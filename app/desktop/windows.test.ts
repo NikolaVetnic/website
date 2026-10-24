@@ -162,6 +162,16 @@ describe("windowsReducer", () => {
     expect(state.windows[0].rect).toEqual(rect);
   });
 
+  it("minimizes every window to show the desktop, keeping the stack", () => {
+    const opened = run({ type: "open", id: "about", area }, { type: "open", id: "blog", area });
+    const desktop = windowsReducer(opened, { type: "showDesktop" });
+
+    expect(desktop.windows.every((window) => window.isMinimized)).toBe(true);
+    expect(desktop.stack).toEqual(opened.stack);
+    expect(getFocusedId(desktop)).toBeNull();
+    expect(windowsReducer(desktop, { type: "showDesktop" })).toBe(desktop);
+  });
+
   it("ignores actions for windows that are not open", () => {
     const state = run({ type: "open", id: "about", area });
     expect(windowsReducer(state, { type: "close", id: "blog" })).toBe(state);

@@ -31,6 +31,7 @@ Node version is in `.nvmrc` (at least 22.22, required by React Router 8).
 - Every route is rendered at build time in Node. Do not touch `window`, `document` or `localStorage` during render; use effects or event handlers.
 - No `action` or `headers` exports in routes: there is no server to run them.
 - Route modules (`app/routes/*`) may use `loader` only for data that is known at build time.
+- Every page is a child of the layout route in `app/routes.ts`, which draws the desktop. A page route exports `meta` (built with `getPageMeta` from `app/meta.ts`) and renders nothing; the URL names the focused window, and `Shell` keeps the two in step.
 - Keep components small and match the surrounding style.
 
 ## Git and pull requests

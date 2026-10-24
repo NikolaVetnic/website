@@ -27,7 +27,8 @@ export type WindowAction =
   | { type: "minimize"; id: AppId }
   | { type: "toggleMaximize"; id: AppId }
   | { type: "toggle"; id: AppId }
-  | { type: "setRect"; id: AppId; rect: Rect };
+  | { type: "setRect"; id: AppId; rect: Rect }
+  | { type: "showDesktop" };
 
 export const NO_WINDOWS: WindowsState = { windows: [], stack: [] };
 
@@ -122,6 +123,12 @@ function show(state: WindowsState, id: AppId): WindowsState {
 }
 
 export function windowsReducer(state: WindowsState, action: WindowAction): WindowsState {
+  if (action.type === "showDesktop") {
+    return state.windows.every((window) => window.isMinimized)
+      ? state
+      : { ...state, windows: state.windows.map((window) => ({ ...window, isMinimized: true })) };
+  }
+
   const current = state.windows.find((window) => window.id === action.id);
 
   if (action.type === "open") {
