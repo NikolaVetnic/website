@@ -145,7 +145,7 @@ function Desktop({ onOpenApp }: DesktopProps) {
   } as CSSProperties;
 
   return (
-    <main
+    <section
       ref={desktopRef}
       className={`desktop${isAnimated ? " desktop--animated" : ""}`}
       style={style}
@@ -168,7 +168,7 @@ function Desktop({ onOpenApp }: DesktopProps) {
       {menuPoint && size ? (
         <DesktopContextMenu point={menuPoint} bounds={size} onAutoArrange={handleAutoArrange} onClose={closeMenu} />
       ) : null}
-    </main>
+    </section>
   );
 }
 

@@ -1,4 +1,4 @@
-import Desktop from "~/components/Desktop/Desktop";
+import Shell from "~/components/Shell/Shell";
 import type { Route } from "./+types/home";
 
 export const meta: Route.MetaFunction = () => [
@@ -10,5 +10,5 @@ export const meta: Route.MetaFunction = () => [
 ];
 
 export default function Home() {
-  return <Desktop />;
+  return <Shell />;
 }
