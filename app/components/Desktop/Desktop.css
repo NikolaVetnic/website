@@ -1,7 +1,7 @@
+/* No z-index here: the context menu has to stack above the windows that share the workspace. */
 .desktop {
-  position: relative;
-  width: 100%;
-  height: 100dvh;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   background:
     radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.2), transparent 30%),
