@@ -16,3 +16,7 @@ export const APPS: DesktopApp[] = [
   { id: "music", title: "Music", icon: "/icons/music.svg" },
   { id: "contact", title: "Contact", icon: "/icons/contact.svg" },
 ];
+
+export function getApp(id: AppId): DesktopApp {
+  return APPS.find((app) => app.id === id) as DesktopApp;
+}
