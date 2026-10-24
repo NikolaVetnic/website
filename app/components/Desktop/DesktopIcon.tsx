@@ -1,6 +1,6 @@
 import type { KeyboardEvent, PointerEvent } from "react";
 
-import type { DesktopApp } from "~/desktop/apps";
+import type { AppId, DesktopApp } from "~/desktop/apps";
 import type { Point } from "~/desktop/grid";
 import "./DesktopIcon.css";
 
@@ -10,8 +10,8 @@ type DesktopIconProps = {
   isSelected: boolean;
   isDragging: boolean;
   onPointerDown: (id: string, event: PointerEvent<HTMLElement>) => void;
-  onSelect: (id: string) => void;
-  onOpen: (id: string) => void;
+  onSelect: (id: AppId) => void;
+  onOpen: (id: AppId) => void;
 };
 
 function DesktopIcon({ app, point, isSelected, isDragging, onPointerDown, onSelect, onOpen }: DesktopIconProps) {
