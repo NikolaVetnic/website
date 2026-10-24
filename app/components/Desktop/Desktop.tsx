@@ -1,4 +1,13 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+  type PointerEvent,
+} from "react";
 
 import { APPS, type AppId, type DesktopApp } from "~/desktop/apps";
 import { getDragPoint, moveToCell } from "~/desktop/drag";
@@ -9,11 +18,13 @@ import {
   getGridSize,
   pointToCell,
   type Cell,
+  type GridSize,
   type GridSpec,
   type Point,
 } from "~/desktop/grid";
 import useElementSize from "~/hooks/useElementSize";
 import usePointerDrag, { type DragMove } from "~/hooks/usePointerDrag";
+import DesktopContextMenu from "./DesktopContextMenu";
 import DesktopIcon from "./DesktopIcon";
 import "./Desktop.css";
 
@@ -33,10 +44,15 @@ type PlacedIcon = { app: DesktopApp; cell: Cell };
 
 type IconDrag = { id: string; point: Point };
 
+// The icons in their fresh-desktop order, filling the grid column by column.
+function arrangeIcons(size: GridSize): PlacedIcon[] {
+  const cells = arrangeInColumns(APPS.length, size);
+  return APPS.map((app, index) => ({ app, cell: cells[index] }));
+}
+
 // One tall column; the first measurement in the browser folds it into the real grid.
 function getInitialIcons(): PlacedIcon[] {
-  const cells = arrangeInColumns(APPS.length, { cols: 1, rows: APPS.length });
-  return APPS.map((app, index) => ({ app, cell: cells[index] }));
+  return arrangeIcons({ cols: 1, rows: APPS.length });
 }
 
 type DesktopProps = {
@@ -52,6 +68,7 @@ function Desktop({ onOpenApp }: DesktopProps) {
   const [selectedId, setSelectedId] = useState<AppId | null>(null);
   const [drag, setDrag] = useState<IconDrag | null>(null);
   const [isAnimated, setIsAnimated] = useState(false);
+  const [menuPoint, setMenuPoint] = useState<Point | null>(null);
 
   // Stored cells can fall outside the grid when the screen shrinks; show those icons inside it.
   const placed = useMemo(() => (grid ? fitIntoGrid(icons, grid) : icons), [icons, grid]);
@@ -103,6 +120,25 @@ function Desktop({ onOpenApp }: DesktopProps) {
     }
   };
 
+  const handleContextMenu = (event: MouseEvent<HTMLElement>) => {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    event.preventDefault();
+    const rect = event.currentTarget.getBoundingClientRect();
+    setMenuPoint({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+  };
+
+  const closeMenu = useCallback(() => setMenuPoint(null), []);
+
+  const handleAutoArrange = () => {
+    closeMenu();
+    if (grid) {
+      setIcons(arrangeIcons(grid));
+    }
+  };
+
   const style = {
     "--desktop-icon-width": `${ICON_WIDTH}px`,
     "--desktop-icon-height": `${ICON_HEIGHT}px`,
@@ -115,6 +151,7 @@ function Desktop({ onOpenApp }: DesktopProps) {
       style={style}
       aria-label="Desktop"
       onPointerDown={handleBackgroundPointerDown}
+      onContextMenu={handleContextMenu}
     >
       {placed.map(({ app, cell }) => (
         <DesktopIcon
@@ -128,6 +165,9 @@ function Desktop({ onOpenApp }: DesktopProps) {
           onOpen={(id) => onOpenApp?.(id)}
         />
       ))}
+      {menuPoint && size ? (
+        <DesktopContextMenu point={menuPoint} bounds={size} onAutoArrange={handleAutoArrange} onClose={closeMenu} />
+      ) : null}
     </main>
   );
 }
