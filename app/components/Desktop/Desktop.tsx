@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
 import { APPS, type AppId, type DesktopApp } from "~/desktop/apps";
+import { getDragPoint, moveToCell } from "~/desktop/drag";
 import {
   arrangeInColumns,
   cellToPoint,
-  clamp,
-  findFreeCell,
   fitIntoGrid,
   getGridSize,
   pointToCell,
@@ -71,36 +70,29 @@ function Desktop({ onOpenApp }: DesktopProps) {
     return () => cancelAnimationFrame(frame);
   }, [size, isAnimated]);
 
-  const getDragPoint = ({ id, dx, dy }: DragMove): Point | null => {
+  const getIconDragPoint = ({ id, dx, dy }: DragMove): Point | null => {
     const icon = placed.find((entry) => entry.app.id === id);
     if (!icon || !size) {
       return null;
     }
 
-    const origin = cellToPoint(ICON_GRID, icon.cell);
-    return {
-      x: clamp(origin.x + dx, 0, Math.max(0, size.width - ICON_WIDTH)),
-      y: clamp(origin.y + dy, 0, Math.max(0, size.height - ICON_HEIGHT)),
-    };
+    return getDragPoint(cellToPoint(ICON_GRID, icon.cell), dx, dy, { width: ICON_WIDTH, height: ICON_HEIGHT }, size);
   };
 
   const startDrag = usePointerDrag({
     onMove: (move) => {
-      const point = getDragPoint(move);
+      const point = getIconDragPoint(move);
       setDrag(point ? { id: move.id, point } : null);
     },
     onDrop: (move) => {
-      const point = getDragPoint(move);
+      const point = getIconDragPoint(move);
       setDrag(null);
       if (!point || !grid) {
         return;
       }
 
-      const target = pointToCell(ICON_GRID, point, grid);
-      const others = placed.filter((entry) => entry.app.id !== move.id).map((entry) => entry.cell);
-      const cell = findFreeCell(target, others, grid);
-
-      setIcons(placed.map((entry) => (entry.app.id === move.id ? { ...entry, cell } : entry)));
+      const index = placed.findIndex((entry) => entry.app.id === move.id);
+      setIcons(moveToCell(placed, index, pointToCell(ICON_GRID, point, grid), grid));
     },
     onCancel: () => setDrag(null),
   });
