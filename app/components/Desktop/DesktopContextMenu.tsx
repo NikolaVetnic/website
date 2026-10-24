@@ -16,6 +16,7 @@ function DesktopContextMenu({ point, bounds, onAutoArrange, onClose }: DesktopCo
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   // Placed once its size is known and before it is painted, so it never runs off the desktop.
+  // The opening animation grows from the pointer, even when the menu had to be shifted.
   useLayoutEffect(() => {
     const menu = menuRef.current;
     if (!menu) {
@@ -25,6 +26,7 @@ function DesktopContextMenu({ point, bounds, onAutoArrange, onClose }: DesktopCo
     const { x, y } = fitMenu(point, { width: menu.offsetWidth, height: menu.offsetHeight }, bounds);
     menu.style.left = `${x}px`;
     menu.style.top = `${y}px`;
+    menu.style.transformOrigin = `${point.x - x}px ${point.y - y}px`;
     menu.querySelector("button")?.focus();
   }, [point, bounds]);
 
