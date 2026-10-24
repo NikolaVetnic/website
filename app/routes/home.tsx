@@ -1,3 +1,4 @@
+import Desktop from "~/components/Desktop/Desktop";
 import type { Route } from "./+types/home";
 
 export const meta: Route.MetaFunction = () => [
@@ -9,10 +10,5 @@ export const meta: Route.MetaFunction = () => [
 ];
 
 export default function Home() {
-  return (
-    <main className="placeholder">
-      <h1>Nikola Pacek Vetnić</h1>
-      <p>The new site is under construction.</p>
-    </main>
-  );
+  return <Desktop />;
 }

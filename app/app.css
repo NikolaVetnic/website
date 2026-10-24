@@ -16,7 +16,6 @@ body {
   color: #f8fbff;
 }
 
-.placeholder,
 .error-page {
   display: grid;
   place-content: center;
