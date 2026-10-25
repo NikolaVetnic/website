@@ -1,12 +1,39 @@
 .taskbar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   height: 48px;
   padding: 0 12px 0 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(12, 28, 43, 0.92);
   backdrop-filter: blur(10px);
+}
+
+.taskbar__home {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(248, 251, 255, 0.85);
+  cursor: pointer;
+}
+
+.taskbar__home svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.taskbar__home:hover,
+.taskbar__home:focus-visible {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .taskbar__windows {

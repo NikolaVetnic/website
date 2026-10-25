@@ -105,7 +105,12 @@ function Shell() {
           );
         })}
       </main>
-      <Taskbar windows={state.windows} focusedId={focusedId} onToggle={(id) => act({ type: "toggle", id })} />
+      <Taskbar
+        windows={state.windows}
+        focusedId={focusedId}
+        onToggle={(id) => act({ type: "toggle", id })}
+        onShowDesktop={() => act({ type: "showDesktop" })}
+      />
     </div>
   );
 }
