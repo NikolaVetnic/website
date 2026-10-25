@@ -27,6 +27,8 @@ type AppWindowProps = {
   isMinimized: boolean;
   isMaximized: boolean;
   dispatch: Dispatch<WindowAction>;
+  // Changes when the window shows another page of its app, which then starts scrolled to the top.
+  contentKey: string;
   children: ReactNode;
 };
 
@@ -39,6 +41,7 @@ function AppWindow({
   isMinimized,
   isMaximized,
   dispatch,
+  contentKey,
   children,
 }: AppWindowProps) {
   const windowRef = useRef<HTMLElement | null>(null);
@@ -187,7 +190,9 @@ function AppWindow({
           </button>
         </div>
       </header>
-      <div className="app-window__content">{children}</div>
+      <div key={contentKey} className="app-window__content">
+        {children}
+      </div>
       {isMaximized
         ? null
         : RESIZE_EDGES.map((edge) => (

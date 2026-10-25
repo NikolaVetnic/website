@@ -31,8 +31,15 @@ Node version is in `.nvmrc` (at least 22.22, required by React Router 8).
 - Every route is rendered at build time in Node. Do not touch `window`, `document` or `localStorage` during render; use effects or event handlers.
 - No `action` or `headers` exports in routes: there is no server to run them.
 - Route modules (`app/routes/*`) may use `loader` only for data that is known at build time.
-- Every page is a child of the layout route in `app/routes.ts`, which draws the desktop. A page route exports `meta` (built with `getPageMeta` from `app/meta.ts`) and renders nothing; the URL names the focused window, and `Shell` keeps the two in step.
+- Every page is a child of the layout route in `app/routes.ts`, which draws the desktop. A page route exports `meta` (built with `getPageMeta` from `app/meta.ts`), may export a build-time `loader`, and renders nothing: its window shows the loaded data through `AppContent`. The URL is the focused window's path, and `Shell` keeps the two in step.
+- Code that needs Node (the file system, Markdown) lives in `*.server.ts` files, so it never reaches the browser bundle.
 - Keep components small and match the surrounding style.
+
+## Content
+
+- Blog posts are `content/blog/<slug>.md`: YAML front matter with `title`, `date` (`YYYY-MM-DD`), `summary` and optional `tags`, then Markdown. The file name is the URL (`/blog/<slug>`): lowercase letters and digits joined by hyphens.
+- A post with a missing or malformed field fails the build, with the post's name in the message.
+- Keep at least one post: with none, `blog/:slug` has a loader but nothing to pre-render, which React Router refuses with `ssr: false`.
 
 ## Git and pull requests
 

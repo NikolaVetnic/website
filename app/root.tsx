@@ -1,10 +1,14 @@
 import type { ReactNode } from "react";
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
+import { SITE_NAME } from "~/meta";
 import type { Route } from "./+types/root";
 import "./app.css";
 
-export const links: Route.LinksFunction = () => [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }];
+export const links: Route.LinksFunction = () => [
+  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+  { rel: "alternate", type: "application/rss+xml", title: `Blog · ${SITE_NAME}`, href: "/rss.xml" },
+];
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
