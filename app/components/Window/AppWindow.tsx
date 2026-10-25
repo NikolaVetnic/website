@@ -6,12 +6,14 @@ import {
   type Dispatch,
   type KeyboardEvent,
   type PointerEvent,
+  type CSSProperties,
   type ReactNode,
 } from "react";
 
 import type { DesktopApp } from "~/desktop/apps";
 import type { Size } from "~/desktop/drag";
 import { moveRect, resizeRect, type Rect, type ResizeEdge, type WindowAction } from "~/desktop/windows";
+import usePhoneLayout from "~/hooks/usePhoneLayout";
 import usePointerDrag from "~/hooks/usePointerDrag";
 import "./AppWindow.css";
 
@@ -49,6 +51,8 @@ function AppWindow({
   const [isBusy, setIsBusy] = useState(false);
   const titleId = useId();
   const id = app.id;
+  // In the phone layout every window fills the screen, so it can't be moved or maximized.
+  const isPhone = usePhoneLayout();
 
   // Focus follows the window to the top, unless the click that raised it already put focus inside.
   useEffect(() => {
@@ -94,7 +98,7 @@ function AppWindow({
   });
 
   const handleTitlePointerDown = (event: PointerEvent<HTMLElement>) => {
-    if (!rect || isMaximized || (event.target as Element).closest("button")) {
+    if (!rect || isMaximized || isPhone || (event.target as Element).closest("button")) {
       return;
     }
 
@@ -122,14 +126,24 @@ function AppWindow({
     "app-window",
     isFocused ? "app-window--focused" : "",
     isMaximized ? "app-window--maximized" : "",
-    rect ? "" : "app-window--unplaced",
+    rect ? "app-window--placed" : "app-window--unplaced",
     isBusy ? "app-window--busy" : "",
   ]
     .filter(Boolean)
     .join(" ");
 
-  const style =
-    isMaximized || !rect ? { zIndex } : { left: rect.x, top: rect.y, width: rect.width, height: rect.height, zIndex };
+  // Custom properties rather than `left` and `top`, so the stylesheet decides where they apply.
+  const style = (
+    rect
+      ? {
+          "--window-x": `${rect.x}px`,
+          "--window-y": `${rect.y}px`,
+          "--window-width": `${rect.width}px`,
+          "--window-height": `${rect.height}px`,
+          zIndex,
+        }
+      : { zIndex }
+  ) as CSSProperties;
 
   return (
     <section
@@ -148,7 +162,7 @@ function AppWindow({
         className="app-window__titlebar"
         onPointerDown={handleTitlePointerDown}
         onDoubleClick={(event) => {
-          if (!(event.target as Element).closest("button")) {
+          if (!isPhone && !(event.target as Element).closest("button")) {
             dispatch({ type: "toggleMaximize", id });
           }
         }}

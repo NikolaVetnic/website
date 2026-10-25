@@ -10,6 +10,12 @@ body {
   min-height: 100%;
 }
 
+/* Phones on their side would otherwise enlarge the text. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: #0f2a42;

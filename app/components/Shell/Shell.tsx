@@ -15,6 +15,7 @@ import {
   type WindowAction,
 } from "~/desktop/windows";
 import useElementSize from "~/hooks/useElementSize";
+import usePhoneLayout from "~/hooks/usePhoneLayout";
 import "./Shell.css";
 
 // Stacked above the desktop icons and below the desktop context menu.
@@ -25,6 +26,7 @@ function Shell() {
   const area = useElementSize(workspaceRef);
   const navigate = useNavigate();
   const path = normalizePath(useLocation().pathname);
+  const isPhone = usePhoneLayout();
 
   // The page's own window is open from the first render, so the pre-rendered HTML shows it too.
   const [state, dispatch] = useReducer(windowsReducer, path, (initialPath) => {
@@ -105,7 +107,13 @@ function Shell() {
           );
         })}
       </main>
-      <Taskbar windows={state.windows} focusedId={focusedId} onToggle={(id) => act({ type: "toggle", id })} />
+      <Taskbar
+        windows={state.windows}
+        focusedId={focusedId}
+        // On a phone the app on screen is the focused one, so its button only switches to it, never hides it.
+        onToggle={(id) => act({ type: isPhone ? "focus" : "toggle", id })}
+        onShowDesktop={() => act({ type: "showDesktop" })}
+      />
     </div>
   );
 }

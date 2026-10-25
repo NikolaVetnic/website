@@ -23,6 +23,7 @@ import {
   type Point,
 } from "~/desktop/grid";
 import useElementSize from "~/hooks/useElementSize";
+import usePhoneLayout from "~/hooks/usePhoneLayout";
 import usePointerDrag, { type DragMove } from "~/hooks/usePointerDrag";
 import DesktopContextMenu from "./DesktopContextMenu";
 import DesktopIcon from "./DesktopIcon";
@@ -44,6 +45,8 @@ type PlacedIcon = { app: DesktopApp; cell: Cell };
 
 type IconDrag = { id: string; point: Point };
 
+const noDrag = () => {};
+
 // The icons in their fresh-desktop order, filling the grid column by column.
 function arrangeIcons(size: GridSize): PlacedIcon[] {
   const cells = arrangeInColumns(APPS.length, size);
@@ -62,6 +65,8 @@ type DesktopProps = {
 function Desktop({ onOpenApp }: DesktopProps) {
   const desktopRef = useRef<HTMLElement | null>(null);
   const size = useElementSize(desktopRef);
+  // The phone layout's home screen is a plain grid: icons stay in their order and there is no menu to arrange them.
+  const isPhone = usePhoneLayout();
   const grid = useMemo(() => (size ? getGridSize(ICON_GRID, size.width, size.height) : null), [size]);
 
   const [icons, setIcons] = useState(getInitialIcons);
@@ -121,7 +126,7 @@ function Desktop({ onOpenApp }: DesktopProps) {
   };
 
   const handleContextMenu = (event: MouseEvent<HTMLElement>) => {
-    if (event.target !== event.currentTarget) {
+    if (isPhone || event.target !== event.currentTarget) {
       return;
     }
 
@@ -160,7 +165,8 @@ function Desktop({ onOpenApp }: DesktopProps) {
           point={drag?.id === app.id ? drag.point : cellToPoint(ICON_GRID, cell)}
           isSelected={selectedId === app.id}
           isDragging={drag?.id === app.id}
-          onPointerDown={startDrag}
+          opensOnClick={isPhone}
+          onPointerDown={isPhone ? noDrag : startDrag}
           onSelect={setSelectedId}
           onOpen={(id) => onOpenApp?.(id)}
         />
