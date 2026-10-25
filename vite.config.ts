@@ -6,7 +6,8 @@ import { defineConfig, type Plugin } from "vite";
 
 // `vite preview` falls back to the root index.html for any path without a file, which hydrates a page with
 // the wrong HTML. Serve pages the way the hosting will instead: a pre-rendered page at its path without the
-// trailing slash, anything else from the SPA fallback. React Router's own pre-render requests are left alone.
+// trailing slash, anything else from the SPA fallback (public/.htaccess has the same rules for Apache). React
+// Router's own pre-render requests are left alone.
 function servePagesLikeTheHosting(): Plugin {
   return {
     name: "serve-pages-like-the-hosting",

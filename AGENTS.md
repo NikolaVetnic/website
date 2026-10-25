@@ -12,6 +12,8 @@ The personal site at [nikolapacekvetnic.rs](https://nikolapacekvetnic.rs): a des
 - `ssr: false` with pre-rendering (`react-router.config.ts`): the build in `build/client` is static HTML, JS and CSS.
 - Plain CSS, one stylesheet per component, BEM-style class names (`desktop-icon__caption`).
 - Hosting is shared Apache hosting (PHP and MySQL available, no Node runtime). Anything dynamic later goes into small PHP scripts under `api/`.
+- Apache serves the build by the rules in `public/.htaccess`: a page at its path without a trailing slash, unknown paths from `__spa-fallback.html` with a 404, never another page's HTML. `npm run preview` serves the same HTML at the same URLs (`vite.config.ts`), so change the two together.
+- Every push to `main` that passes CI is deployed to staging.nikolapacekvetnic.rs over FTPS (the `deploy-staging` job, secrets in the `staging` environment). Staging is kept out of search engines.
 
 ## Commands
 
