@@ -12,3 +12,15 @@
 .desktop:not(.desktop--animated) .desktop-icon {
   transition: none;
 }
+
+/* The phone layout (usePhoneLayout.ts): a home screen with the icons in rows, in their own order. */
+@media (max-width: 699px), (max-height: 499px) {
+  .desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    align-content: start;
+    gap: 12px 4px;
+    padding: 24px 12px;
+    overflow-y: auto;
+  }
+}

@@ -14,12 +14,23 @@ type DesktopIconProps = {
   point: Point;
   isSelected: boolean;
   isDragging: boolean;
+  // Any click opens the app, not just a tap (the phone layout).
+  opensOnClick: boolean;
   onPointerDown: (id: string, event: PointerEvent<HTMLElement>) => void;
   onSelect: (id: AppId) => void;
   onOpen: (id: AppId) => void;
 };
 
-function DesktopIcon({ app, point, isSelected, isDragging, onPointerDown, onSelect, onOpen }: DesktopIconProps) {
+function DesktopIcon({
+  app,
+  point,
+  isSelected,
+  isDragging,
+  opensOnClick,
+  onPointerDown,
+  onSelect,
+  onOpen,
+}: DesktopIconProps) {
   const press = useRef<Press | null>(null);
 
   const className = [
@@ -49,7 +60,7 @@ function DesktopIcon({ app, point, isSelected, isDragging, onPointerDown, onSele
     press.current = null;
 
     const isTap = start !== null && Math.hypot(event.clientX - start.x, event.clientY - start.y) < TAP_DISTANCE;
-    if (isTap && start.pointerType !== "mouse") {
+    if (isTap && (opensOnClick || start.pointerType !== "mouse")) {
       onOpen(app.id);
     } else {
       onSelect(app.id);

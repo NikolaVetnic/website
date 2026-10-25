@@ -202,6 +202,52 @@
   cursor: nwse-resize;
 }
 
+/* The phone layout (usePhoneLayout.ts): every window fills the screen; the taskbar's Home button and the
+   open apps in it take over from minimize, maximize, moving and resizing. */
+@media (max-width: 699px), (max-height: 499px) {
+  .app-window {
+    inset: 0;
+    width: auto;
+    height: auto;
+    border-width: 0;
+    border-radius: 0;
+    /* Solid, so the home screen doesn't show through an app that covers it. */
+    background: linear-gradient(180deg, #f2f6fd 0%, #e3ebf8 100%);
+    box-shadow: none;
+  }
+
+  .app-window__titlebar {
+    min-height: 48px;
+    padding: 4px 4px 4px 16px;
+    border-radius: 0;
+    touch-action: manipulation;
+  }
+
+  .app-window__icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .app-window__title {
+    font-size: 1rem;
+  }
+
+  .app-window__control {
+    width: 44px;
+    height: 40px;
+  }
+
+  .app-window__control svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .app-window__control:not(.app-window__control--close),
+  .app-window__resize {
+    display: none;
+  }
+}
+
 @keyframes app-window-open {
   from {
     opacity: 0;

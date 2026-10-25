@@ -121,6 +121,48 @@
   text-align: right;
 }
 
+/* The phone layout (usePhoneLayout.ts): bigger buttons, open apps as icons only, no clock (the phone has one). */
+@media (max-width: 699px), (max-height: 499px) {
+  .taskbar {
+    gap: 4px;
+    height: 56px;
+    padding: 0 8px;
+  }
+
+  .taskbar__home {
+    width: 48px;
+    height: 44px;
+  }
+
+  .taskbar__home svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .taskbar__window {
+    height: 44px;
+    padding: 0 12px;
+  }
+
+  .taskbar__icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Still read out by screen readers. */
+  .taskbar__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .taskbar__clock {
+    display: none;
+  }
+}
+
 @keyframes taskbar-window-in {
   from {
     opacity: 0;
