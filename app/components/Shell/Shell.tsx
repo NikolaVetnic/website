@@ -1,6 +1,7 @@
-import { useEffect, useReducer, useRef } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useEffect, useReducer, useRef, useState } from "react";
+import { useLocation, useMatches, useNavigate } from "react-router";
 
+import AppContent from "~/components/AppContent/AppContent";
 import Desktop from "~/components/Desktop/Desktop";
 import Taskbar from "~/components/Taskbar/Taskbar";
 import AppWindow from "~/components/Window/AppWindow";
@@ -32,6 +33,15 @@ function Shell() {
   });
   const focusedId = getFocusedId(state);
   const focusedPath = getFocusedPath(state);
+
+  // What the page's route loaded, kept per path for windows that are no longer in the URL. Updating it during
+  // render (React's pattern for state that follows a value) redoes the render before anything is shown.
+  const matches = useMatches();
+  const pageData = matches[matches.length - 1]?.loaderData;
+  const [pages, setPages] = useState<Record<string, unknown>>({});
+  if (pageData !== undefined && pages[path] !== pageData) {
+    setPages({ ...pages, [path]: pageData });
+  }
 
   // The effect below reads these without running again when they change.
   const latest = useRef({ focusedPath, area });
@@ -89,7 +99,7 @@ function Shell() {
               isMaximized={window.isMaximized}
               dispatch={act}
             >
-              <p className="shell__placeholder">{app.title} is on its way.</p>
+              <AppContent app={app} path={window.path} data={window.path === path ? pageData : pages[window.path]} />
             </AppWindow>
           );
         })}
