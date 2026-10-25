@@ -48,6 +48,11 @@ export function getAppPath(id: AppId | null): string {
   return id ? `/${id}` : "/";
 }
 
+// Without the trailing slash, which the hosting may add to pre-rendered pages (`/blog/` for `/blog`).
+export function normalizePath(pathname: string): string {
+  return pathname.length > 1 ? pathname.replace(/\/+$/, "") || "/" : pathname;
+}
+
 // The app a path belongs to, by its first segment, so `/blog/` and later `/blog/<slug>` are the Blog too.
 export function getAppFromPath(pathname: string): AppId | null {
   const segment = pathname.split("/")[1];

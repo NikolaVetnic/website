@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   NO_WINDOWS,
   getFocusedId,
+  getFocusedPath,
   getOpenRect,
   keepOnDesktop,
   moveRect,
@@ -170,6 +171,39 @@ describe("windowsReducer", () => {
     expect(desktop.stack).toEqual(opened.stack);
     expect(getFocusedId(desktop)).toBeNull();
     expect(windowsReducer(desktop, { type: "showDesktop" })).toBe(desktop);
+  });
+
+  it("opens a window without a rect before the workspace is measured", () => {
+    expect(run({ type: "open", id: "blog", area: null }).windows[0].rect).toBeNull();
+  });
+
+  it("places unmeasured windows where they would have opened, once", () => {
+    const state = run({ type: "open", id: "blog", area: null });
+    const placed = windowsReducer(state, { type: "place", area });
+
+    expect(placed.windows[0].rect).toEqual(getOpenRect(area, 0));
+    expect(windowsReducer(placed, { type: "place", area })).toBe(placed);
+  });
+
+  it("starts a window at its app's page and keeps its path when it comes back", () => {
+    const opened = run({ type: "open", id: "blog", area });
+    expect(opened.windows[0].path).toBe("/blog");
+
+    const moved = windowsReducer(opened, { type: "open", id: "blog", area, path: "/blog/first-post" });
+    expect(moved.windows[0].path).toBe("/blog/first-post");
+
+    const back = run(
+      { type: "open", id: "blog", area, path: "/blog/first-post" },
+      { type: "minimize", id: "blog" },
+      { type: "open", id: "blog", area },
+    );
+    expect(back.windows[0].path).toBe("/blog/first-post");
+  });
+
+  it("gives the focused window's path, or the bare desktop", () => {
+    expect(getFocusedPath(NO_WINDOWS)).toBe("/");
+    expect(getFocusedPath(run({ type: "open", id: "blog", area, path: "/blog/first-post" }))).toBe("/blog/first-post");
+    expect(getFocusedPath(run({ type: "open", id: "blog", area }, { type: "minimize", id: "blog" }))).toBe("/");
   });
 
   it("ignores actions for windows that are not open", () => {
