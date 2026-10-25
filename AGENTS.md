@@ -38,7 +38,8 @@ Node version is in `.nvmrc` (at least 22.22, required by React Router 8).
 ## Content
 
 - Blog posts are `content/blog/<slug>.md`: YAML front matter with `title`, `date` (`YYYY-MM-DD`), `summary` and optional `tags`, then Markdown. The file name is the URL (`/blog/<slug>`): lowercase letters and digits joined by hyphens.
-- A post with a missing or malformed field fails the build, with the post's name in the message.
+- A post's images go in `public/blog/<slug>/` and are written by file name: `![Alt text](photo.jpg "Caption")`. An image on a line of its own becomes a figure, its title the caption.
+- A post with a missing or malformed field, or a local image that isn't there, fails the build, with the post's name in the message.
 - Keep at least one post: with none, `blog/:slug` has a loader but nothing to pre-render, which React Router refuses with `ssr: false`.
 
 ## Git and pull requests
