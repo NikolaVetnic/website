@@ -19,8 +19,9 @@ const RESIZE_EDGES: ResizeEdge[] = ["n", "s", "e", "w", "ne", "nw", "se", "sw"];
 
 type AppWindowProps = {
   app: DesktopApp;
-  rect: Rect;
-  area: Size;
+  // Both null until the workspace has been measured: the window is placed by CSS and can't move yet.
+  rect: Rect | null;
+  area: Size | null;
   zIndex: number;
   isFocused: boolean;
   isMinimized: boolean;
@@ -59,11 +60,15 @@ function AppWindow({
   const startMove = usePointerDrag({
     onMove: ({ dx, dy }) => {
       setIsBusy(true);
-      setRect(moveRect(startRect.current, dx, dy, area));
+      if (startRect.current && area) {
+        setRect(moveRect(startRect.current, dx, dy, area));
+      }
     },
     onDrop: ({ dx, dy }) => {
       setIsBusy(false);
-      setRect(moveRect(startRect.current, dx, dy, area));
+      if (startRect.current && area) {
+        setRect(moveRect(startRect.current, dx, dy, area));
+      }
     },
     onCancel: () => setIsBusy(false),
   });
@@ -72,17 +77,21 @@ function AppWindow({
     threshold: 0,
     onMove: ({ id: edge, dx, dy }) => {
       setIsBusy(true);
-      setRect(resizeRect(startRect.current, edge as ResizeEdge, dx, dy, area));
+      if (startRect.current && area) {
+        setRect(resizeRect(startRect.current, edge as ResizeEdge, dx, dy, area));
+      }
     },
     onDrop: ({ id: edge, dx, dy }) => {
       setIsBusy(false);
-      setRect(resizeRect(startRect.current, edge as ResizeEdge, dx, dy, area));
+      if (startRect.current && area) {
+        setRect(resizeRect(startRect.current, edge as ResizeEdge, dx, dy, area));
+      }
     },
     onCancel: () => setIsBusy(false),
   });
 
   const handleTitlePointerDown = (event: PointerEvent<HTMLElement>) => {
-    if (isMaximized || (event.target as Element).closest("button")) {
+    if (!rect || isMaximized || (event.target as Element).closest("button")) {
       return;
     }
 
@@ -91,6 +100,10 @@ function AppWindow({
   };
 
   const handleResizePointerDown = (edge: ResizeEdge, event: PointerEvent<HTMLElement>) => {
+    if (!rect) {
+      return;
+    }
+
     startRect.current = rect;
     startResize(edge, event);
   };
@@ -106,14 +119,14 @@ function AppWindow({
     "app-window",
     isFocused ? "app-window--focused" : "",
     isMaximized ? "app-window--maximized" : "",
+    rect ? "" : "app-window--unplaced",
     isBusy ? "app-window--busy" : "",
   ]
     .filter(Boolean)
     .join(" ");
 
-  const style = isMaximized
-    ? { zIndex }
-    : { left: rect.x, top: rect.y, width: rect.width, height: rect.height, zIndex };
+  const style =
+    isMaximized || !rect ? { zIndex } : { left: rect.x, top: rect.y, width: rect.width, height: rect.height, zIndex };
 
   return (
     <section

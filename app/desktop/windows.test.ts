@@ -172,6 +172,18 @@ describe("windowsReducer", () => {
     expect(windowsReducer(desktop, { type: "showDesktop" })).toBe(desktop);
   });
 
+  it("opens a window without a rect before the workspace is measured", () => {
+    expect(run({ type: "open", id: "blog", area: null }).windows[0].rect).toBeNull();
+  });
+
+  it("places unmeasured windows where they would have opened, once", () => {
+    const state = run({ type: "open", id: "blog", area: null });
+    const placed = windowsReducer(state, { type: "place", area });
+
+    expect(placed.windows[0].rect).toEqual(getOpenRect(area, 0));
+    expect(windowsReducer(placed, { type: "place", area })).toBe(placed);
+  });
+
   it("ignores actions for windows that are not open", () => {
     const state = run({ type: "open", id: "about", area });
     expect(windowsReducer(state, { type: "close", id: "blog" })).toBe(state);

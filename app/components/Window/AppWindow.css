@@ -26,6 +26,14 @@
   border-width: 0;
 }
 
+/* Where getOpenRect puts the first window, for a window that is open before the workspace is measured. */
+.app-window--unplaced {
+  top: calc((100% - min(440px, 100%)) / 3);
+  left: calc((100% - min(640px, 100%)) / 2);
+  width: min(640px, 100%);
+  height: min(440px, 100%);
+}
+
 .app-window--busy {
   user-select: none;
 }

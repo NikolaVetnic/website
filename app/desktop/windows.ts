@@ -8,7 +8,8 @@ export type ResizeEdge = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
 
 export type DesktopWindow = {
   id: AppId;
-  rect: Rect;
+  // Null until the workspace has been measured; until then CSS puts the window where `getOpenRect` will.
+  rect: Rect | null;
   isMinimized: boolean;
   isMaximized: boolean;
 };
@@ -21,19 +22,21 @@ export type WindowsState = {
 };
 
 export type WindowAction =
-  | { type: "open"; id: AppId; area: Size }
+  | { type: "open"; id: AppId; area: Size | null }
   | { type: "close"; id: AppId }
   | { type: "focus"; id: AppId }
   | { type: "minimize"; id: AppId }
   | { type: "toggleMaximize"; id: AppId }
   | { type: "toggle"; id: AppId }
   | { type: "setRect"; id: AppId; rect: Rect }
-  | { type: "showDesktop" };
+  | { type: "showDesktop" }
+  | { type: "place"; area: Size };
 
 export const NO_WINDOWS: WindowsState = { windows: [], stack: [] };
 
 export const MIN_WINDOW_SIZE: Size = { width: 280, height: 180 };
 
+// AppWindow.css repeats these for windows that are open before the workspace is measured.
 const DEFAULT_WINDOW_SIZE: Size = { width: 640, height: 440 };
 
 const CASCADE_OFFSET = 32;
@@ -43,7 +46,7 @@ const CASCADE_STEPS = 6;
 const GRAB_WIDTH = 96;
 const GRAB_HEIGHT = 40;
 
-// Centred on the desktop, each further window a step down and to the right, never larger than the desktop.
+// Centred horizontally, a third of the way down, each further window a step down and to the right, never larger than the desktop.
 export function getOpenRect(area: Size, index: number): Rect {
   const width = Math.min(DEFAULT_WINDOW_SIZE.width, area.width);
   const height = Math.min(DEFAULT_WINDOW_SIZE.height, area.height);
@@ -123,6 +126,18 @@ function show(state: WindowsState, id: AppId): WindowsState {
 }
 
 export function windowsReducer(state: WindowsState, action: WindowAction): WindowsState {
+  if (action.type === "place") {
+    return state.windows.some((window) => !window.rect)
+      ? {
+          ...state,
+          windows: state.windows.map((window, index) => ({
+            ...window,
+            rect: window.rect ?? getOpenRect(action.area, index),
+          })),
+        }
+      : state;
+  }
+
   if (action.type === "showDesktop") {
     return state.windows.every((window) => window.isMinimized)
       ? state
@@ -138,7 +153,7 @@ export function windowsReducer(state: WindowsState, action: WindowAction): Windo
 
     const window = {
       id: action.id,
-      rect: getOpenRect(action.area, state.windows.length),
+      rect: action.area ? getOpenRect(action.area, state.windows.length) : null,
       isMinimized: false,
       isMaximized: false,
     };

@@ -66,7 +66,7 @@ function Shell() {
                 <AppWindow
                   key={window.id}
                   app={app}
-                  rect={keepOnDesktop(window.rect, area)}
+                  rect={window.rect && keepOnDesktop(window.rect, area)}
                   area={area}
                   zIndex={WINDOW_Z_INDEX + state.stack.indexOf(window.id)}
                   isFocused={window.id === focusedId}
