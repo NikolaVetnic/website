@@ -100,6 +100,20 @@
   font-size: 0.85rem;
 }
 
+/* A video embedded in a post keeps its 16:9 shape at any width. */
+.blog-post__video {
+  margin: 1.5em 0;
+}
+
+.blog-post__video iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 6px;
+}
+
 .blog-post__body hr {
   margin: 2em 0;
   border: 0;
