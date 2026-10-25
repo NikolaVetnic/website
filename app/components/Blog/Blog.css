@@ -82,6 +82,48 @@
 .blog-post__body img {
   max-width: 100%;
   height: auto;
+  vertical-align: middle;
+}
+
+.blog-post__body figure {
+  margin: 1.5em 0;
+  text-align: center;
+}
+
+.blog-post__body figure img {
+  border-radius: 6px;
+}
+
+.blog-post__body figcaption {
+  margin-top: 6px;
+  color: #5b6f83;
+  font-size: 0.85rem;
+}
+
+.blog-post__body hr {
+  margin: 2em 0;
+  border: 0;
+  border-top: 1px solid rgba(27, 43, 58, 0.15);
+}
+
+/* A wide table scrolls on its own instead of widening the window. */
+.blog-post__body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.blog-post__body th,
+.blog-post__body td {
+  padding: 6px 12px;
+  border: 1px solid rgba(27, 43, 58, 0.15);
+  text-align: left;
+}
+
+.blog-post__body th {
+  background: rgba(27, 43, 58, 0.05);
 }
 
 .blog-post__body blockquote {
