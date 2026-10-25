@@ -1,4 +1,4 @@
-import type { AppId } from "./apps";
+import { getAppPath, type AppId } from "./apps";
 import type { Size } from "./drag";
 import { clamp } from "./grid";
 
@@ -8,6 +8,8 @@ export type ResizeEdge = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
 
 export type DesktopWindow = {
   id: AppId;
+  // Where the window is within its app (`/blog/first-post`); the URL while it has focus.
+  path: string;
   // Null until the workspace has been measured; until then CSS puts the window where `getOpenRect` will.
   rect: Rect | null;
   isMinimized: boolean;
@@ -22,7 +24,8 @@ export type WindowsState = {
 };
 
 export type WindowAction =
-  | { type: "open"; id: AppId; area: Size | null }
+  // Without a path, a new window starts at its app's own page and an open one stays where it was.
+  | { type: "open"; id: AppId; area: Size | null; path?: string }
   | { type: "close"; id: AppId }
   | { type: "focus"; id: AppId }
   | { type: "minimize"; id: AppId }
@@ -113,6 +116,12 @@ export function getFocusedId(state: WindowsState): AppId | null {
   return null;
 }
 
+// The URL for the current state: the focused window's path, or the bare desktop.
+export function getFocusedPath(state: WindowsState): string {
+  const id = getFocusedId(state);
+  return state.windows.find((window) => window.id === id)?.path ?? getAppPath(null);
+}
+
 function raise(stack: AppId[], id: AppId): AppId[] {
   return [...stack.filter((entry) => entry !== id), id];
 }
@@ -148,11 +157,13 @@ export function windowsReducer(state: WindowsState, action: WindowAction): Windo
 
   if (action.type === "open") {
     if (current) {
-      return show(state, action.id);
+      const shown = show(state, action.id);
+      return action.path ? { ...shown, windows: update(shown, action.id, { path: action.path }) } : shown;
     }
 
     const window = {
       id: action.id,
+      path: action.path ?? getAppPath(action.id),
       rect: action.area ? getOpenRect(action.area, state.windows.length) : null,
       isMinimized: false,
       isMaximized: false,

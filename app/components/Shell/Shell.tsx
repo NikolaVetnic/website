@@ -4,8 +4,15 @@ import { useLocation, useNavigate } from "react-router";
 import Desktop from "~/components/Desktop/Desktop";
 import Taskbar from "~/components/Taskbar/Taskbar";
 import AppWindow from "~/components/Window/AppWindow";
-import { getApp, getAppFromPath, getAppPath, type AppId } from "~/desktop/apps";
-import { NO_WINDOWS, getFocusedId, keepOnDesktop, windowsReducer, type WindowAction } from "~/desktop/windows";
+import { getApp, getAppFromPath, normalizePath, type AppId } from "~/desktop/apps";
+import {
+  NO_WINDOWS,
+  getFocusedId,
+  getFocusedPath,
+  keepOnDesktop,
+  windowsReducer,
+  type WindowAction,
+} from "~/desktop/windows";
 import useElementSize from "~/hooks/useElementSize";
 import "./Shell.css";
 
@@ -16,37 +23,43 @@ function Shell() {
   const workspaceRef = useRef<HTMLElement | null>(null);
   const area = useElementSize(workspaceRef);
   const navigate = useNavigate();
-  const pathAppId = getAppFromPath(useLocation().pathname);
+  const path = normalizePath(useLocation().pathname);
 
   // The page's own window is open from the first render, so the pre-rendered HTML shows it too.
-  const [state, dispatch] = useReducer(windowsReducer, pathAppId, (id) =>
-    id ? windowsReducer(NO_WINDOWS, { type: "open", id, area: null }) : NO_WINDOWS,
-  );
+  const [state, dispatch] = useReducer(windowsReducer, path, (initialPath) => {
+    const id = getAppFromPath(initialPath);
+    return id ? windowsReducer(NO_WINDOWS, { type: "open", id, area: null, path: initialPath }) : NO_WINDOWS;
+  });
   const focusedId = getFocusedId(state);
+  const focusedPath = getFocusedPath(state);
 
   // The effect below reads these without running again when they change.
-  const latest = useRef({ focusedId, area });
+  const latest = useRef({ focusedPath, area });
   useEffect(() => {
-    latest.current = { focusedId, area };
+    latest.current = { focusedPath, area };
   });
 
-  // The URL names the focused window. Each change of focus on the page is a new history entry; the URL
-  // follows once the navigation lands, so it is compared with the focus before the change, not with the URL.
+  // The URL is the focused window's path. Each change on the page is a new history entry; the URL follows
+  // once the navigation lands, so it is compared with the state before the change, not with the URL.
   const act = (action: WindowAction) => {
-    const nextId = getFocusedId(windowsReducer(state, action));
+    const nextPath = getFocusedPath(windowsReducer(state, action));
     dispatch(action);
-    if (nextId !== focusedId) {
-      navigate(getAppPath(nextId));
+    if (nextPath !== focusedPath) {
+      navigate(nextPath);
     }
   };
 
-  // A URL from outside the page (Back, Forward) brings its window to the front; the bare desktop minimizes them all.
+  // A URL from outside the page (a link, Back, Forward) brings its window to the front at that path;
+  // the bare desktop minimizes them all.
   useEffect(() => {
     const current = latest.current;
-    if (current.focusedId !== pathAppId) {
-      dispatch(pathAppId ? { type: "open", id: pathAppId, area: current.area } : { type: "showDesktop" });
+    if (current.focusedPath === path) {
+      return;
     }
-  }, [pathAppId]);
+
+    const id = getAppFromPath(path);
+    dispatch(id ? { type: "open", id, area: current.area, path } : { type: "showDesktop" });
+  }, [path]);
 
   // Windows open before the workspace was measured get their rect, right where CSS has been showing them.
   useEffect(() => {
