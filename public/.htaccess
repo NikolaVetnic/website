@@ -26,12 +26,8 @@ ErrorDocument 404 /__spa-fallback.html
 
 <IfModule mod_headers.c>
   # Pages and their .data files change with every deploy, so the browser checks for a new copy each time.
+  # assets/ has its own .htaccess.
   Header set Cache-Control "no-cache"
-
-  # Built scripts and styles have a hash of their content in the name, so a file never changes.
-  <If "%{REQUEST_URI} =~ m#^/assets/#">
-    Header set Cache-Control "public, max-age=31536000, immutable"
-  </If>
 </IfModule>
 
 <IfModule mod_deflate.c>
