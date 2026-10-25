@@ -18,6 +18,10 @@ const FRONT_MATTER = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
 // Only used to resolve image paths; any origin would do.
 const SITE = "https://site.invalid";
 
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 const markdown = new Marked({
   renderer: {
     // Links out of the site open in a new tab, so the desktop stays where it was.
@@ -26,6 +30,22 @@ const markdown = new Marked({
       return /^https?:\/\//.test(token.href)
         ? html.replace(/^<a /, '<a target="_blank" rel="noopener noreferrer" ')
         : html;
+    },
+    // Images load as the reader scrolls to them.
+    image(token) {
+      return Renderer.prototype.image.call(this, token).replace(/^<img /, '<img loading="lazy" decoding="async" ');
+    },
+    // An image on a line of its own is a figure, and its title the caption under it.
+    paragraph({ tokens }) {
+      const [image] = tokens;
+      if (tokens.length !== 1 || image.type !== "image") {
+        return false;
+      }
+
+      const { title } = image as Tokens.Image;
+      const img = this.parser.parseInline([{ ...image, title: null } as Tokens.Image]);
+      const caption = title ? `<figcaption>${escapeHtml(title)}</figcaption>` : "";
+      return `<figure>${img}${caption}</figure>\n`;
     },
   },
 });

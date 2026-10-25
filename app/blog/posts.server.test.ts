@@ -63,8 +63,18 @@ describe("images in posts", () => {
 
   it("finds a post's own images in its folder and keeps paths from the site root", () => {
     expect(render("Look: ![Photo](photo%20one.jpg) and ![Logo](/images/logo.png).")).toBe(
-      '<p>Look: <img src="/blog/first-post/photo%20one.jpg" alt="Photo"> and ' +
-        '<img src="/images/logo.png" alt="Logo">.</p>\n',
+      '<p>Look: <img loading="lazy" decoding="async" src="/blog/first-post/photo%20one.jpg" alt="Photo"> and ' +
+        '<img loading="lazy" decoding="async" src="/images/logo.png" alt="Logo">.</p>\n',
+    );
+  });
+
+  it("makes an image on its own line a figure, with its title as the caption", () => {
+    expect(render('![A *photo*](photo%20one.jpg "Sunset & sea")')).toBe(
+      '<figure><img loading="lazy" decoding="async" src="/blog/first-post/photo%20one.jpg" alt="A photo">' +
+        "<figcaption>Sunset &amp; sea</figcaption></figure>\n",
+    );
+    expect(render("![Logo](/images/logo.png)")).toBe(
+      '<figure><img loading="lazy" decoding="async" src="/images/logo.png" alt="Logo"></figure>\n',
     );
   });
 
