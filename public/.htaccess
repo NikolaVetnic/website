@@ -1,0 +1,44 @@
+# Apache rules for the built site. `vite preview` serves pages the same way (see vite.config.ts).
+
+DirectoryIndex index.html
+Options -Indexes -MultiViews
+
+RewriteEngine On
+
+# HTTPS only. The forwarded header covers a proxy in front of Apache that talks to it over plain HTTP.
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# A page's URL has no trailing slash (/blog), though its file is in a folder (blog/index.html). Apache's own
+# redirect to /blog/ is off; /blog/ goes to /blog instead.
+DirectorySlash Off
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+)/$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Serve a page's folder at its URL, without a redirect.
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+)$ $1/index.html [L]
+
+# Anything else without a file gets the SPA fallback, never another page's HTML: each page's HTML contains its
+# own window, and hydrating it at the wrong URL leaves two desktops on the page. The 404 status stays.
+ErrorDocument 404 /__spa-fallback.html
+
+<IfModule mod_headers.c>
+  # Pages and their .data files change with every deploy, so the browser checks for a new copy each time.
+  # assets/ has its own .htaccess.
+  Header set Cache-Control "no-cache"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json text/xml application/xml application/rss+xml image/svg+xml
+</IfModule>
+
+<Files "rss.xml">
+  ForceType application/rss+xml
+</Files>
+
+# The deploy keeps a list of uploaded files next to the site; nobody else needs it.
+<Files ".ftp-deploy-sync-state.json">
+  Require all denied
+</Files>

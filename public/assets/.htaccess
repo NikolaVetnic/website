@@ -1,0 +1,5 @@
+# Built scripts and styles have a hash of their content in the name, so a file never changes. A file of its own
+# rather than an <If> in the root .htaccess, which LiteSpeed (the hosting's server) may not understand.
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>
