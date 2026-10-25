@@ -6,6 +6,7 @@ import {
   type Dispatch,
   type KeyboardEvent,
   type PointerEvent,
+  type CSSProperties,
   type ReactNode,
 } from "react";
 
@@ -122,14 +123,24 @@ function AppWindow({
     "app-window",
     isFocused ? "app-window--focused" : "",
     isMaximized ? "app-window--maximized" : "",
-    rect ? "" : "app-window--unplaced",
+    rect ? "app-window--placed" : "app-window--unplaced",
     isBusy ? "app-window--busy" : "",
   ]
     .filter(Boolean)
     .join(" ");
 
-  const style =
-    isMaximized || !rect ? { zIndex } : { left: rect.x, top: rect.y, width: rect.width, height: rect.height, zIndex };
+  // Custom properties rather than `left` and `top`, so the stylesheet decides where they apply.
+  const style = (
+    rect
+      ? {
+          "--window-x": `${rect.x}px`,
+          "--window-y": `${rect.y}px`,
+          "--window-width": `${rect.width}px`,
+          "--window-height": `${rect.height}px`,
+          zIndex,
+        }
+      : { zIndex }
+  ) as CSSProperties;
 
   return (
     <section

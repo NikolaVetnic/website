@@ -20,10 +20,11 @@
   box-shadow: 0 20px 44px rgba(7, 21, 35, 0.42);
 }
 
-.app-window--maximized {
-  inset: 0;
-  border-radius: 0;
-  border-width: 0;
+.app-window--placed {
+  top: var(--window-y);
+  left: var(--window-x);
+  width: var(--window-width);
+  height: var(--window-height);
 }
 
 /* Where getOpenRect puts the first window, for a window that is open before the workspace is measured. */
@@ -32,6 +33,15 @@
   left: calc((100% - min(640px, 100%)) / 2);
   width: min(640px, 100%);
   height: min(440px, 100%);
+}
+
+/* After the two above, so it wins over both. */
+.app-window--maximized {
+  inset: 0;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  border-width: 0;
 }
 
 .app-window--busy {
