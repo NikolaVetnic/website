@@ -33,6 +33,7 @@ Node version is in `.nvmrc` (at least 22.22, required by React Router 8).
 - Route modules (`app/routes/*`) may use `loader` only for data that is known at build time.
 - Every page is a child of the layout route in `app/routes.ts`, which draws the desktop. A page route exports `meta` (built with `getPageMeta` from `app/meta.ts`), may export a build-time `loader`, and renders nothing: its window shows the loaded data through `AppContent`. The URL is the focused window's path, and `Shell` keeps the two in step.
 - Code that needs Node (the file system, Markdown) lives in `*.server.ts` files, so it never reaches the browser bundle.
+- Small screens get the phone layout: a home screen and full-screen apps. Media queries draw it, so the pre-rendered page is right before any script runs; `usePhoneLayout` only switches behaviour (dragging, what a tap does). The query is written out in `usePhoneLayout.ts` and in each stylesheet that uses it, so change them together.
 - Keep components small and match the surrounding style.
 
 ## Content
