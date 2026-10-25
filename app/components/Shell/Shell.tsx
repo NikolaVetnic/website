@@ -98,8 +98,9 @@ function Shell() {
               isMinimized={window.isMinimized}
               isMaximized={window.isMaximized}
               dispatch={act}
+              contentKey={window.path}
             >
-              <AppContent app={app} path={window.path} data={window.path === path ? pageData : pages[window.path]} />
+              <AppContent app={app} data={window.path === path ? pageData : pages[window.path]} />
             </AppWindow>
           );
         })}

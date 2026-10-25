@@ -24,6 +24,14 @@ describe("parsePost", () => {
     expect(parsed.html).toBe("<h2>Why</h2>\n<p>A <em>new</em> site.</p>\n");
   });
 
+  it("opens links out of the site in a new tab and keeps links within it", () => {
+    const { html } = parsePost("a", post(valid, "[Out](https://example.com) and [in](/blog/older)."));
+
+    expect(html).toBe(
+      '<p><a target="_blank" rel="noopener noreferrer" href="https://example.com">Out</a> and <a href="/blog/older">in</a>.</p>\n',
+    );
+  });
+
   it("allows a post without tags", () => {
     expect(parsePost("a", post("title: A\ndate: 2026-01-02\nsummary: S")).tags).toEqual([]);
   });

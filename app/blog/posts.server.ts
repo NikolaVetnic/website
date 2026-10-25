@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-import { marked } from "marked";
+import { Marked, Renderer } from "marked";
 import { parse as parseYaml } from "yaml";
 
 import type { Post } from "./posts";
@@ -12,6 +12,18 @@ const POSTS_DIR = path.resolve("content/blog");
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const FRONT_MATTER = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
+
+// Links out of the site open in a new tab, so the desktop stays where it was.
+const markdown = new Marked({
+  renderer: {
+    link(token) {
+      const html = Renderer.prototype.link.call(this, token);
+      return /^https?:\/\//.test(token.href)
+        ? html.replace(/^<a /, '<a target="_blank" rel="noopener noreferrer" ')
+        : html;
+    },
+  },
+});
 
 function isText(value: unknown): value is string {
   return typeof value === "string" && value.trim() !== "";
@@ -45,7 +57,7 @@ export function parsePost(slug: string, source: string): Post {
     throw fail("`tags` must be a list of words");
   }
 
-  const html = marked.parse(source.slice(match[0].length), { async: false });
+  const html = markdown.parse(source.slice(match[0].length), { async: false });
   return { slug, title, date, summary, tags, html };
 }
 
