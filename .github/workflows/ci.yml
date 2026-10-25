@@ -56,6 +56,10 @@ jobs:
       # The action keeps a list of what it uploaded on the server, so it sends only changed files and deletes
       # the ones a new build no longer has.
       - uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        # Over TLS 1.3 the FTP server rejects the 22nd data connection of a deploy (alert 50, decode error), every
+        # time. The action has no TLS setting, but Node takes one from NODE_OPTIONS.
+        env:
+          NODE_OPTIONS: --tls-max-v1.2
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
