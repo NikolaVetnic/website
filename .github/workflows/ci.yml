@@ -5,9 +5,10 @@ on:
     branches: [main]
   pull_request:
 
+# A newer push replaces a running check on a pull request, but never stops a deploy halfway through.
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -27,3 +28,38 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+      - if: github.event_name == 'push'
+        uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: build/client
+          # .htaccess
+          include-hidden-files: true
+          retention-days: 7
+
+  deploy-staging:
+    needs: check
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://staging.nikolapacekvetnic.rs
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: site
+      - name: Keep staging out of search engines
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > site/robots.txt
+          printf '\n<IfModule mod_headers.c>\n  Header always set X-Robots-Tag "noindex"\n</IfModule>\n' >> site/.htaccess
+      # The action keeps a list of what it uploaded on the server, so it sends only changed files and deletes
+      # the ones a new build no longer has.
+      - uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./site/
+          server-dir: ./
