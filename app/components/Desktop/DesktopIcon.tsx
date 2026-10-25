@@ -1,8 +1,13 @@
-import type { KeyboardEvent, PointerEvent } from "react";
+import { useRef, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 
 import type { AppId, DesktopApp } from "~/desktop/apps";
 import type { Point } from "~/desktop/grid";
 import "./DesktopIcon.css";
+
+// How far a press may wander and still count as a tap rather than the end of a drag.
+const TAP_DISTANCE = 10;
+
+type Press = { pointerType: string; x: number; y: number };
 
 type DesktopIconProps = {
   app: DesktopApp;
@@ -15,6 +20,8 @@ type DesktopIconProps = {
 };
 
 function DesktopIcon({ app, point, isSelected, isDragging, onPointerDown, onSelect, onOpen }: DesktopIconProps) {
+  const press = useRef<Press | null>(null);
+
   const className = [
     "desktop-icon",
     isSelected ? "desktop-icon--selected" : "",
@@ -30,13 +37,32 @@ function DesktopIcon({ app, point, isSelected, isDragging, onPointerDown, onSele
     }
   };
 
+  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    press.current = { pointerType: event.pointerType, x: event.clientX, y: event.clientY };
+    onPointerDown(app.id, event);
+  };
+
+  // A mouse selects with a click and opens with a double-click; a finger or a pen opens with a single tap.
+  // A click from the keyboard (Space) has no press and only selects; Enter opens.
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    const start = press.current;
+    press.current = null;
+
+    const isTap = start !== null && Math.hypot(event.clientX - start.x, event.clientY - start.y) < TAP_DISTANCE;
+    if (isTap && start.pointerType !== "mouse") {
+      onOpen(app.id);
+    } else {
+      onSelect(app.id);
+    }
+  };
+
   return (
     <button
       type="button"
       className={className}
       style={{ left: point.x, top: point.y }}
-      onPointerDown={(event) => onPointerDown(app.id, event)}
-      onClick={() => onSelect(app.id)}
+      onPointerDown={handlePointerDown}
+      onClick={handleClick}
       onFocus={() => onSelect(app.id)}
       onDoubleClick={() => onOpen(app.id)}
       onKeyDown={handleKeyDown}
