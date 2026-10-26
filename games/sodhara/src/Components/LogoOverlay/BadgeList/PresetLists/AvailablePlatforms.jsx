@@ -4,14 +4,15 @@ import windowsLogo from "../../../../Images/windows.png";
 import macosLogo from "../../../../Images/macos.png";
 
 const AvailablePlatforms = () => {
+  // Version 0.4.7 on Google Drive; the links open in a new tab, since Drive won't show inside the SODHARA window.
   const platformBadges = [
     {
-      href: "/releases/sodhara-win_v0.4.7_20240727-1458.zip",
+      href: "https://drive.google.com/file/d/12zs5m_L-NwICbAot_Y19LcrymbqwDK6m/view?usp=drive_link",
       src: windowsLogo,
       alt: "Windows",
     },
     {
-      href: "/releases/sodhara-mac_v0.4.7_20240727-1458.zip",
+      href: "https://drive.google.com/file/d/12zKE4unjpjzNZb-u7raBsL6CQgU4De8A/view?usp=drive_link",
       src: macosLogo,
       alt: "MacOS",
     },
