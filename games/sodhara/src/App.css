@@ -1,0 +1,166 @@
+:root {
+  --primary-color: #fff;
+  --secondary-color: #df7126;
+  --background-primary-color: #1a1a1a;
+  --background-secondary-color: #2a2a2a;
+  --background-tertiary-color: #000;
+  --btn-secondary-color: #333;
+  --btn-secondary-hover-color: #555;
+  --btn-action-color: #ac3232;
+  --btn-action-hover-color: #df7126;
+  --btn-danger-color: #d9534f;
+  --font-body: bodyFont, sans-serif;
+  --font-title: titleFont, sans-serif;
+  --font-btn: buttonFont, sans-serif;
+}
+
+@font-face {
+  font-family: titleFont;
+  src: url(./Fonts/Kimberley.otf);
+}
+
+@font-face {
+  font-family: bodyFont;
+  src: url(./Fonts/Typold-Book500.ttf);
+}
+
+@font-face {
+  font-family: buttonFont;
+  src: url(./Fonts/AgenorNeue-Regular.otf);
+}
+
+#about,
+#features,
+#screenshots,
+#trailer {
+  scroll-margin-top: 70px; /* Adjust to the height of your header */
+}
+
+body {
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  position: relative;
+  /* background-color: var(--background-primary-color); */
+  background-color: #000;
+  color: var(--primary-color);
+}
+
+/* Default styling for smaller screens */
+.content-container {
+  width: 100%; /* Full width on small screens */
+  background-color: var(--background-primary-color); /* Matches body background */
+}
+
+.spacer {
+  height: 82px; /* Match the header offset */
+}
+
+.hero-section {
+  padding-top: 0px;
+  position: relative;
+}
+
+.hero-section .hero-image {
+  width: 100%;
+  height: auto;
+}
+
+.flexbox-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  z-index: 1; /* Ensure it is on top of the image */
+}
+
+.content {
+  padding: 20px;
+  text-align: center;
+}
+
+.features {
+  padding-left: 12.5%;
+  padding-right: 12.5%;
+  width: 75%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.gallery {
+  padding: 10px 0px 0px 0px;
+  text-align: center;
+  font-family: var(--font-title);
+  background-color: var(--background-secondary-color);
+  border-radius: 10px;
+}
+
+.trailer {
+  padding: 10px 0px 0px 0px;
+  text-align: center;
+  font-family: var(--font-title);
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  background-color: var(--background-tertiary-color);
+}
+
+.footer form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer input {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 400px;
+}
+
+.footer button {
+  padding: 10px 20px;
+  background-color: var(--btn-danger-color);
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.footer-logos img {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .features,
+  .gallery-images {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .feature,
+  .gallery-images img {
+    width: 100%;
+  }
+
+  .trailer-video iframe {
+    height: 300px;
+  }
+}
+
+/* Apply margins and max-width on larger screens */
+@media (min-width: 1024px) {
+  .content-container {
+    max-width: 1024px; /* Adjust the width as needed */
+    margin: 0 auto; /* Centers the content with equal margins on both sides */
+    background-color: var(--background-primary-color); /* Keep content area background */
+  }
+}

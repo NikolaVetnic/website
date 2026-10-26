@@ -6,8 +6,11 @@
     "node": ">=22.22.0"
   },
   "scripts": {
+    "predev": "npm run build:games",
     "dev": "react-router dev",
+    "prebuild": "npm run build:games",
     "build": "react-router build",
+    "build:games": "vite build --config games/sodhara/vite.config.ts --logLevel warn",
     "preview": "vite preview --outDir build/client",
     "typecheck": "react-router typegen && tsc",
     "lint": "eslint .",

@@ -1,0 +1,50 @@
+.feature-text {
+  text-align: left;
+  margin: 20px 0;
+  color: var(--primary-color);
+}
+
+.overtitle {
+  font-size: 14px;
+  color: var(--secondary-color);
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.divider {
+  width: 50px;
+  border: 1px solid var(--secondary-color); /* Adjust the color to match the divider color */
+  margin: 10px 0;
+}
+
+.text {
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.highlight {
+  color: var(--secondary-color);
+}
+
+@media (max-width: 767px) {
+  .feature-text {
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .overtitle,
+  .title,
+  .text {
+    text-align: center;
+  }
+
+  .divider {
+    margin: 10px auto; /* Center the divider */
+  }
+}
