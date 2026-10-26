@@ -265,6 +265,12 @@ function convert(html: string, media: Map<number, string>, links: Links) {
       return `\n|${content}${separator}`;
     },
   });
+  // A table's sections are only groups of rows: as blocks they'd put a blank line after the header, which ends a
+  // Markdown table there.
+  turndown.addRule("tableSection", {
+    filter: ["thead", "tbody", "tfoot"],
+    replacement: (content) => content,
+  });
   turndown.addRule("table", {
     filter: "table",
     replacement: (content) => `\n\n${content.trim()}\n\n`,
