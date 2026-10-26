@@ -10,7 +10,7 @@ The personal site at [nikolapacekvetnic.rs](https://nikolapacekvetnic.rs): a des
 
 - React 19, TypeScript, React Router 8 in framework mode, Vite 8.
 - `ssr: false` with pre-rendering (`react-router.config.ts`): the build in `build/client` is static HTML, JS and CSS.
-- Plain CSS, one stylesheet per component, BEM-style class names (`desktop-icon__caption`).
+- Plain CSS, one stylesheet per component, BEM-style class names (`desktop-icon__caption`). Colours in window content, accents and the wallpaper come from the tokens on `:root` in `app/app.css`, as `rgb(var(--text))` or `rgb(var(--accent) / 0.1)`, so the appearance settings reach them; never write those as literals.
 - Hosting is shared Apache hosting (PHP and MySQL available, no Node runtime). Anything dynamic later goes into small PHP scripts under `api/`.
 - Apache serves the build by the rules in `public/.htaccess`: a page at its path, with or without a trailing slash, unknown paths from `__spa-fallback.html` with a 404, never another page's HTML. `npm run preview` serves the same HTML at the same URLs (`vite.config.ts`), so change the two together. The hosting's LiteSpeed applies only part of the file and adds a trailing slash to folders whatever it says, so never redirect a slash away there (the two redirects loop), and the app doesn't rely on the file: `entry.client.tsx` drops a trailing slash from the address before the router starts.
 - Every push to `main` that passes CI is deployed to staging.nikolapacekvetnic.rs over FTPS (the `deploy-staging` job, secrets in the `staging` environment). Staging is kept out of search engines.
