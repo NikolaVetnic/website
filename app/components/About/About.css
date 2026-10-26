@@ -1,0 +1,98 @@
+.about {
+  display: grid;
+  gap: 16px;
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
+/* The tabs on the left; what the page offers (its languages, its PDF) on the right. */
+.about__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about__tabs {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 8px;
+  background: rgba(27, 43, 58, 0.08);
+}
+
+.about__tab {
+  padding: 4px 14px;
+  border-radius: 6px;
+  color: #4a5d70;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.about__tab:hover {
+  color: #1b2b3a;
+}
+
+.about__tab[aria-current="page"] {
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(7, 21, 35, 0.15);
+  color: #1b2b3a;
+}
+
+.about__tab:focus-visible,
+.about__language:focus-visible,
+.about__pdf:focus-visible {
+  outline: 2px solid #1d5fa8;
+  outline-offset: 2px;
+}
+
+.about__languages {
+  display: flex;
+  gap: 2px;
+}
+
+.about__language {
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: #5b6f83;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.about__language[aria-pressed="true"] {
+  background: rgba(29, 95, 168, 0.1);
+  color: #1d5fa8;
+}
+
+.about__pdf {
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: #1d5fa8;
+  color: #fff;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.about__pdf:hover {
+  background: #174d89;
+}
+
+/* The resume's sections are labels in capitals, and its job and school lines read as list entries. */
+.about__resume h2 {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.about__resume h3 {
+  margin: 1.2em 0 0.3em;
+  font-size: 1rem;
+}
+
+.about__loading {
+  margin: 0;
+  color: #4a5d70;
+}

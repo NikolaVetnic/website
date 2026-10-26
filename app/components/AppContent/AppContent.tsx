@@ -1,3 +1,4 @@
+import About from "~/components/About/About";
 import Blog from "~/components/Blog/Blog";
 import type { DesktopApp } from "~/desktop/apps";
 import "./AppContent.css";
@@ -11,6 +12,8 @@ type AppContentProps = {
 // What each app shows inside its window.
 function AppContent({ app, data }: AppContentProps) {
   switch (app.id) {
+    case "about":
+      return <About data={data} />;
     case "blog":
       return <Blog data={data} />;
     default:
