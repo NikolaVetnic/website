@@ -3,10 +3,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.2), transparent 30%),
-    radial-gradient(circle at 84% 10%, rgba(143, 255, 208, 0.15), transparent 26%),
-    linear-gradient(145deg, #194067 0%, #1e5b84 50%, #0f2a42 100%);
+  background: var(--wallpaper);
 }
 
 .desktop:not(.desktop--animated) .desktop-icon {

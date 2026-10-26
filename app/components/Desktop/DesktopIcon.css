@@ -24,13 +24,13 @@
 }
 
 .desktop-icon:focus-visible {
-  outline: 2px solid rgba(201, 235, 255, 0.9);
+  outline: 2px solid rgb(var(--chrome-accent-pale) / 0.9);
   outline-offset: 1px;
 }
 
 .desktop-icon--selected {
-  border-color: rgba(201, 235, 255, 0.45);
-  background: rgba(118, 213, 255, 0.2);
+  border-color: rgb(var(--chrome-accent-pale) / 0.45);
+  background: rgb(var(--chrome-accent) / 0.2);
 }
 
 .desktop-icon--dragging {
@@ -59,7 +59,7 @@
 }
 
 .desktop-icon--selected .desktop-icon__caption {
-  background: rgba(30, 91, 132, 0.9);
+  background: rgb(var(--chrome-accent-deep) / 0.9);
   text-shadow: none;
 }
 

@@ -4,9 +4,9 @@
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(242, 246, 253, 0.97) 0%, rgba(227, 235, 248, 0.97) 100%);
-  box-shadow: 0 12px 28px rgba(7, 21, 35, 0.3);
-  color: #1b2b3a;
+  background: linear-gradient(180deg, rgb(var(--surface-top) / 0.97) 0%, rgb(var(--surface-bottom) / 0.97) 100%);
+  box-shadow: 0 12px 28px rgb(var(--shadow) / 0.3);
+  color: rgb(var(--text));
   outline: none;
   animation: app-window-open 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -17,7 +17,7 @@
 
 .app-window--focused {
   border-color: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 20px 44px rgba(7, 21, 35, 0.42);
+  box-shadow: 0 20px 44px rgb(var(--shadow) / 0.42);
 }
 
 .app-window--placed {
@@ -215,7 +215,7 @@
     border-width: 0;
     border-radius: 0;
     /* Solid, so the home screen doesn't show through an app that covers it. */
-    background: linear-gradient(180deg, #f2f6fd 0%, #e3ebf8 100%);
+    background: linear-gradient(180deg, rgb(var(--surface-top)) 0%, rgb(var(--surface-bottom)) 100%);
     box-shadow: none;
   }
 

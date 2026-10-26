@@ -4,7 +4,7 @@
 }
 
 .prose a {
-  color: #1d5fa8;
+  color: rgb(var(--accent));
 }
 
 .prose > :first-child {
@@ -34,14 +34,14 @@
 
 .prose figcaption {
   margin-top: 6px;
-  color: #5b6f83;
+  color: rgb(var(--text-subtle));
   font-size: 0.85rem;
 }
 
 .prose hr {
   margin: 2em 0;
   border: 0;
-  border-top: 1px solid rgba(27, 43, 58, 0.15);
+  border-top: 1px solid rgb(var(--text) / 0.15);
 }
 
 /* A wide table scrolls on its own instead of widening the window. */
@@ -56,33 +56,33 @@
 .prose th,
 .prose td {
   padding: 6px 12px;
-  border: 1px solid rgba(27, 43, 58, 0.15);
+  border: 1px solid rgb(var(--text) / 0.15);
   text-align: left;
 }
 
 .prose th {
-  background: rgba(27, 43, 58, 0.05);
+  background: rgb(var(--text) / 0.05);
 }
 
 .prose blockquote {
   margin: 1em 0;
   padding: 0 1em;
-  border-left: 3px solid rgba(29, 95, 168, 0.35);
-  color: #4a5d70;
+  border-left: 3px solid rgb(var(--accent) / 0.35);
+  color: rgb(var(--text-muted));
 }
 
 .prose code {
   padding: 1px 4px;
   border-radius: 4px;
-  background: rgba(27, 43, 58, 0.08);
+  background: rgb(var(--text) / 0.08);
   font-size: 0.9em;
 }
 
 .prose pre {
   padding: 12px 14px;
   border-radius: 8px;
-  background: #1b2b3a;
-  color: #e9f1fb;
+  background: rgb(var(--code-block));
+  color: rgb(var(--code-block-text));
   overflow-x: auto;
 }
 
