@@ -1,55 +1,55 @@
 /* General Text Block Styling */
 .text-block {
-    padding: 20px;
-    background-color: var(--background-secondary-color);
-    border-radius: 10px;
-    text-align: center;
-    margin: 20px 0;
-    color: var(--primary-color);
+  padding: 20px;
+  background-color: var(--background-secondary-color);
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px 0;
+  color: var(--primary-color);
 }
 
 .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
 }
 
 .title {
-    font-family: var(--font-title);
-    font-size: 24px;
-    font-weight: bold;
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .overtitle,
 .highlight {
-    color: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 .overtitle {
-    font-size: 14px;
-    margin-bottom: 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 
 .line {
-    flex: 1;
-    height: 2px;
-    background-color: var(--secondary-color);
+  flex: 1;
+  height: 2px;
+  background-color: var(--secondary-color);
 }
 
 .text {
-    font-size: 16px;
-    margin: 10px 0;
+  font-size: 16px;
+  margin: 10px 0;
 }
 
 .text:not(:last-child) {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 767px) {
-    .text-block {
-        padding: 10px;
-    }
+  .text-block {
+    padding: 10px;
+  }
 }

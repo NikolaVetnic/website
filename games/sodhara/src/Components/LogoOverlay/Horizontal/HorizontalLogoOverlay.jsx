@@ -11,29 +11,26 @@ import logoWithoutSubtitle from "../../../Images/logo_without-subtitle.png";
 const useSmallLogoBelowPx = 1024;
 
 const HorizontalLogoOverlay = () => {
-    return (
-        <div className="flexbox-container">
-            <div className="horizontal-logo-overlay">
-                <div className="horizontal-logo-overlay-content">
-                    <GameLogo />
-                </div>
-                <SocialMedia />
-                <AvailablePlatforms />
-            </div>
+  return (
+    <div className="flexbox-container">
+      <div className="horizontal-logo-overlay">
+        <div className="horizontal-logo-overlay-content">
+          <GameLogo />
         </div>
-    );
+        <SocialMedia />
+        <AvailablePlatforms />
+      </div>
+    </div>
+  );
 };
 
 const GameLogo = () => {
-    return (
-        <picture>
-            <source
-                srcSet={logoWithoutSubtitle}
-                media={`(max-width: ${useSmallLogoBelowPx}px)`}
-            />
-            <img src={logoWithSubtitle} alt="Game Logo" className="game-logo" />
-        </picture>
-    );
+  return (
+    <picture>
+      <source srcSet={logoWithoutSubtitle} media={`(max-width: ${useSmallLogoBelowPx}px)`} />
+      <img src={logoWithSubtitle} alt="Game Logo" className="game-logo" />
+    </picture>
+  );
 };
 
 export default HorizontalLogoOverlay;

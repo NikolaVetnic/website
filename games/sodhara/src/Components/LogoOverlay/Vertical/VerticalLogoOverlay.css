@@ -1,37 +1,37 @@
 /* Overlay container */
 .vertical-logo-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Top overlay (for logo) */
 .top-overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.8); /* Dark overlay */
-    height: 20%; /* Fixed height of 20% */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8); /* Dark overlay */
+  height: 20%; /* Fixed height of 20% */
 }
 
 /* Bottom overlay (for platform logos) */
 .bottom-overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.8); /* Dark overlay */
-    height: 20%; /* Fixed height of 20% */
-    margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8); /* Dark overlay */
+  height: 20%; /* Fixed height of 20% */
+  margin-bottom: 4px;
 }
 
 /* Logo image styling */
 .logo-image {
-    padding: 0;
-    max-width: 100%; /* Adjust size as needed */
-    height: auto;
+  padding: 0;
+  max-width: 100%; /* Adjust size as needed */
+  height: auto;
 }

@@ -8,9 +8,9 @@ Check out the [desktop preview](./preview/Preview_Desktop%202558%20×%2011194.jp
 
 Some hints on how to get the most out of the template:
 
--   Check out `:root` element of `./src/App.css` for quick access to some easy to configure global variables.
--   When stating `highlights` in the `TextBlock` component use lower case exclusively.
--   Some components are commented out solely due to personal preference.
+- Check out `:root` element of `./src/App.css` for quick access to some easy to configure global variables.
+- When stating `highlights` in the `TextBlock` component use lower case exclusively.
+- Some components are commented out solely due to personal preference.
 
 ## Licence
 

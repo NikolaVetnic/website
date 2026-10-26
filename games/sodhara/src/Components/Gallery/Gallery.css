@@ -1,19 +1,19 @@
 .gallery-images {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .gallery-images a {
-    flex: 1 1 200px;
-    max-width: 100%;
+  flex: 1 1 200px;
+  max-width: 100%;
 }
 
 .gallery-images img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-    display: block;
-    margin: 0;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+  margin: 0;
 }
