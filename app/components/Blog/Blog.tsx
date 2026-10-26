@@ -1,7 +1,7 @@
-import type { MouseEvent } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 import { formatPostDate, getPostPath, type Post, type PostSummary } from "~/blog/posts";
+import Prose from "~/components/Prose/Prose";
 import "./Blog.css";
 
 type BlogProps = {
@@ -55,28 +55,6 @@ function PostList({ posts }: { posts: PostSummary[] }) {
 }
 
 function PostPage({ post }: { post: Post }) {
-  const navigate = useNavigate();
-
-  // Links within the site move the window instead of reloading the page; links out open a new tab (see posts.server.ts).
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
-    const link = (event.target as Element).closest("a");
-    if (
-      !link ||
-      link.target ||
-      link.origin !== window.location.origin ||
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
-    ) {
-      return;
-    }
-
-    event.preventDefault();
-    navigate(link.pathname + link.search + link.hash);
-  };
-
   return (
     <article className="blog-post">
       <Link className="blog__back" to="/blog">
@@ -84,7 +62,7 @@ function PostPage({ post }: { post: Post }) {
       </Link>
       <h1 className="blog-post__title">{post.title}</h1>
       <PostMeta date={post.date} tags={post.tags} />
-      <div className="blog-post__body" onClick={handleClick} dangerouslySetInnerHTML={{ __html: post.html }} />
+      <Prose className="blog-post__body" html={post.html} />
     </article>
   );
 }
