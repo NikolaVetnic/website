@@ -12,7 +12,7 @@ The personal site at [nikolapacekvetnic.rs](https://nikolapacekvetnic.rs): a des
 - `ssr: false` with pre-rendering (`react-router.config.ts`): the build in `build/client` is static HTML, JS and CSS.
 - Plain CSS, one stylesheet per component, BEM-style class names (`desktop-icon__caption`).
 - Hosting is shared Apache hosting (PHP and MySQL available, no Node runtime). Anything dynamic later goes into small PHP scripts under `api/`.
-- Apache serves the build by the rules in `public/.htaccess`: a page at its path without a trailing slash, unknown paths from `__spa-fallback.html` with a 404, never another page's HTML. `npm run preview` serves the same HTML at the same URLs (`vite.config.ts`), so change the two together. The hosting's LiteSpeed ignores the file for now, so the app doesn't rely on it: `entry.client.tsx` drops a trailing slash from the address before the router starts.
+- Apache serves the build by the rules in `public/.htaccess`: a page at its path, with or without a trailing slash, unknown paths from `__spa-fallback.html` with a 404, never another page's HTML. `npm run preview` serves the same HTML at the same URLs (`vite.config.ts`), so change the two together. The hosting's LiteSpeed applies only part of the file and adds a trailing slash to folders whatever it says, so never redirect a slash away there (the two redirects loop), and the app doesn't rely on the file: `entry.client.tsx` drops a trailing slash from the address before the router starts.
 - Every push to `main` that passes CI is deployed to staging.nikolapacekvetnic.rs over FTPS (the `deploy-staging` job, secrets in the `staging` environment). Staging is kept out of search engines.
 
 ## Commands
