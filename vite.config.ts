@@ -28,8 +28,27 @@ function servePagesLikeTheHosting(): Plugin {
   };
 }
 
+// The dev server serves public/ file by file, so a folder's address, such as a game's page at /apps/knossos/,
+// would get the site's own HTML instead, and its "nothing here". Serve the folder's index.html there, as the
+// hosting does.
+function serveFolderPagesInDev(): Plugin {
+  return {
+    name: "serve-folder-pages-in-dev",
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        const url = new URL(req.url ?? "/", "http://localhost");
+        const page = path.join(decodeURIComponent(url.pathname), "index.html");
+        if (url.pathname.endsWith("/") && existsSync(path.join(server.config.publicDir, page))) {
+          req.url = page + url.search;
+        }
+        next();
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [reactRouter(), servePagesLikeTheHosting()],
+  plugins: [reactRouter(), servePagesLikeTheHosting(), serveFolderPagesInDev()],
   resolve: {
     tsconfigPaths: true,
   },
