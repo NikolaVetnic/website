@@ -1,0 +1,8 @@
+.app-page {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* The page's own background shows through only while it loads. */
+  background: #000;
+}

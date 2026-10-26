@@ -137,6 +137,13 @@
   scrollbar-gutter: stable both-edges;
 }
 
+/* A page of its own (an app's iframe) fills the window to the edges and scrolls by itself. */
+.app-window__content--page {
+  padding: 0;
+  overflow: hidden;
+  scrollbar-gutter: auto;
+}
+
 .app-window__resize {
   position: absolute;
   touch-action: none;

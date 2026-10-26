@@ -1,6 +1,6 @@
 import type { Size } from "./drag";
 
-export type AppId = "about" | "blog" | "projects" | "games" | "art" | "music" | "contact" | "settings";
+export type AppId = "about" | "blog" | "projects" | "games" | "art" | "music" | "contact" | "settings" | "sodhara";
 
 export type DesktopApp = {
   id: AppId;
@@ -8,12 +8,14 @@ export type DesktopApp = {
   icon: string;
   // Shown by search engines and link previews for the app's page.
   description: string;
-  // Where the app lives, when not at its id from the root (`/blog`): `/games/<game>`.
+  // Where the app lives, when not at its id from the root (`/blog`): `/games/sodhara`.
   path?: string;
   // The folder app that shows it, instead of the desktop.
   folder?: AppId;
   // The size its window opens at, when not the usual (windows.ts); never more than the desktop.
   windowSize?: Size;
+  // A page of its own that the window shows edge to edge, in an iframe (`/apps/sodhara/`).
+  page?: string;
 };
 
 // Icon order on a fresh desktop.
@@ -51,6 +53,16 @@ export const APPS: DesktopApp[] = [
     icon: "/icons/settings.svg",
     description: "Change how the site looks: light or dark, and more to come.",
   },
+  {
+    id: "sodhara",
+    title: "SODHARA",
+    icon: "/apps/sodhara/icon-128.png",
+    description: "SODHARA, a retro-styled 2D sci-fi action platformer in the spirit of Super Metroid.",
+    path: "/games/sodhara",
+    folder: "games",
+    windowSize: { width: 1040, height: 720 },
+    page: "/apps/sodhara/",
+  },
 ];
 
 // The apps with an icon on the desktop; the others are in a folder app.
@@ -76,7 +88,7 @@ export function normalizePath(pathname: string): string {
 }
 
 // The app a path belongs to: the one whose path it starts with, segment by segment, and the longest of those, so
-// `/blog/` and `/blog/<slug>` are the Blog, and an app at `/games/<game>` would be found before Games.
+// `/blog/` and `/blog/<slug>` are the Blog, `/games` is Games and `/games/sodhara` is SODHARA.
 export function getAppFromPath(pathname: string): AppId | null {
   const segments = pathname.split("/").filter(Boolean);
   let found: AppId | null = null;

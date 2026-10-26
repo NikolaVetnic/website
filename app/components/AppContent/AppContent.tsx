@@ -1,4 +1,5 @@
 import About from "~/components/About/About";
+import AppPage from "~/components/AppPage/AppPage";
 import Blog from "~/components/Blog/Blog";
 import Folder from "~/components/Folder/Folder";
 import Settings from "~/components/Settings/Settings";
@@ -9,10 +10,16 @@ type AppContentProps = {
   app: DesktopApp;
   // What the route for the window's path loaded at build time (if anything).
   data: unknown;
+  // Brings the window to the front, for content the window can't tell was clicked (a page in an iframe).
+  onActivate: () => void;
 };
 
 // What each app shows inside its window.
-function AppContent({ app, data }: AppContentProps) {
+function AppContent({ app, data, onActivate }: AppContentProps) {
+  if (app.page) {
+    return <AppPage app={{ ...app, page: app.page }} onActivate={onActivate} />;
+  }
+
   switch (app.id) {
     case "about":
       return <About data={data} />;
