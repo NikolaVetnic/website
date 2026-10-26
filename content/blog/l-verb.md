@@ -13,8 +13,7 @@ Konjugasjon:
 
 | Infinitiv | Presens | Preteritum | Pres. perfektum | Imperativ |
 | --------- | ------- | ---------- | --------------- | --------- |
-
-| å la | lar | lot | har latt | la! |
+| å la      | lar     | lot        | har latt        | la!       |
 
 Mening (fra [NAOB](https://naob.no/ordbok/la_4)): å tillate, å gi lov eller mulighet for, å foranledige. Nå du vil gi tillatelse eller ikke hindre noe, eller nå du lar noe skje uten å endre det.
 
@@ -41,8 +40,7 @@ Konjugasjon:
 
 | Infinitiv | Presens | Preteritum | Pres. perfektum | Imperativ |
 | --------- | ------- | ---------- | --------------- | --------- |
-
-| å lage | lager | laget | har laget | lag! |
+| å lage    | lager   | laget      | har laget       | lag!      |
 
 Mening (fra [NAOB](https://naob.no/ordbok/lage_2)): forme, danne, gjøre i stand, forberede.
 
@@ -68,8 +66,7 @@ Konjugasjon:
 
 | Infinitiv | Presens | Preteritum | Pres. perfektum | Imperativ |
 | --------- | ------- | ---------- | --------------- | --------- |
-
-| å late | later | lot | har latt | lat! |
+| å late    | later   | lot        | har latt        | lat!      |
 
 Mening (fra [NAOB](https://naob.no/ordbok/late_2)): gi inntrykk av (å være), men også slippe, gi fra seg, miste, innrømme, osv.
 
@@ -93,8 +90,7 @@ Konjugasjon:
 
 | Infinitiv | Presens | Preteritum | Pres. perfektum | Imperativ |
 | --------- | ------- | ---------- | --------------- | --------- |
-
-| å le | ler | lo | har ledd | le! |
+| å le      | ler     | lo         | har ledd        | le!       |
 
 Mening (fra [NAOB](https://naob.no/ordbok/le_2)): uttrykke glede, munterhet ved å frembringe en rekke ensartede, hurtige lyder.
 
@@ -110,8 +106,7 @@ Konjugasjon:
 
 | Infinitiv | Presens | Preteritum | Pres. perfektum | Imperativ |
 | --------- | ------- | ---------- | --------------- | --------- |
-
-| å legge | legger | lag | har lagt | legg! |
+| å legge   | legger  | lag        | har lagt        | legg!     |
 
 Mening (fra [NAOB](https://naob.no/ordbok/legge)): få til å ligge på underlag, få til å ligge i beholder e.l.<sup>[1]</sup>, bre (horisontalt) ut som dekkende flate, plassere (horisontalt) mot et underlag, gjøre klar til å sove, hvile e.l., fortrinnsvis i liggende stilling, anbringe, plassere, stille i posisjon.
 
@@ -132,8 +127,7 @@ Konjugasjon:
 
 | Infinitiv | Presens | Preteritum | Pres. perfektum | Imperativ |
 | --------- | ------- | ---------- | --------------- | --------- |
-
-| å ligge | ligger | lå | har ligget | ligg! |
+| å ligge   | ligger  | lå         | har ligget      | ligg!     |
 
 Mening (fra [NAOB](https://naob.no/ordbok/ligge)): befinne seg (mer eller mindre) i horisontal stilling, bøye seg eller strekke seg utover eller fremover, befinne seg i sengen, befinne seg, være.
 
@@ -152,8 +146,7 @@ Konjugasjon:
 
 | Infinitiv | Presens | Preteritum | Pres. perfektum | Imperativ |
 | --------- | ------- | ---------- | --------------- | --------- |
-
-| å lyve | lyver | løy | har løyet | lyv! |
+| å lyve    | lyver   | løy        | har løyet       | lyv!      |
 
 Mening (fra [NAOB](https://naob.no/ordbok/lyve)): bevisst snakke usant, bevisst fordreie eller forvanske faktiske forhold, si løgner, være usann eller uriktig, gi en falsk forestilling eller et falskt inntrykk.
 
