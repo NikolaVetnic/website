@@ -36,6 +36,22 @@
     linear-gradient(145deg, #194067 0%, #1e5b84 50%, #0f2a42 100%);
 }
 
+/* The dark theme: the window content turns dark, the accent brighter. The chrome is dark in both themes. */
+:root[data-theme="dark"] {
+  --surface-top: 33 41 53;
+  --surface-bottom: 26 33 43;
+  --raised: 52 63 78;
+  --text: 226 232 240;
+  --text-muted: 168 181 198;
+  --text-subtle: 143 158 176;
+  --shadow: 0 0 0;
+  --code-block: 13 19 27;
+  --code-block-text: 226 236 248;
+  --accent: 118 190 255;
+  --accent-hover: 156 208 255;
+  --on-accent: 10 24 38;
+}
+
 html,
 body {
   margin: 0;
