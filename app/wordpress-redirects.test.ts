@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import { APPS, getAppPath } from "./desktop/apps";
+import { getAppFromPath } from "./desktop/apps";
 import { getWordPressRedirect, WORDPRESS_PAGE_IDS, WORDPRESS_POST_IDS } from "./wordpress-redirects";
 
 describe("getWordPressRedirect", () => {
@@ -15,12 +15,13 @@ describe("getWordPressRedirect", () => {
     expect(getWordPressRedirect("/", "?p=2074")).toBe("/blog/pixel-perfect-text-in-unity");
   });
 
-  it("sends each old page to an app", () => {
-    const paths = [getAppPath(null), ...APPS.map((app) => getAppPath(app.id))];
+  it("sends each old page to the desktop or into an app", () => {
     for (const id of WORDPRESS_PAGE_IDS) {
-      expect(paths).toContain(getWordPressRedirect("/", `?page_id=${id}`));
+      const path = getWordPressRedirect("/", `?page_id=${id}`)!;
+      expect(path === "/" || getAppFromPath(path) !== null, path).toBe(true);
     }
     expect(getWordPressRedirect("/", "?page_id=1799")).toBe("/games");
+    expect(getWordPressRedirect("/", "?page_id=1508")).toBe("/about/resume");
   });
 
   it("sends unknown ids, archives and feeds somewhere sensible", () => {
