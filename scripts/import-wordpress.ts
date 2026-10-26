@@ -39,7 +39,9 @@ type Page = {
   file: string;
   path: string;
   title: string;
-  lang?: string;
+  // The language's name and flag, for pages written in several languages (see app/about/about.server.ts).
+  language?: string;
+  flag?: string;
   // Old navigation left out of the page, as HTML.
   drop?: RegExp[];
   // Front matter taken out of the page's HTML: the first group of the pattern.
@@ -50,24 +52,29 @@ type Page = {
 const PAGES: Page[] = [
   {
     id: 7,
-    file: "about/bio",
+    file: "about/bio.en",
     path: "/about",
     title: "Bio",
+    language: "English",
+    flag: "gb",
     drop: [/<p[^>]*>\[ <a href="\?page_id=7">english[\s\S]*?<\/p>/],
   },
   {
     id: 1072,
-    file: "about/bio-sr",
+    file: "about/bio.sr",
     path: "/about",
     title: "Biografija",
-    lang: "sr",
+    language: "Srpski",
+    flag: "rs",
     drop: [/<p[^>]*>\[ <a href="\?page_id=7">english[\s\S]*?<\/p>/],
   },
   {
     id: 1508,
-    file: "about/resume",
+    file: "about/resume.en",
     path: "/about/resume",
     title: "Resume",
+    language: "English",
+    flag: "gb",
     drop: [/<p[^>]*><a [^>]*>\[ download the resume as PDF \]<\/a><\/p>/],
     fields: { pdf: /<a href="([^"]+)"[^>]*>\[ download the resume as PDF \]<\/a>/ },
   },
@@ -331,14 +338,14 @@ for (const post of posts) {
 }
 
 const pagesById = new Map(pages.map((page) => [page.id, page]));
-for (const { id, file, title, lang, drop = [], fields = {} } of PAGES) {
+for (const { id, file, title, language, flag, drop = [], fields = {} } of PAGES) {
   const page = pagesById.get(id);
   if (!page) {
     throw new Error(`Page ${id} (${file}) is not on the old site`);
   }
 
   let html = page.content.rendered;
-  const frontMatter = new Document({ title, ...(lang ? { lang } : {}) });
+  const frontMatter = new Document({ title, ...(language && flag ? { language, flag } : {}) });
   for (const [name, pattern] of Object.entries(fields)) {
     const value = pattern.exec(html)?.[1];
     if (!value) {

@@ -1,5 +1,7 @@
 ---
 title: Bio
+language: English
+flag: gb
 ---
 
 _Nikola Vetnić_ (1984) completed his undergraduate and master studies in computer science and informational technology at the University of Novi Sad (Serbia), as well as obtained his doctorate in music composition at the University of Arts in Belgrade (Serbia).

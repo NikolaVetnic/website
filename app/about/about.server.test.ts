@@ -4,67 +4,86 @@ import path from "node:path";
 
 import { afterAll, describe, expect, it } from "vitest";
 
-import { getAboutPage, parseAboutPage } from "./about.server";
+import { getAboutVersions, parseAboutVersion } from "./about.server";
 
 const page = (front: string, body = "Hello.") => `---\n${front}\n---\n${body}\n`;
+const english = "title: Bio\nlanguage: English\nflag: gb";
 
-describe("parseAboutPage", () => {
-  it("reads the front matter and renders the Markdown, in English unless it says otherwise", () => {
-    expect(parseAboutPage("bio", page("title: Bio", "A *short* bio."))).toEqual({
-      title: "Bio",
+// A public folder with the flags the tests use.
+const publicDir = mkdtempSync(path.join(tmpdir(), "public-"));
+mkdirSync(path.join(publicDir, "flags"));
+mkdirSync(path.join(publicDir, "about"));
+for (const flag of ["gb", "no", "rs"]) {
+  writeFileSync(path.join(publicDir, "flags", `${flag}.svg`), "");
+}
+writeFileSync(path.join(publicDir, "about/portrait.jpg"), "");
+afterAll(() => rmSync(publicDir, { recursive: true }));
+
+const parse = (source: string) => parseAboutVersion("bio.en.md", "en", source, publicDir);
+
+describe("parseAboutVersion", () => {
+  it("reads the front matter and renders the Markdown", () => {
+    expect(parse(page(english, "A *short* bio."))).toEqual({
       lang: "en",
+      language: "English",
+      flag: "/flags/gb.svg",
+      title: "Bio",
       html: "<p>A <em>short</em> bio.</p>\n",
     });
-    expect(parseAboutPage("bio-sr", page("title: Biografija\nlang: sr")).lang).toBe("sr");
   });
 
   it("keeps a link to a PDF", () => {
-    expect(parseAboutPage("resume", page("title: Resume\npdf: https://example.com/cv.pdf")).pdf).toBe(
-      "https://example.com/cv.pdf",
-    );
+    expect(parse(page(`${english}\npdf: https://example.com/cv.pdf`)).pdf).toBe("https://example.com/cv.pdf");
   });
 
-  it("refuses pages with missing or malformed fields", () => {
-    expect(() => parseAboutPage("bio", "No front matter")).toThrow(/front matter missing/);
-    expect(() => parseAboutPage("bio", page("lang: en"))).toThrow('About page "bio": `title` missing');
-    expect(() => parseAboutPage("bio", page("title: Bio\nlang: Serbian"))).toThrow(/`lang`/);
-    expect(() => parseAboutPage("resume", page("title: Resume\npdf: cv.pdf"))).toThrow(/`pdf`/);
+  it("refuses versions with missing or malformed fields", () => {
+    expect(() => parse("No front matter")).toThrow(/front matter missing/);
+    expect(() => parse(page("language: English\nflag: gb"))).toThrow('About page "bio.en.md": `title` missing');
+    expect(() => parse(page("title: Bio\nflag: gb"))).toThrow(/`language` missing/);
+    expect(() => parse(page("title: Bio\nlanguage: English\nflag: GB"))).toThrow(/`flag`/);
+    expect(() => parse(page("title: Bio\nlanguage: English\nflag: fr"))).toThrow(
+      'flag "fr" not found (looked for public/flags/fr.svg)',
+    );
+    expect(() => parse(page(`${english}\npdf: cv.pdf`))).toThrow(/`pdf`/);
   });
 
   it("finds the pages' own images in public/about/", () => {
-    const publicDir = mkdtempSync(path.join(tmpdir(), "public-"));
-    mkdirSync(path.join(publicDir, "about"));
-    writeFileSync(path.join(publicDir, "about/portrait.jpg"), "");
-
-    try {
-      expect(parseAboutPage("bio", page("title: Bio", "![Me](portrait.jpg)"), publicDir).html).toContain(
-        'src="/about/portrait.jpg"',
-      );
-      expect(() => parseAboutPage("bio", page("title: Bio", "![Me](missing.jpg)"), publicDir)).toThrow(
-        /looked for public\/about\/missing.jpg/,
-      );
-    } finally {
-      rmSync(publicDir, { recursive: true });
-    }
+    expect(parse(page(english, "![Me](portrait.jpg)")).html).toContain('src="/about/portrait.jpg"');
+    expect(() => parse(page(english, "![Me](missing.jpg)"))).toThrow(/looked for public\/about\/missing.jpg/);
   });
 });
 
-describe("getAboutPage", () => {
+describe("getAboutVersions", () => {
   const dir = mkdtempSync(path.join(tmpdir(), "about-"));
   afterAll(() => rmSync(dir, { recursive: true }));
 
-  it("reads a page by its file name", () => {
-    writeFileSync(path.join(dir, "bio.md"), page("title: Bio"));
-    expect(getAboutPage("bio", dir).title).toBe("Bio");
+  it("reads every language of a page, English first, then by code", () => {
+    writeFileSync(path.join(dir, "bio.sr.md"), page("title: Biografija\nlanguage: Srpski\nflag: rs"));
+    writeFileSync(path.join(dir, "bio.en.md"), page(english));
+    writeFileSync(path.join(dir, "bio.no.md"), page("title: Bio\nlanguage: Norsk\nflag: no"));
+    writeFileSync(path.join(dir, "resume.en.md"), page("title: Resume\nlanguage: English\nflag: gb"));
+
+    expect(getAboutVersions("bio", dir, publicDir).map((version) => version.lang)).toEqual(["en", "no", "sr"]);
+    expect(getAboutVersions("resume", dir, publicDir).map((version) => version.lang)).toEqual(["en"]);
   });
 
-  it("fails with the page's name when the file isn't there", () => {
-    expect(() => getAboutPage("resume", dir)).toThrow('About page "resume": content/about/resume.md not found');
+  it("fails when a page has no English version, or a file is misnamed", () => {
+    const other = mkdtempSync(path.join(tmpdir(), "about-"));
+    try {
+      writeFileSync(path.join(other, "bio.sr.md"), page("title: Biografija\nlanguage: Srpski\nflag: rs"));
+      expect(() => getAboutVersions("bio", other, publicDir)).toThrow(
+        'About page "bio": content/about/bio.en.md not found',
+      );
+
+      writeFileSync(path.join(other, "bio.english.md"), page(english));
+      expect(() => getAboutVersions("bio", other, publicDir)).toThrow(/bio.<two-letter language code>.md/);
+    } finally {
+      rmSync(other, { recursive: true });
+    }
   });
 
   it("reads the site's own pages", () => {
-    expect(getAboutPage("bio").lang).toBe("en");
-    expect(getAboutPage("bio-sr").lang).toBe("sr");
-    expect(getAboutPage("resume").pdf).toMatch(/^https:\/\//);
+    expect(getAboutVersions("bio").map((version) => version.lang)).toEqual(["en", "sr"]);
+    expect(getAboutVersions("resume")[0].pdf).toMatch(/^https:\/\//);
   });
 });

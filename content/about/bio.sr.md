@@ -1,6 +1,7 @@
 ---
 title: Biografija
-lang: sr
+language: Srpski
+flag: rs
 ---
 
 _Nikola Vetnić_ (1984) je završio master studije računarskih nauka i informacionih tehnologija na Univerzitetu u Novom Sadu, a takođe je i odbranio doktorski umetnički projekat iz muzičke kompozicije na Univerzitetu umetnosti u Beogradu.

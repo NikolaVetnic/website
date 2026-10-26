@@ -1,43 +1,45 @@
 import { useState } from "react";
 import { Link } from "react-router";
 
-import { ABOUT_TABS, type AboutData, type AboutPage } from "~/about/about";
+import { ABOUT_TABS, DEFAULT_LANG, type AboutData, type AboutVersion } from "~/about/about";
 import Prose from "~/components/Prose/Prose";
 import "./About.css";
 
 type AboutProps = {
-  // What the About routes loaded: the bio (`/about`) or the resume (`/about/resume`).
+  // What the About routes loaded: the bio (`/about`) or the resume (`/about/resume`), in all its languages.
   data: unknown;
 };
 
-const LANGUAGE_NAMES: Record<string, string> = { en: "English", sr: "Srpski" };
-
 function isAboutData(data: unknown): data is AboutData {
-  return typeof data === "object" && data !== null && "page" in data;
+  return typeof data === "object" && data !== null && "versions" in data;
 }
 
-// The bio's languages, English first: that's what the pre-rendered page shows.
+// The language picked last, kept while the visitor moves between the tabs, whose content mounts anew each time.
+// The page always loads in English, the language the pre-rendered HTML has.
+let chosenLang = DEFAULT_LANG;
+
 function LanguageSwitch({
-  options,
+  versions,
   lang,
   onChange,
 }: {
-  options: AboutPage[];
+  versions: AboutVersion[];
   lang: string;
   onChange: (lang: string) => void;
 }) {
   return (
     <div className="about__languages" role="group" aria-label="Language">
-      {options.map((option) => (
+      {versions.map((version) => (
         <button
-          key={option.lang}
+          key={version.lang}
           type="button"
           className="about__language"
-          lang={option.lang}
-          aria-pressed={option.lang === lang}
-          onClick={() => onChange(option.lang)}
+          lang={version.lang}
+          aria-pressed={version.lang === lang}
+          onClick={() => onChange(version.lang)}
         >
-          {LANGUAGE_NAMES[option.lang] ?? option.lang}
+          <img className="about__flag" src={version.flag} alt="" width={16} height={12} />
+          {version.language}
         </button>
       ))}
     </div>
@@ -45,13 +47,18 @@ function LanguageSwitch({
 }
 
 function About({ data }: AboutProps) {
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState(chosenLang);
 
   if (!isAboutData(data)) {
     return <p className="about__loading">Loading…</p>;
   }
 
-  const page = data.page === "resume" ? data.resume : lang === data.bioSr.lang ? data.bioSr : data.bio;
+  // The chosen language where the page has it, else English.
+  const version = data.versions.find((entry) => entry.lang === lang) ?? data.versions[0];
+  const choose = (next: string) => {
+    chosenLang = next;
+    setLang(next);
+  };
 
   return (
     <div className="about">
@@ -68,15 +75,18 @@ function About({ data }: AboutProps) {
             </Link>
           ))}
         </nav>
-        {data.page === "bio" ? (
-          <LanguageSwitch options={[data.bio, data.bioSr]} lang={page.lang} onChange={setLang} />
-        ) : page.pdf ? (
-          <a className="about__pdf" href={page.pdf} target="_blank" rel="noopener noreferrer">
-            Download PDF
-          </a>
-        ) : null}
+        <div className="about__actions">
+          {data.versions.length > 1 ? (
+            <LanguageSwitch versions={data.versions} lang={version.lang} onChange={choose} />
+          ) : null}
+          {version.pdf ? (
+            <a className="about__pdf" href={version.pdf} target="_blank" rel="noopener noreferrer">
+              Download PDF
+            </a>
+          ) : null}
+        </div>
       </div>
-      <Prose className={`about__${data.page}`} html={page.html} lang={page.lang} />
+      <Prose className={`about__${data.page}`} html={version.html} lang={version.lang} />
     </div>
   );
 }

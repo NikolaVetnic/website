@@ -1,5 +1,7 @@
 ---
 title: Resume
+language: English
+flag: gb
 pdf: https://drive.google.com/file/d/15lo1hgCkxDELyPSsoz8BVx9C54WH3-wF/view?usp=sharing
 ---
 

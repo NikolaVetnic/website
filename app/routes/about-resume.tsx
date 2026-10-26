@@ -1,11 +1,11 @@
 import type { AboutData } from "~/about/about";
-import { getAboutPage } from "~/about/about.server";
+import { getAboutVersions } from "~/about/about.server";
 import { SITE_NAME, getPageMeta } from "~/meta";
 import type { Route } from "./+types/about-resume";
 
-// Runs at build time; the About window shows the resume (see About.tsx).
+// Runs at build time; the About window shows the resume in every language it's written in (see About.tsx).
 export function loader(): AboutData {
-  return { page: "resume", resume: getAboutPage("resume") };
+  return { page: "resume", versions: getAboutVersions("resume") };
 }
 
 export const meta: Route.MetaFunction = () =>
