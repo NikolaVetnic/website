@@ -43,6 +43,13 @@
   text-transform: uppercase;
 }
 
+/* A group after another starts with a thin line. */
+.desktop-context-menu__item + .desktop-context-menu__header {
+  margin-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 11px;
+}
+
 .desktop-context-menu__item {
   width: 100%;
   padding: 8px 9px;

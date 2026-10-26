@@ -144,6 +144,11 @@ function Desktop({ onOpenApp }: DesktopProps) {
     }
   };
 
+  const handlePersonalize = () => {
+    closeMenu();
+    onOpenApp?.("settings");
+  };
+
   const style = {
     "--desktop-icon-width": `${ICON_WIDTH}px`,
     "--desktop-icon-height": `${ICON_HEIGHT}px`,
@@ -172,7 +177,13 @@ function Desktop({ onOpenApp }: DesktopProps) {
         />
       ))}
       {menuPoint && size ? (
-        <DesktopContextMenu point={menuPoint} bounds={size} onAutoArrange={handleAutoArrange} onClose={closeMenu} />
+        <DesktopContextMenu
+          point={menuPoint}
+          bounds={size}
+          onAutoArrange={handleAutoArrange}
+          onPersonalize={handlePersonalize}
+          onClose={closeMenu}
+        />
       ) : null}
     </section>
   );
