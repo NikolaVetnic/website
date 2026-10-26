@@ -21,7 +21,8 @@ describe("getWordPressRedirect", () => {
       expect(path === "/" || getAppFromPath(path) !== null, path).toBe(true);
     }
     expect(getWordPressRedirect("/", "?page_id=1799")).toBe("/games/sodhara");
-    expect(getWordPressRedirect("/", "?page_id=746")).toBe("/games");
+    expect(getWordPressRedirect("/", "?page_id=746")).toBe("/games/knossos");
+    expect(getWordPressRedirect("/", "?page_id=770")).toBe("/games");
     expect(getWordPressRedirect("/", "?page_id=1508")).toBe("/about/resume");
   });
 
