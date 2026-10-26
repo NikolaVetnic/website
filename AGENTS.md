@@ -44,6 +44,7 @@ Node version is in `.nvmrc` (at least 22.22, required by React Router 8).
 - A post's images go in `public/blog/<slug>/` and are written by file name: `![Alt text](photo.jpg "Caption")`. An image on a line of its own becomes a figure, its title the caption.
 - A post with a missing or malformed field, or a local image that isn't there, fails the build, with the post's name in the message.
 - The posts from the old WordPress site were imported by `npm run import:wordpress` (`scripts/import-wordpress-posts.ts`). Running it again overwrites them, so edits to an imported post are lost until the old site is gone and the script retired.
+- Links to the old site (`/?p=<id>`, `/?page_id=<id>`, archives, feeds) are redirected to their new pages, from the table in `app/wordpress-redirects.ts` by `entry.client.tsx` and with the same rules in `public/.htaccess`. Change the two together; a test fails when they disagree. A page imported later can get its own path in both.
 - Keep at least one post: with none, `blog/:slug` has a loader but nothing to pre-render, which React Router refuses with `ssr: false`.
 
 ## Git and pull requests
