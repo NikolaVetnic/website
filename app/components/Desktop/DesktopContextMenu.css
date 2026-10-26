@@ -37,7 +37,7 @@
 .desktop-context-menu__header {
   margin: 0;
   padding: 7px 9px;
-  color: rgba(201, 235, 255, 0.9);
+  color: rgb(var(--chrome-accent-pale) / 0.9);
   font-size: 0.7rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -59,5 +59,5 @@
 .desktop-context-menu__item:hover,
 .desktop-context-menu__item:focus-visible {
   outline: none;
-  background: rgba(118, 213, 255, 0.22);
+  background: rgb(var(--chrome-accent) / 0.22);
 }

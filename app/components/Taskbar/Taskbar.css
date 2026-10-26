@@ -74,7 +74,7 @@
   width: 6px;
   height: 3px;
   border-radius: 2px;
-  background: rgba(201, 235, 255, 0.6);
+  background: rgb(var(--chrome-accent-pale) / 0.6);
   transform: translateX(-50%);
   transition: width 160ms ease;
 }
@@ -86,13 +86,13 @@
 }
 
 .taskbar__window--focused {
-  background: rgba(118, 213, 255, 0.18);
+  background: rgb(var(--chrome-accent) / 0.18);
   color: #ffffff;
 }
 
 .taskbar__window--focused::after {
   width: 18px;
-  background: #76d5ff;
+  background: rgb(var(--chrome-accent));
 }
 
 .taskbar__window--minimized {

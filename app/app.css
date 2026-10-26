@@ -4,6 +4,38 @@
   box-sizing: border-box;
 }
 
+/* The colours the appearance settings change. Each is an RGB triplet for rgb(), so it can be used at any opacity:
+   rgb(var(--accent)), rgb(var(--accent) / 0.1). Lines and fills in windows are the text colour at a low opacity,
+   so they follow the theme. The dark chrome (taskbar, title bars, menus) keeps its own colours in each component.
+   These are the defaults: light theme, blue accent, blue wallpaper. */
+:root {
+  /* Window content */
+  --surface-top: 242 246 253;
+  --surface-bottom: 227 235 248;
+  --raised: 255 255 255;
+  --text: 27 43 58;
+  --text-muted: 74 93 112;
+  --text-subtle: 91 111 131;
+  --shadow: 7 21 35;
+  --code-block: 27 43 58;
+  --code-block-text: 233 241 251;
+
+  /* Accent: strong on the light window content, bright on the dark chrome */
+  --accent: 29 95 168;
+  --accent-hover: 23 77 137;
+  --on-accent: 255 255 255;
+  --chrome-accent: 118 213 255;
+  --chrome-accent-pale: 201 235 255;
+  --chrome-accent-deep: 30 91 132;
+
+  /* Wallpaper */
+  --wallpaper-base: #0f2a42;
+  --wallpaper:
+    radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.2), transparent 30%),
+    radial-gradient(circle at 84% 10%, rgba(143, 255, 208, 0.15), transparent 26%),
+    linear-gradient(145deg, #194067 0%, #1e5b84 50%, #0f2a42 100%);
+}
+
 html,
 body {
   margin: 0;
@@ -18,7 +50,7 @@ html {
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #0f2a42;
+  background: var(--wallpaper-base);
   color: #f8fbff;
 }
 

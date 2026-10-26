@@ -14,7 +14,7 @@
 
 .blog__item-title a,
 .blog__back {
-  color: #1d5fa8;
+  color: rgb(var(--accent));
 }
 
 .blog__meta {
@@ -23,15 +23,15 @@
   gap: 6px 10px;
   align-items: center;
   margin: 4px 0 0;
-  color: #5b6f83;
+  color: rgb(var(--text-subtle));
   font-size: 0.85rem;
 }
 
 .blog__tag {
   padding: 1px 8px;
   border-radius: 999px;
-  background: rgba(29, 95, 168, 0.1);
-  color: #1d5fa8;
+  background: rgb(var(--accent) / 0.1);
+  color: rgb(var(--accent));
 }
 
 .blog__summary {
@@ -41,7 +41,7 @@
 
 .blog__empty {
   margin: 0;
-  color: #4a5d70;
+  color: rgb(var(--text-muted));
 }
 
 .blog__back {
