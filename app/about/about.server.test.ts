@@ -83,7 +83,7 @@ describe("getAboutVersions", () => {
   });
 
   it("reads the site's own pages", () => {
-    expect(getAboutVersions("bio").map((version) => version.lang)).toEqual(["en", "sr"]);
+    expect(getAboutVersions("bio").map((version) => version.lang)).toEqual(["en", "no", "sr"]);
     expect(getAboutVersions("resume")[0].pdf).toMatch(/^https:\/\//);
   });
 });
