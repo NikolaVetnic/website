@@ -17,6 +17,7 @@ import {
 } from "~/desktop/windows";
 import useElementSize from "~/hooks/useElementSize";
 import usePhoneLayout from "~/hooks/usePhoneLayout";
+import useSettings from "~/settings/useSettings";
 import "./Shell.css";
 
 // Stacked above the desktop icons and below the desktop context menu.
@@ -28,6 +29,9 @@ function Shell() {
   const navigate = useNavigate();
   const path = normalizePath(useLocation().pathname);
   const isPhone = usePhoneLayout();
+  // Keeps the appearance settings live while the page is open, whether or not the Settings window is: following
+  // the system's light or dark, and changes made in another tab.
+  useSettings();
 
   // What the page's route loaded, kept per path for windows that are no longer in the URL. Updating it during
   // render (React's pattern for state that follows a value) redoes the render before anything is shown.
