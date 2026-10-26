@@ -1,0 +1,98 @@
+.hero {
+  position: relative;
+  display: grid;
+  min-height: max(100vh, 560px);
+  padding: calc(var(--header-height) + 24px) 20px clamp(48px, 9vh, 96px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The art fills the hero; darker towards the bottom, where the text is, and at the edges. */
+.hero__art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 45% 30%;
+  /* Zoomed in a little, which keeps the art's corner emblem outside the frame, and drifting slowly. */
+  transform: scale(1.15);
+  transform-origin: 35% 65%;
+  animation: hero-drift 40s ease-in-out infinite alternate;
+}
+
+@keyframes hero-drift {
+  to {
+    transform: scale(1.2) translateX(-1.5%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__art {
+    animation: none;
+  }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 0%, rgba(7, 6, 11, 0.45) 75%),
+    linear-gradient(
+      180deg,
+      rgba(7, 6, 11, 0.5) 0%,
+      transparent 22%,
+      transparent 45%,
+      rgba(7, 6, 11, 0.8) 82%,
+      var(--bg) 100%
+    );
+}
+
+.hero__content {
+  display: grid;
+  justify-items: center;
+  align-self: end;
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero__title {
+  margin: 0;
+}
+
+.hero__logo {
+  display: block;
+  width: min(820px, 92vw);
+  filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7));
+}
+
+.hero__tagline {
+  margin: 0;
+  max-width: 34ch;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+  line-height: 1.4;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.hero__platforms {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
