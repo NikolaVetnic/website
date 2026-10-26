@@ -1,3 +1,5 @@
+> Moved here from NikolaVetnic/SODHARA_LandingPage (ef37943, 9 Nov 2024). It now builds with the website's Vite (`npm run build:games`) and is served at `/apps/sodhara/`, where the SODHARA window shows it. Its GIFs became WebM/MP4 clips and its images WebP. See the website's AGENTS.md.
+
 # Game Landing Page Template
 
 The Landing page of the excellent [Blasphemous II](https://www.blasphemous2game.com/) was used as a reference.
