@@ -1,0 +1,38 @@
+/* General Overlay Styling */
+.horizontal-logo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); /* Slight overlay for text contrast */
+}
+
+/* Container Flex Layout */
+.flexbox-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+}
+
+/* Logo */
+.game-logo {
+    max-width: 90%;
+    height: auto;
+}
+
+/* Responsive Styling for Mobile */
+@media (max-width: 768px) {
+    .horizontal-logo-overlay-content {
+        margin-top: clamp(10vw /* min */, 15vw /* preferred */, 5vw /* max */);
+    }
+}

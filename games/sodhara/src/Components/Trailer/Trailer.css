@@ -1,0 +1,15 @@
+.trailer-video iframe {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .trailer-video iframe {
+        height: 180px;
+    }
+}
+
+@media (min-width: 769px) {
+    .trailer-video iframe {
+        height: 500px;
+    }
+}

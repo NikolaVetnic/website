@@ -1,0 +1,26 @@
+.feature-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: var(--background-secondary-color);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.feature-mobile-text {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.feature-mobile-image {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.feature-mobile-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
