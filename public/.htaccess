@@ -75,10 +75,10 @@ RewriteCond %{HTTP:X-Forwarded-Proto} !=https
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # A page's URL has no trailing slash (/blog), though its file is in a folder (blog/index.html). Apache's own
-# redirect to /blog/ is off; /blog/ goes to /blog instead.
+# redirect to /blog/ is off. /blog/ isn't redirected back either: LiteSpeed ignores DirectorySlash and adds the
+# slash anyway, and the two redirects would loop. /blog/ serves the same page, the app drops the slash from the
+# address (entry.client.tsx), and the canonical tag names /blog.
 DirectorySlash Off
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^(.+)/$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 # Serve a page's folder at its URL, without a redirect.
 RewriteCond %{REQUEST_FILENAME}/index.html -f
