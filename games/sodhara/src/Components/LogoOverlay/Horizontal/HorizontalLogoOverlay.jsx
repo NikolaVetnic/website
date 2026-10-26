@@ -4,7 +4,7 @@ import AvailablePlatforms from "../BadgeList/PresetLists/AvailablePlatforms";
 import SocialMedia from "../BadgeList/PresetLists/SocialMedia";
 
 import logoWithSubtitle from "../../../Images/logo_with-subtitle.png";
-import logoWithoutSubtitle from "../../../Images/logo_without-subtitle.png";
+import logoWithoutSubtitle from "../../../Images/logo_without-subtitle.webp";
 
 const useSmallLogoBelowPx = 1024;
 

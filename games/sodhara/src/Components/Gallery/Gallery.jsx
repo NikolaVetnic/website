@@ -1,12 +1,12 @@
 import "./Gallery.css";
 
-import galleryImage1 from "../../Images/gallery1.png";
-import galleryImage2 from "../../Images/gallery2.png";
-import galleryImage3 from "../../Images/gallery3.png";
-import galleryImage4 from "../../Images/gallery4.png";
-import galleryImage5 from "../../Images/gallery5.png";
-import galleryImage6 from "../../Images/gallery6.png";
-import galleryImage7 from "../../Images/gallery7.png";
+import galleryImage1 from "../../Images/gallery1.webp";
+import galleryImage2 from "../../Images/gallery2.webp";
+import galleryImage3 from "../../Images/gallery3.webp";
+import galleryImage4 from "../../Images/gallery4.webp";
+import galleryImage5 from "../../Images/gallery5.webp";
+import galleryImage6 from "../../Images/gallery6.webp";
+import galleryImage7 from "../../Images/gallery7.webp";
 
 const images = [
   { src: galleryImage1, alt: "Gallery 1" },

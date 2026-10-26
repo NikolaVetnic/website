@@ -1,7 +1,7 @@
 import "./VerticalLogoOverlay.css";
 
 import AvailablePlatforms from "../BadgeList/PresetLists/AvailablePlatforms";
-import logoWithoutSubtitle from "../../../Images/logo_without-subtitle.png";
+import logoWithoutSubtitle from "../../../Images/logo_without-subtitle.webp";
 
 const VerticalLogoOverlay = () => {
   return (

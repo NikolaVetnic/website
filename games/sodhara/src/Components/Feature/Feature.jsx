@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import "./Feature.css";
 import FeatureText from "./FeatureText/FeatureText";
 import FeatureMobile from "./FeatureMobile/FeatureMobile";
+import Clip from "./Clip";
 
-const Feature = ({ text, image, title, overtitle, highlights, textLeft }) => {
+const Feature = ({ text, clip, title, overtitle, highlights, textLeft }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
 
   const handleResize = () => {
@@ -18,7 +19,7 @@ const Feature = ({ text, image, title, overtitle, highlights, textLeft }) => {
   }, []);
 
   return isMobile ? (
-    <FeatureMobile text={text} image={image} title={title} overtitle={overtitle} highlights={highlights} />
+    <FeatureMobile text={text} clip={clip} title={title} overtitle={overtitle} highlights={highlights} />
   ) : (
     <div className={`feature ${textLeft ? "text-left" : "text-right"}`}>
       <div className="feature-content">
@@ -26,7 +27,7 @@ const Feature = ({ text, image, title, overtitle, highlights, textLeft }) => {
           <FeatureText overtitle={overtitle} title={title} text={text} highlights={highlights} />
         </div>
         <div className="image-column">
-          <img src={image} alt={title} />
+          <Clip clip={clip} title={title} />
         </div>
       </div>
     </div>

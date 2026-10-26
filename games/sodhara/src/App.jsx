@@ -1,12 +1,17 @@
 import "./App.css";
 
-import splashPortrait from "./Images/splash_portrait.jpg";
+import splashPortrait from "./Images/splash_portrait.webp";
 
-import evasionDemo from "./Images/gif/evasion-demo.gif";
-import tripleJumpAndBall from "./Images/gif/triple-jump-and-ball.gif";
-import bombJump from "./Images/gif/bomb-jump.gif";
-import iceBeamDemo from "./Images/gif/ice-beam-demo.gif";
-import wallClingAndDash from "./Images/gif/wall-cling-and-dash.gif";
+import evasionDemoWebm from "./Images/clips/evasion-demo.webm";
+import evasionDemoMp4 from "./Images/clips/evasion-demo.mp4";
+import tripleJumpAndBallWebm from "./Images/clips/triple-jump-and-ball.webm";
+import tripleJumpAndBallMp4 from "./Images/clips/triple-jump-and-ball.mp4";
+import bombJumpWebm from "./Images/clips/bomb-jump.webm";
+import bombJumpMp4 from "./Images/clips/bomb-jump.mp4";
+import iceBeamDemoWebm from "./Images/clips/ice-beam-demo.webm";
+import iceBeamDemoMp4 from "./Images/clips/ice-beam-demo.mp4";
+import wallClingAndDashWebm from "./Images/clips/wall-cling-and-dash.webm";
+import wallClingAndDashMp4 from "./Images/clips/wall-cling-and-dash.mp4";
 
 import { Header, MobileHeader } from "./Components/Header/Header";
 import VerticalLogoOverlay from "./Components/LogoOverlay/Vertical/VerticalLogoOverlay";
@@ -19,7 +24,7 @@ import Trailer from "./Components/Trailer/Trailer";
 const LandingPage = () => {
   const features = [
     {
-      image: tripleJumpAndBall,
+      clip: { webm: tripleJumpAndBallWebm, mp4: tripleJumpAndBallMp4 },
       overtitle: "Experience the motion unbound",
       title: "Mobility",
       text: "SODHARA offers a plethora of ways to traverse its vast game world. String together divergent moveset elements to explore hidden secrets tucked away in even the most unreachable places.",
@@ -27,7 +32,7 @@ const LandingPage = () => {
       textLeft: true,
     },
     {
-      image: wallClingAndDash,
+      clip: { webm: wallClingAndDashWebm, mp4: wallClingAndDashMp4 },
       overtitle: "Conquer the vertical world",
       title: "Agility",
       text: "Expansive levels unfold in every direction, beckoning the intrepid explorer to scale towering peaks and venture into the deepest depths. Draw on your dexterity as you chase your goal through the menacing dark.",
@@ -35,7 +40,7 @@ const LandingPage = () => {
       textLeft: false,
     },
     {
-      image: bombJump,
+      clip: { webm: bombJumpWebm, mp4: bombJumpMp4 },
       overtitle: "Step beyond the well-worn trail",
       title: "Ingenuity",
       text: "SODHARA rewards curiosity – as your arsenal expands, you’re encouraged to discover new uses for familiar tools. When faced with a challenge, explore, adapt, and think beyond the obvious!",
@@ -43,7 +48,7 @@ const LandingPage = () => {
       textLeft: true,
     },
     {
-      image: evasionDemo,
+      clip: { webm: evasionDemoWebm, mp4: evasionDemoMp4 },
       overtitle: "Survive against the odds",
       title: "Tenacity",
       text: "Slip past enemies and avoid confrontation, or unleash destruction and wreak havoc on your foes! With a robust arsenal of defensive and offensive abilities, you have many ways to face the dangers that lie in this perilous world.",
@@ -51,7 +56,7 @@ const LandingPage = () => {
       textLeft: false,
     },
     {
-      image: iceBeamDemo,
+      clip: { webm: iceBeamDemoWebm, mp4: iceBeamDemoMp4 },
       overtitle: "Repurpose the weapons",
       title: "Versatility",
       text: "In SODHARA, no tool or weapon is limited to a single use, and every challenge invites diverse strategies – wield weapons to shape your surroundings, and turn tools into assets in the heat of battle.",
@@ -126,7 +131,7 @@ const FeatureList = ({ features }) => (
     {features.map((feature, index) => (
       <Feature
         key={index}
-        image={feature.image}
+        clip={feature.clip}
         overtitle={feature.overtitle}
         title={feature.title}
         text={feature.text}
