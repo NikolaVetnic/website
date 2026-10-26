@@ -1,4 +1,3 @@
-import React from "react";
 import "./TextBlock.css";
 
 const TextBlock = ({ title, paragraphs, highlights = [] }) => {

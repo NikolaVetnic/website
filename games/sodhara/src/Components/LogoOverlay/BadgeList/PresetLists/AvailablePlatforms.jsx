@@ -1,5 +1,3 @@
-import React from "react";
-
 import BadgeList from "../BadgeList";
 
 import windowsLogo from "../../../../Images/windows.png";

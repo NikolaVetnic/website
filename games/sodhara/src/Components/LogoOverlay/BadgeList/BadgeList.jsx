@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./BadgeList.css";
 
 const Badge = ({ href, src, alt, imgHeight }) => (

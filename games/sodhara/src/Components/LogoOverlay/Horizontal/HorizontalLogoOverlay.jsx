@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./HorizontalLogoOverlay.css";
 
 import AvailablePlatforms from "../BadgeList/PresetLists/AvailablePlatforms";

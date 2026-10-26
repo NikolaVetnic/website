@@ -1,4 +1,3 @@
-import React from "react";
 import "./CheckboxWithText.css";
 
 const CheckboxWithText = ({ text }) => {

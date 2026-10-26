@@ -1,4 +1,3 @@
-import React from "react";
 import "./FeatureText.css";
 
 const FeatureText = ({ overtitle, title, text, highlights }) => {

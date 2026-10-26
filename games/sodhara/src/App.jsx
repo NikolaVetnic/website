@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 
 import splashPortrait from "./Images/splash_portrait.jpg";
@@ -62,7 +61,7 @@ const LandingPage = () => {
   ];
 
   return (
-    <div class="content-container">
+    <div className="content-container">
       <div className="landing-page">
         <Header />
         <MobileHeader />

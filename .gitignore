@@ -4,6 +4,8 @@ node_modules/
 # Build output
 build/
 .react-router/
+# The games' pages, built before the site (npm run build:games)
+public/apps/
 
 # Environment
 .env

@@ -1,9 +1,4 @@
-import React from "react";
-
 import BadgeList from "../BadgeList";
-
-import windowsLogo from "../../../../Images/windows.png";
-import macosLogo from "../../../../Images/macos.png";
 
 import itchioLogo from "../../../../Images/itchio.png"; // Add the path to your overlay icons
 import discordLogo from "../../../../Images/discord.png"; // Add the path to your overlay icons

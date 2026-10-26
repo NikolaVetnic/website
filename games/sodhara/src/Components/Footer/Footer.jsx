@@ -1,4 +1,3 @@
-import React from "react";
 import "./Footer.css";
 
 // Import local images
@@ -33,6 +32,8 @@ const SocialMediaSection = () => {
   );
 };
 
+// Not shown for now (see Footer above), kept to switch back on.
+// eslint-disable-next-line no-unused-vars
 const NewsletterSection = () => {
   return (
     <div className="newsletter">
@@ -46,6 +47,8 @@ const NewsletterSection = () => {
   );
 };
 
+// Not shown for now (see Footer above), kept to switch back on.
+// eslint-disable-next-line no-unused-vars
 const LogosSection = () => {
   return (
     <div className="overlay-image">

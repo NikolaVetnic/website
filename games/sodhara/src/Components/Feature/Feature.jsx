@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Feature.css";
 import FeatureText from "./FeatureText/FeatureText";
 import FeatureMobile from "./FeatureMobile/FeatureMobile";
