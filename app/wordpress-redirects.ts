@@ -44,7 +44,7 @@ const PAGES: Record<number, string> = {
   1413: "/games", // Game Dev Other
   1566: "/games", // Dungeon Gunner
   1571: "/games", // Rouge C
-  1799: "/games", // SODHARA
+  1799: "/games/sodhara", // SODHARA
   296: "/art",
   102: "/music", // SVARUN
   158: "/music", // Lonesome Night

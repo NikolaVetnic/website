@@ -35,6 +35,16 @@ describe("getOpenRect", () => {
   it("fills a desktop smaller than a window", () => {
     expect(getOpenRect({ width: 360, height: 300 }, 3)).toEqual({ x: 0, y: 0, width: 360, height: 300 });
   });
+
+  it("opens at a size of the app's own, still within the desktop", () => {
+    expect(getOpenRect(area, 0, { width: 1040, height: 720 })).toEqual({ x: 80, y: 27, width: 1040, height: 720 });
+    expect(getOpenRect({ width: 800, height: 600 }, 0, { width: 1040, height: 720 })).toEqual({
+      x: 0,
+      y: 0,
+      width: 800,
+      height: 600,
+    });
+  });
 });
 
 describe("keepOnDesktop and moveRect", () => {

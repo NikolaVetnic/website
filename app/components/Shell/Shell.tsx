@@ -108,7 +108,11 @@ function Shell() {
               dispatch={act}
               contentKey={window.path}
             >
-              <AppContent app={app} data={window.path === path ? pageData : pages[window.path]} />
+              <AppContent
+                app={app}
+                data={window.path === path ? pageData : pages[window.path]}
+                onActivate={() => act({ type: "focus", id: window.id })}
+              />
             </AppWindow>
           );
         })}

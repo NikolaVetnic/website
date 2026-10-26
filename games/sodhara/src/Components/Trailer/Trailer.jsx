@@ -11,7 +11,6 @@ const Trailer = ({ title = "Gameplay Showcase", src = "https://www.youtube-nocoo
         title={title}
         loading="lazy"
         allow="encrypted-media; picture-in-picture; fullscreen"
-        allowFullScreen
       ></iframe>
     </div>
   </section>

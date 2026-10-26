@@ -142,7 +142,13 @@ function AppWindow({
           "--window-height": `${rect.height}px`,
           zIndex,
         }
-      : { zIndex }
+      : {
+          // Until measured, CSS opens the window at its app's size, as getOpenRect will.
+          ...(app.windowSize
+            ? { "--open-width": `${app.windowSize.width}px`, "--open-height": `${app.windowSize.height}px` }
+            : {}),
+          zIndex,
+        }
   ) as CSSProperties;
 
   return (
@@ -204,7 +210,7 @@ function AppWindow({
           </button>
         </div>
       </header>
-      <div key={contentKey} className="app-window__content">
+      <div key={contentKey} className={`app-window__content${app.page ? " app-window__content--page" : ""}`}>
         {children}
       </div>
       {isMaximized

@@ -40,6 +40,7 @@ function usePointerDrag({ onMove, onDrop, onCancel, threshold = 4 }: UsePointerD
       }
 
       active.current = { id, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, moved: false };
+      const element = event.currentTarget;
 
       const getMove = (drag: ActiveDrag, pointer: PointerEvent): DragMove => ({
         id: drag.id,
@@ -58,6 +59,15 @@ function usePointerDrag({ onMove, onDrop, onCancel, threshold = 4 }: UsePointerD
           return;
         }
 
+        if (!drag.moved) {
+          // From here on the pointer's events stay with the dragged element, even over an iframe (a game's page),
+          // which would otherwise take them. Not before: a click on a button inside it must stay that button's.
+          try {
+            element.setPointerCapture(drag.pointerId);
+          } catch {
+            // The pointer is already gone; its up or cancel event ends the drag.
+          }
+        }
         drag.moved = true;
         callbacks.current.onMove(move);
       };
