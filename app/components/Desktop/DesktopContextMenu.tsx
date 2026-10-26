@@ -9,10 +9,11 @@ type DesktopContextMenuProps = {
   point: Point;
   bounds: Size;
   onAutoArrange: () => void;
+  onPersonalize: () => void;
   onClose: () => void;
 };
 
-function DesktopContextMenu({ point, bounds, onAutoArrange, onClose }: DesktopContextMenuProps) {
+function DesktopContextMenu({ point, bounds, onAutoArrange, onPersonalize, onClose }: DesktopContextMenuProps) {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   // Placed once its size is known and before it is painted, so it never runs off the desktop.
@@ -62,6 +63,10 @@ function DesktopContextMenu({ point, bounds, onAutoArrange, onClose }: DesktopCo
       <p className="desktop-context-menu__header">Icons</p>
       <button type="button" className="desktop-context-menu__item" role="menuitem" onClick={onAutoArrange}>
         Auto Arrange
+      </button>
+      <p className="desktop-context-menu__header">Desktop</p>
+      <button type="button" className="desktop-context-menu__item" role="menuitem" onClick={onPersonalize}>
+        Personalize…
       </button>
     </div>
   );

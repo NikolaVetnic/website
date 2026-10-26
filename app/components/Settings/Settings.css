@@ -1,0 +1,106 @@
+.settings {
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
+.settings__heading {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.settings__field {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.settings__label {
+  margin-bottom: 8px;
+  padding: 0;
+  color: rgb(var(--text-muted));
+  font-size: 0.9rem;
+}
+
+.settings__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.settings__option {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid rgb(var(--text) / 0.15);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.settings__option:hover {
+  border-color: rgb(var(--text) / 0.3);
+}
+
+.settings__option:has(:checked) {
+  border-color: rgb(var(--accent));
+  box-shadow: 0 0 0 1px rgb(var(--accent));
+}
+
+.settings__option:has(:focus-visible) {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+/* The whole card is the radio button; the input stays, inside it, for the keyboard and screen readers. */
+.settings__radio {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* A window in miniature. Its colours are the themes' own, whatever theme is showing: they're pictures of them,
+   so they don't come from the tokens. */
+.settings__preview {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  height: 64px;
+  padding: 0 0 8px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #e9eff8;
+  box-shadow: inset 0 0 0 1px rgba(27, 43, 58, 0.12);
+}
+
+.settings__preview--dark {
+  background: #1e2530;
+}
+
+.settings__preview--system {
+  background: linear-gradient(135deg, #e9eff8 50%, #1e2530 50%);
+}
+
+.settings__preview-bar {
+  height: 12px;
+  margin-bottom: 4px;
+  background: #2a4157;
+}
+
+.settings__preview-line {
+  height: 5px;
+  margin: 0 10px;
+  border-radius: 3px;
+  background: #8fa3ba;
+}
+
+.settings__preview-line--short {
+  width: 50%;
+}
+
+.settings__note {
+  margin: 16px 0 0;
+  color: rgb(var(--text-subtle));
+  font-size: 0.85rem;
+}
