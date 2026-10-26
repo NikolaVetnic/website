@@ -47,9 +47,11 @@ RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/pixel-perfect-text-in-unit
 RewriteCond %{QUERY_STRING} (^|&)p=\d+(&|$)
 RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog? [R=301,L]
 
-# Pages, to the app of their section, then any other page id.
-RewriteCond %{QUERY_STRING} (^|&)page_id=(7|1072|1508)(&|$)
+# Pages, to their own page or the app of their section, then any other page id.
+RewriteCond %{QUERY_STRING} (^|&)page_id=(7|1072)(&|$)
 RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/about? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=1508(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/about/resume? [R=301,L]
 RewriteCond %{QUERY_STRING} (^|&)page_id=9(&|$)
 RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog? [R=301,L]
 RewriteCond %{QUERY_STRING} (^|&)page_id=(298|505|895|1253|1371|1611|1614)(&|$)

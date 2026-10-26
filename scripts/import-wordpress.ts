@@ -1,6 +1,7 @@
-// Imports the posts of the old WordPress site as Markdown in content/blog, with their images in public/blog.
-// It reads WordPress's public REST API, so it needs no login, and it overwrites what it wrote before, so it can be
-// run again until the old site goes offline. Run with `npm run import:wordpress`.
+// Imports the posts of the old WordPress site as Markdown in content/blog, with their images in public/blog, and
+// the pages listed in PAGES into the apps' folders in content/. It reads WordPress's public REST API, so it needs
+// no login, and it overwrites what it wrote before, so it can be run again until the old site goes offline. Run
+// with `npm run import:wordpress`.
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -24,12 +25,60 @@ type WordPressPost = {
   content: { rendered: string };
   categories: number[];
 };
+type WordPressPage = { id: number; content: { rendered: string } };
 type WordPressMedia = {
   id: number;
   source_url: string;
   media_details?: { sizes?: Record<string, { width: number; source_url: string }> };
 };
 type WordPressCategory = { id: number; name: string };
+
+type Page = {
+  id: number;
+  // Where the Markdown goes in content/, and the new address of the page.
+  file: string;
+  path: string;
+  title: string;
+  // The language's name and flag, for pages written in several languages (see app/about/about.server.ts).
+  language?: string;
+  flag?: string;
+  // Old navigation left out of the page, as HTML.
+  drop?: RegExp[];
+  // Front matter taken out of the page's HTML: the first group of the pattern.
+  fields?: Record<string, RegExp>;
+};
+
+// The pages imported so far, for the apps that show them.
+const PAGES: Page[] = [
+  {
+    id: 7,
+    file: "about/bio.en",
+    path: "/about",
+    title: "Bio",
+    language: "English",
+    flag: "gb",
+    drop: [/<p[^>]*>\[ <a href="\?page_id=7">english[\s\S]*?<\/p>/],
+  },
+  {
+    id: 1072,
+    file: "about/bio.sr",
+    path: "/about",
+    title: "Biografija",
+    language: "Srpski",
+    flag: "rs",
+    drop: [/<p[^>]*>\[ <a href="\?page_id=7">english[\s\S]*?<\/p>/],
+  },
+  {
+    id: 1508,
+    file: "about/resume.en",
+    path: "/about/resume",
+    title: "Resume",
+    language: "English",
+    flag: "gb",
+    drop: [/<p[^>]*><a [^>]*>\[ download the resume as PDF \]<\/a><\/p>/],
+    fields: { pdf: /<a href="([^"]+)"[^>]*>\[ download the resume as PDF \]<\/a>/ },
+  },
+];
 
 // Every page of a collection; WordPress gives at most 100 items per request.
 async function fetchAll<T>(collection: string): Promise<T[]> {
@@ -104,7 +153,10 @@ function fence(code: string, language: string): string {
   return `\n\n${ticks}${language}\n${code.replace(/\n$/, "")}\n${ticks}\n\n`;
 }
 
-function convert(post: WordPressPost, slug: string, media: Map<number, string>, postPaths: Map<number, string>) {
+// Where links to other posts and pages of the old site now go.
+type Links = { posts: Map<number, string>; pages: Map<number, string> };
+
+function convert(html: string, media: Map<number, string>, links: Links) {
   // Each image WordPress shows, at its original size, and the file name it gets in the post's folder.
   const images = new Map<string, string>();
   const imageFile = (img: HTMLImageElement): string => {
@@ -175,7 +227,8 @@ function convert(post: WordPressPost, slug: string, media: Map<number, string>, 
     replacement: (_, node) => image(node as HTMLImageElement),
   });
 
-  // A link around an image to the image's own file adds nothing; links to other posts go to their new pages.
+  // A link around an image to the image's own file adds nothing; links to other posts, and to the pages imported
+  // so far, go to their new pages.
   turndown.addRule("link", {
     filter: (node) => node.nodeName === "A" && Boolean(node.getAttribute("href")),
     replacement: (content, node) => {
@@ -185,8 +238,11 @@ function convert(post: WordPressPost, slug: string, media: Map<number, string>, 
           return content;
         }
       }
-      const postId = href.origin.replace("http:", "https:") === SITE ? Number(href.searchParams.get("p")) : 0;
-      const target = postPaths.get(postId) ?? href.href.replace(/^http:\/\/nikolapacekvetnic\.rs/, SITE);
+      const own = href.origin.replace("http:", "https:") === SITE;
+      const target =
+        (own && links.posts.get(Number(href.searchParams.get("p")))) ||
+        (own && links.pages.get(Number(href.searchParams.get("page_id")))) ||
+        href.href.replace(/^http:\/\/nikolapacekvetnic\.rs/, SITE);
       return content.trim() ? `[${content.trim()}](${target})` : "";
     },
   });
@@ -215,7 +271,7 @@ function convert(post: WordPressPost, slug: string, media: Map<number, string>, 
   });
 
   const markdown = turndown
-    .turndown(post.content.rendered)
+    .turndown(html)
     .replace(/^[ \u00a0]+$/gm, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
@@ -238,19 +294,33 @@ async function download(url: string, file: string) {
   await writeFile(file, Buffer.from(await response.arrayBuffer()));
 }
 
-const [posts, media, categories] = await Promise.all([
+// Images of a post or page, into its folder in public/.
+async function saveImages(images: Map<string, string>, dir: string) {
+  if (images.size > 0) {
+    await mkdir(dir, { recursive: true });
+  }
+  for (const [url, file] of images) {
+    await download(url, `${dir}/${file}`);
+  }
+}
+
+const [posts, pages, media, categories] = await Promise.all([
   fetchAll<WordPressPost>("posts"),
+  fetchAll<WordPressPage>("pages"),
   fetchAll<WordPressMedia>("media"),
   fetchAll<WordPressCategory>("categories"),
 ]);
 const mediaUrls = new Map(media.map((item) => [item.id, imageUrl(item)]));
 const categoryNames = new Map(categories.map((category) => [category.id, category.name.toLowerCase()]));
 const slugs = new Map(posts.map((post) => [post.id, toSlug(post.slug)]));
-const postPaths = new Map([...slugs].map(([id, slug]) => [id, `/blog/${slug}`]));
+const links: Links = {
+  posts: new Map([...slugs].map(([id, slug]) => [id, `/blog/${slug}`])),
+  pages: new Map(PAGES.map((page) => [page.id, page.path])),
+};
 
 for (const post of posts) {
   const slug = slugs.get(post.id)!;
-  const { markdown, images } = convert(post, slug, mediaUrls, postPaths);
+  const { markdown, images } = convert(post.content.rendered, mediaUrls, links);
 
   const frontMatter = new Document({
     title: toText(post.title.rendered),
@@ -263,11 +333,33 @@ for (const post of posts) {
   (frontMatter.get("tags", true) as YAMLSeq).flow = true;
 
   await writeFile(`content/blog/${slug}.md`, `---\n${frontMatter.toString({ lineWidth: 0 })}---\n\n${markdown}\n`);
-  if (images.size > 0) {
-    await mkdir(`public/blog/${slug}`, { recursive: true });
-  }
-  for (const [url, file] of images) {
-    await download(url, `public/blog/${slug}/${file}`);
-  }
+  await saveImages(images, `public/blog/${slug}`);
   console.log(`${slug}: ${images.size} image(s)`);
+}
+
+const pagesById = new Map(pages.map((page) => [page.id, page]));
+for (const { id, file, title, language, flag, drop = [], fields = {} } of PAGES) {
+  const page = pagesById.get(id);
+  if (!page) {
+    throw new Error(`Page ${id} (${file}) is not on the old site`);
+  }
+
+  let html = page.content.rendered;
+  const frontMatter = new Document({ title, ...(language && flag ? { language, flag } : {}) });
+  for (const [name, pattern] of Object.entries(fields)) {
+    const value = pattern.exec(html)?.[1];
+    if (!value) {
+      throw new Error(`Page ${id} (${file}): no ${name} in the page`);
+    }
+    frontMatter.set(name, value);
+  }
+  for (const pattern of drop) {
+    html = html.replace(pattern, "");
+  }
+
+  const { markdown, images } = convert(html, mediaUrls, links);
+  await mkdir(path.dirname(`content/${file}.md`), { recursive: true });
+  await writeFile(`content/${file}.md`, `---\n${frontMatter.toString({ lineWidth: 0 })}---\n\n${markdown}\n`);
+  await saveImages(images, `public/${file}`);
+  console.log(`${file}: ${images.size} image(s)`);
 }

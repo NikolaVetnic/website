@@ -15,7 +15,7 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "import:wordpress": "node scripts/import-wordpress-posts.ts && prettier --write --log-level warn content/blog"
+    "import:wordpress": "node scripts/import-wordpress.ts && prettier --write --log-level warn content"
   },
   "dependencies": {
     "@react-router/node": "^8.5.0",

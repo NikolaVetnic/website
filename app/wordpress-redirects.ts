@@ -23,13 +23,13 @@ const POSTS: Record<number, string> = {
   2074: "pixel-perfect-text-in-unity",
 };
 
-// Pages by their WordPress id, to the app whose section they were in.
+// Pages by their WordPress id: to their own page where they have one, else to the app of their section.
 const PAGES: Record<number, string> = {
   2: "/", // Sample Page
   6: "/", // Home
   7: "/about", // Bio
   1072: "/about", // Bio [SRP]
-  1508: "/about", // Resume [ENG]
+  1508: "/about/resume", // Resume [ENG]
   9: "/blog",
   298: "/projects", // Code
   505: "/projects", // Other Projects
