@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
@@ -45,5 +45,43 @@ describe("getWordPressRedirect", () => {
     expect(getWordPressRedirect("/", "?p=abc")).toBeNull();
     expect(getWordPressRedirect("/", "?app=1")).toBeNull();
     expect(getWordPressRedirect("/blog", "?p=2074")).toBeNull();
+  });
+});
+
+// The redirects in public/.htaccess, as pairs of a query string pattern and a target, in their order.
+function readApacheRedirects(): [RegExp, string][] {
+  const rules = readFileSync("public/.htaccess", "utf8").matchAll(
+    /^RewriteCond %\{QUERY_STRING\} (\S+)\nRewriteRule \^\(index\\\.php\)\?\$ https:\/\/%\{HTTP_HOST\}(\S*)\? \[R=301,L\]$/gm,
+  );
+  return [...rules].map(([, pattern, target]) => [new RegExp(pattern), target]);
+}
+
+describe("public/.htaccess", () => {
+  it("redirects every old link where the browser does", () => {
+    const apache = readApacheRedirects();
+    expect(apache.length).toBeGreaterThan(20);
+
+    const queries = [
+      ...WORDPRESS_POST_IDS.map((id) => `p=${id}`),
+      ...WORDPRESS_PAGE_IDS.map((id) => `page_id=${id}`),
+      "p=1",
+      "page_id=1",
+      "cat=55",
+      "tag=unity",
+      "m=202010",
+      "author=1",
+      "feed=rss2",
+      "p=2074&feed=rss2",
+      "replytocom=5&p=2014",
+      "p=20140",
+      "page_id=70",
+      "x=1",
+      "p=",
+      "app=1",
+    ];
+    for (const query of queries) {
+      const target = apache.find(([pattern]) => pattern.test(query))?.[1] ?? null;
+      expect(target, query).toBe(getWordPressRedirect("/", `?${query}`));
+    }
   });
 });

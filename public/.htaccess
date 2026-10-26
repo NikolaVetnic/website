@@ -5,6 +5,70 @@ Options -Indexes -MultiViews
 
 RewriteEngine On
 
+# Links to the old WordPress site (/?p=2074, /?page_id=7) go to their new pages, straight to https://. The same
+# table is in app/wordpress-redirects.ts, which the browser uses while the hosting ignores this file; a test checks
+# that both send every link to the same place. The trailing ? drops the old query string.
+RewriteCond %{QUERY_STRING} (^|&)feed=
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/rss.xml? [R=301,L]
+
+# Posts, then any other post id.
+RewriteCond %{QUERY_STRING} (^|&)p=64(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/persepolis-gamma? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=71(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/svarun-divide-ut-regnes-2019-youtube? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=77(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/cakewalk-sonar-midi-controllers-rewired-to-max-msp? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=347(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/a-simple-feed-forward-image-classifier? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=362(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/convolution-neural-network-image-classifier? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=365(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/transfer-learning-finding-learning-rate-and-more? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=689(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/knossos-chapter-v-assets-completed? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=1077(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/sights-of-chapter-vi? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=1685(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/using-mylyn-3-23-with-eclipse-adt? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=1700(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/consuming-a-rest-api-with-abap? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=1739(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/sap-database-tables? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=1742(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/sap-internal-tables? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=1833(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/developing-a-slot-based-save-system-in-unity? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=1967(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/norsk-sprakkafe-i-novi-sad? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=2014(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/l-verb? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=2074(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog/pixel-perfect-text-in-unity? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)p=\d+(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog? [R=301,L]
+
+# Pages, to the app of their section, then any other page id.
+RewriteCond %{QUERY_STRING} (^|&)page_id=(7|1072|1508)(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/about? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=9(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=(298|505|895|1253|1371|1611|1614)(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/projects? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=(302|746|770|1413|1566|1571|1799)(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/games? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=296(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/art? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=(102|158|277|491|720|729|928|933|1103)(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/music? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=8(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/contact? [R=301,L]
+RewriteCond %{QUERY_STRING} (^|&)page_id=\d+(&|$)
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/? [R=301,L]
+
+# Category, tag, date and author archives.
+RewriteCond %{QUERY_STRING} (^|&)(cat|tag|m|author)=
+RewriteRule ^(index\.php)?$ https://%{HTTP_HOST}/blog? [R=301,L]
+
 # HTTPS only. The forwarded header covers a proxy in front of Apache that talks to it over plain HTTP.
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !=https
