@@ -1,7 +1,8 @@
 import About from "~/components/About/About";
 import Blog from "~/components/Blog/Blog";
+import Folder from "~/components/Folder/Folder";
 import Settings from "~/components/Settings/Settings";
-import type { DesktopApp } from "~/desktop/apps";
+import { getFolderApps, type DesktopApp } from "~/desktop/apps";
 import "./AppContent.css";
 
 type AppContentProps = {
@@ -17,6 +18,8 @@ function AppContent({ app, data }: AppContentProps) {
       return <About data={data} />;
     case "blog":
       return <Blog data={data} />;
+    case "games":
+      return <Folder apps={getFolderApps("games")} />;
     case "settings":
       return <Settings />;
     default:

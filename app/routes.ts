@@ -1,6 +1,6 @@
 import { type RouteConfig, index, layout, route } from "@react-router/dev/routes";
 
-import { APPS } from "./desktop/apps";
+import { APPS, getAppPath } from "./desktop/apps";
 
 // One layout draws the desktop for every page, so it stays mounted while the URL moves between apps.
 // The Blog has routes of its own, for its post list and for each post, and About for its bio and resume; the
@@ -13,7 +13,7 @@ export default [
     route("about", "routes/about.tsx"),
     route("about/resume", "routes/about-resume.tsx"),
     ...APPS.filter((app) => app.id !== "blog" && app.id !== "about").map((app) =>
-      route(app.id, "routes/app.tsx", { id: `routes/app-${app.id}` }),
+      route(getAppPath(app.id).slice(1), "routes/app.tsx", { id: `routes/app-${app.id}` }),
     ),
     route("*", "routes/not-found.tsx"),
   ]),

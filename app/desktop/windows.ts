@@ -1,4 +1,4 @@
-import { getAppPath, type AppId } from "./apps";
+import { getApp, getAppPath, type AppId } from "./apps";
 import type { Size } from "./drag";
 import { clamp } from "./grid";
 
@@ -50,9 +50,10 @@ const GRAB_WIDTH = 96;
 const GRAB_HEIGHT = 40;
 
 // Centred horizontally, a third of the way down, each further window a step down and to the right, never larger than the desktop.
-export function getOpenRect(area: Size, index: number): Rect {
-  const width = Math.min(DEFAULT_WINDOW_SIZE.width, area.width);
-  const height = Math.min(DEFAULT_WINDOW_SIZE.height, area.height);
+// At the usual size unless its app asks for another.
+export function getOpenRect(area: Size, index: number, size: Size = DEFAULT_WINDOW_SIZE): Rect {
+  const width = Math.min(size.width, area.width);
+  const height = Math.min(size.height, area.height);
   const step = (index % CASCADE_STEPS) * CASCADE_OFFSET;
 
   return {
@@ -141,7 +142,7 @@ export function windowsReducer(state: WindowsState, action: WindowAction): Windo
           ...state,
           windows: state.windows.map((window, index) => ({
             ...window,
-            rect: window.rect ?? getOpenRect(action.area, index),
+            rect: window.rect ?? getOpenRect(action.area, index, getApp(window.id).windowSize),
           })),
         }
       : state;
@@ -164,7 +165,7 @@ export function windowsReducer(state: WindowsState, action: WindowAction): Windo
     const window = {
       id: action.id,
       path: action.path ?? getAppPath(action.id),
-      rect: action.area ? getOpenRect(action.area, state.windows.length) : null,
+      rect: action.area ? getOpenRect(action.area, state.windows.length, getApp(action.id).windowSize) : null,
       isMinimized: false,
       isMaximized: false,
     };

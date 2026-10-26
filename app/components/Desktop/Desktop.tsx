@@ -9,7 +9,7 @@ import {
   type PointerEvent,
 } from "react";
 
-import { APPS, type AppId, type DesktopApp } from "~/desktop/apps";
+import { DESKTOP_APPS, type AppId, type DesktopApp } from "~/desktop/apps";
 import { getDragPoint, moveToCell } from "~/desktop/drag";
 import {
   arrangeInColumns,
@@ -49,13 +49,13 @@ const noDrag = () => {};
 
 // The icons in their fresh-desktop order, filling the grid column by column.
 function arrangeIcons(size: GridSize): PlacedIcon[] {
-  const cells = arrangeInColumns(APPS.length, size);
-  return APPS.map((app, index) => ({ app, cell: cells[index] }));
+  const cells = arrangeInColumns(DESKTOP_APPS.length, size);
+  return DESKTOP_APPS.map((app, index) => ({ app, cell: cells[index] }));
 }
 
 // One tall column; the first measurement in the browser folds it into the real grid.
 function getInitialIcons(): PlacedIcon[] {
-  return arrangeIcons({ cols: 1, rows: APPS.length });
+  return arrangeIcons({ cols: 1, rows: DESKTOP_APPS.length });
 }
 
 type DesktopProps = {

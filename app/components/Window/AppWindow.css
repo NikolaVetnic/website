@@ -27,12 +27,13 @@
   height: var(--window-height);
 }
 
-/* Where getOpenRect puts the first window, for a window that is open before the workspace is measured. */
+/* Where getOpenRect puts the first window, for a window that is open before the workspace is measured: at the usual
+   size, or its app's (--open-width, --open-height, set by AppWindow). */
 .app-window--unplaced {
-  top: calc((100% - min(440px, 100%)) / 3);
-  left: calc((100% - min(640px, 100%)) / 2);
-  width: min(640px, 100%);
-  height: min(440px, 100%);
+  top: calc((100% - min(var(--open-height, 440px), 100%)) / 3);
+  left: calc((100% - min(var(--open-width, 640px), 100%)) / 2);
+  width: min(var(--open-width, 640px), 100%);
+  height: min(var(--open-height, 440px), 100%);
 }
 
 /* After the two above, so it wins over both. */
