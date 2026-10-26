@@ -1,4 +1,4 @@
-export type AppId = "about" | "blog" | "projects" | "games" | "art" | "music" | "contact";
+export type AppId = "about" | "blog" | "projects" | "games" | "art" | "music" | "contact" | "settings";
 
 export type DesktopApp = {
   id: AppId;
@@ -36,6 +36,12 @@ export const APPS: DesktopApp[] = [
     title: "Contact",
     icon: "/icons/contact.svg",
     description: "How to get in touch with Nikola Pacek Vetnić.",
+  },
+  {
+    id: "settings",
+    title: "Settings",
+    icon: "/icons/settings.svg",
+    description: "Change how the site looks: light or dark, and more to come.",
   },
 ];
 

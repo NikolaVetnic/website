@@ -1,5 +1,6 @@
 import About from "~/components/About/About";
 import Blog from "~/components/Blog/Blog";
+import Settings from "~/components/Settings/Settings";
 import type { DesktopApp } from "~/desktop/apps";
 import "./AppContent.css";
 
@@ -16,6 +17,8 @@ function AppContent({ app, data }: AppContentProps) {
       return <About data={data} />;
     case "blog":
       return <Blog data={data} />;
+    case "settings":
+      return <Settings />;
     default:
       return <p className="app-content__placeholder">{app.title} is on its way.</p>;
   }
