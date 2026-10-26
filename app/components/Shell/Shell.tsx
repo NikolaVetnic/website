@@ -3,6 +3,7 @@ import { useLocation, useMatches, useNavigate } from "react-router";
 
 import AppContent from "~/components/AppContent/AppContent";
 import Desktop from "~/components/Desktop/Desktop";
+import NotFound from "~/components/NotFound/NotFound";
 import Taskbar from "~/components/Taskbar/Taskbar";
 import AppWindow from "~/components/Window/AppWindow";
 import { getApp, getAppFromPath, normalizePath, type AppId } from "~/desktop/apps";
@@ -28,14 +29,6 @@ function Shell() {
   const path = normalizePath(useLocation().pathname);
   const isPhone = usePhoneLayout();
 
-  // The page's own window is open from the first render, so the pre-rendered HTML shows it too.
-  const [state, dispatch] = useReducer(windowsReducer, path, (initialPath) => {
-    const id = getAppFromPath(initialPath);
-    return id ? windowsReducer(NO_WINDOWS, { type: "open", id, area: null, path: initialPath }) : NO_WINDOWS;
-  });
-  const focusedId = getFocusedId(state);
-  const focusedPath = getFocusedPath(state);
-
   // What the page's route loaded, kept per path for windows that are no longer in the URL. Updating it during
   // render (React's pattern for state that follows a value) redoes the render before anything is shown.
   const matches = useMatches();
@@ -44,6 +37,16 @@ function Shell() {
   if (pageData !== undefined && pages[path] !== pageData) {
     setPages({ ...pages, [path]: pageData });
   }
+  // An address the site doesn't have (see routes/not-found.tsx) is the bare desktop, even under an app's path.
+  const isNotFound = typeof pageData === "object" && pageData !== null && "notFound" in pageData;
+  const pathApp = isNotFound ? null : getAppFromPath(path);
+
+  // The page's own window is open from the first render, so the pre-rendered HTML shows it too.
+  const [state, dispatch] = useReducer(windowsReducer, NO_WINDOWS, (empty) =>
+    pathApp ? windowsReducer(empty, { type: "open", id: pathApp, area: null, path }) : empty,
+  );
+  const focusedId = getFocusedId(state);
+  const focusedPath = getFocusedPath(state);
 
   // The effect below reads these without running again when they change.
   const latest = useRef({ focusedPath, area });
@@ -69,9 +72,8 @@ function Shell() {
       return;
     }
 
-    const id = getAppFromPath(path);
-    dispatch(id ? { type: "open", id, area: current.area, path } : { type: "showDesktop" });
-  }, [path]);
+    dispatch(pathApp ? { type: "open", id: pathApp, area: current.area, path } : { type: "showDesktop" });
+  }, [path, pathApp]);
 
   // Windows open before the workspace was measured get their rect, right where CSS has been showing them.
   useEffect(() => {
@@ -106,6 +108,7 @@ function Shell() {
             </AppWindow>
           );
         })}
+        {isNotFound ? <NotFound path={path} onClose={() => navigate("/", { replace: true })} /> : null}
       </main>
       <Taskbar
         windows={state.windows}

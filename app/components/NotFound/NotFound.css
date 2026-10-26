@@ -1,0 +1,59 @@
+/* Above the windows (from z-index 10), below the desktop context menu (100). */
+.not-found {
+  position: absolute;
+  top: 33%;
+  left: 50%;
+  z-index: 50;
+  width: min(360px, calc(100% - 32px));
+  padding: 18px 20px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(242, 246, 253, 0.97) 0%, rgba(227, 235, 248, 0.97) 100%);
+  box-shadow: 0 20px 44px rgba(7, 21, 35, 0.42);
+  color: #1b2b3a;
+  transform: translate(-50%, -50%);
+}
+
+/* The phone layout's icons fill the top of the screen; the notice goes below them. */
+@media (max-width: 699px), (max-height: 499px) {
+  .not-found {
+    top: 60%;
+  }
+}
+
+.not-found__title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.not-found__text {
+  margin: 8px 0 0;
+  color: #4a5d70;
+  line-height: 1.5;
+}
+
+.not-found__path {
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: rgba(27, 43, 58, 0.08);
+  overflow-wrap: anywhere;
+  font-size: 0.9em;
+}
+
+.not-found__button {
+  display: block;
+  margin: 14px 0 0 auto;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: #1d5fa8;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.not-found__button:hover,
+.not-found__button:focus-visible {
+  outline: none;
+  background: #174d89;
+}
