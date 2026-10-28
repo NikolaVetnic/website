@@ -67,10 +67,10 @@ a {
   outline-offset: 3px;
 }
 
-/* A section: its title over a grey line, and its content, centred in the page's width. As much room above the title as
-   between its line and the content. */
+/* A section: its title over a grey line, and its content, centred in the page's width. As much room above the title, and below
+   the content, as between the title's line and the content. */
 .section {
-  padding: 32px 20px clamp(56px, 9vw, 112px);
+  padding: 32px 20px;
 }
 
 .section__inner {
