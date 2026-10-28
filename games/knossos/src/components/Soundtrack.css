@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
   gap: clamp(28px, 5vw, 56px);
-  align-items: center;
+  align-items: start;
 }
 
 .soundtrack__text {
