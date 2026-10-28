@@ -16,8 +16,9 @@
 
   --font-display: "Jost", "Futura", "Segoe UI", sans-serif;
   --font-body: "Inter", "Segoe UI", sans-serif;
-  /* The campaign's titles are set in Futura Bk BT, a commercial font; Jost is a free revival of the same design. */
-  --font-title: "Jost", "Futura", sans-serif;
+  /* The Kickstarter campaign's titles are in Futura Bk BT, a commercial font the page can't embed: visitors who have
+     it see it, everyone else sees Jost, a free revival of the same design. */
+  --font-title: "Futura Bk BT", "Jost", sans-serif;
 
   --header-height: 64px;
   --content-width: 1120px;
@@ -66,7 +67,7 @@ a {
   outline-offset: 3px;
 }
 
-/* A section: its title (SectionTitle) and content centred in the page's width. */
+/* A section: its title over a grey line, and its content, centred in the page's width. */
 .section {
   padding: clamp(56px, 9vw, 112px) 20px;
 }
@@ -74,6 +75,19 @@ a {
 .section__inner {
   max-width: var(--content-width);
   margin: 0 auto;
+}
+
+.section__title {
+  margin: 0 0 32px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #bebebe;
+  color: #fdca74;
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  text-shadow: 2px 2px 0 #24006d;
+  text-transform: uppercase;
 }
 
 .section--alt {

@@ -1,12 +1,11 @@
 import { FEATURES } from "../content";
 import Motif from "./Motif";
-import SectionTitle from "./SectionTitle";
 import "./Features.css";
 
 const Features = () => (
   <section id="features" className="section section--alt">
     <div className="section__inner">
-      <SectionTitle icon="features">Features</SectionTitle>
+      <h2 className="section__title">Features</h2>
       <ul className="features">
         {FEATURES.map((feature) => (
           <li key={feature.title} className="feature">

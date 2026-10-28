@@ -1,12 +1,11 @@
 import { DOWNLOADS } from "../content";
 import colonnade from "../images/colonnade.webp";
-import SectionTitle from "./SectionTitle";
 import "./Download.css";
 
 const Download = () => (
   <section id="download" className="download" style={{ "--download-art": `url(${colonnade})` }}>
     <div className="download__inner">
-      <SectionTitle icon="download">Download</SectionTitle>
+      <h2 className="section__title">Download</h2>
       <p className="download__text">
         To share our vision with you we have prepared a fully completed Prologue of the final game in English which you
         are free to download via link below.
