@@ -110,7 +110,5 @@ export const KICKSTARTER = {
 
 export const SOCIAL = [
   { label: "Kickstarter", href: KICKSTARTER.href },
-  { label: "Facebook", href: "https://www.facebook.com/KnossosTheGame" },
-  { label: "Twitter", href: "https://twitter.com/SvarunEnt" },
   { label: "YouTube", href: "https://www.youtube.com/channel/UC8abQM1r8OlrsCR1dyuVUHw" },
 ];

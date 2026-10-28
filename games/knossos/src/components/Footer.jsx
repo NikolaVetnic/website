@@ -10,7 +10,7 @@ const Footer = () => (
         </a>
       ))}
     </nav>
-    <p className="footer__credit">K’NOSSOS · Independently developed by Svarun Entertainment</p>
+    <p className="footer__credit">Svarun Entertainment. A game by Nikola Vetnić © {new Date().getFullYear()}</p>
   </footer>
 );
 
