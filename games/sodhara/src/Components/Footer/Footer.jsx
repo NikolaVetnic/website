@@ -23,7 +23,7 @@ const SocialMediaSection = () => {
   return (
     <div className="social-media">
       <a href="https://nikolavetnic.itch.io/sodhara" target="_blank" rel="noopener noreferrer">
-        <img src={itchioIcon} alt="Twitter" />
+        <img src={itchioIcon} alt="itch.io" />
       </a>
       <a href="https://discord.gg/WDjnXeHe" target="_blank" rel="noopener noreferrer">
         <img src={discordIcon} alt="Discord" />
