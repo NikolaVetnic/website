@@ -1,80 +1,49 @@
 import { useState } from "react";
 import "./Header.css";
 
-const Header = () => {
-  return (
-    <header className="header">
-      <nav className="navbar active">
-        <a href="#features">About</a>
-        <a href="#screenshots">Gallery</a>
-        <a href="#trailer">Video</a>
-      </nav>
-      <nav className="navbar active">
-        {/*
-                <a
-                    className="action-button"
-                    href="https://nikolapacekvetnic.rs/?page_id=1799"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Donate
-                </a>
-                */}
-      </nav>
-    </header>
-  );
-};
+const MENU_ITEMS = [
+  { href: "#features", label: "About" },
+  { href: "#screenshots", label: "Gallery" },
+  { href: "#trailer", label: "Video" },
+];
 
-const MobileHeader = () => {
+// The bar across the top: the game's name, the section links and a Download button that leads to the download
+// buttons under the splash. Below 768 px the links fold into a menu.
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
-
-  const menuItems = [
-    { href: "#features", label: "About" },
-    { href: "#screenshots", label: "Gallery" },
-    { href: "#trailer", label: "Video" },
-  ];
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="mobile-header">
-      <BurgerMenu toggleMenu={toggleMenu} />
-      <nav className={`navbar ${menuOpen ? "active" : ""}`}>
-        {menuItems.map((item, index) => (
-          <NavItem key={index} {...item} toggleMenu={toggleMenu} />
-        ))}
-      </nav>
-      <div className="mobile-header-buttons action-button">
-        {/*
-                <button
-                    onClick={() =>
-                        window.open(
-                            "https://nikolapacekvetnic.rs/?page_id=1799",
-                            "_blank",
-                            "noopener,noreferrer"
-                        )
-                    }
-                >
-                    Donate
-                </button>
-                */}
+    <header className="header">
+      <div className="header__inner">
+        <a className="header__name" href="#splash" onClick={closeMenu}>
+          SODHARA
+        </a>
+        <nav className={`navbar ${menuOpen ? "active" : ""}`}>
+          {MENU_ITEMS.map((item) => (
+            <a key={item.href} href={item.href} onClick={closeMenu}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <a className="header__download" href="#download" onClick={closeMenu}>
+          Download
+        </a>
+        <button
+          type="button"
+          className="burger-menu"
+          aria-label="Menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </header>
   );
 };
 
-const BurgerMenu = ({ toggleMenu }) => (
-  <div className="burger-menu" onClick={toggleMenu}>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-);
-
-const NavItem = ({ href, label, toggleMenu }) => (
-  <a href={href} onClick={toggleMenu}>
-    {label}
-  </a>
-);
-
-export { Header, MobileHeader };
+export default Header;

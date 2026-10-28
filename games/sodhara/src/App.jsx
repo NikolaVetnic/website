@@ -13,7 +13,7 @@ import iceBeamDemoMp4 from "./Images/clips/ice-beam-demo.mp4";
 import wallClingAndDashWebm from "./Images/clips/wall-cling-and-dash.webm";
 import wallClingAndDashMp4 from "./Images/clips/wall-cling-and-dash.mp4";
 
-import { Header, MobileHeader } from "./Components/Header/Header";
+import Header from "./Components/Header/Header";
 import VerticalLogoOverlay from "./Components/LogoOverlay/Vertical/VerticalLogoOverlay";
 import TextBlock from "./Components/TextBlock/TextBlock";
 import Feature from "./Components/Feature/Feature";
@@ -69,7 +69,6 @@ const LandingPage = () => {
     <div className="content-container">
       <div className="landing-page">
         <Header />
-        <MobileHeader />
 
         <div className="spacer"></div>
 

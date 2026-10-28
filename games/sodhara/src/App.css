@@ -32,8 +32,9 @@
 #about,
 #features,
 #screenshots,
-#trailer {
-  scroll-margin-top: 70px; /* Adjust to the height of your header */
+#trailer,
+#download {
+  scroll-margin-top: calc(var(--header-height) + 16px);
 }
 
 body {
@@ -53,7 +54,7 @@ body {
 }
 
 .spacer {
-  height: 82px; /* Match the header offset */
+  height: var(--header-height);
 }
 
 .hero-section {
