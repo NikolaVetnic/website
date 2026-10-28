@@ -1,3 +1,4 @@
+import SectionTitle from "../SectionTitle/SectionTitle";
 import "./Gallery.css";
 
 import galleryImage1 from "../../Images/gallery1.webp";
@@ -21,7 +22,7 @@ const images = [
 const Gallery = () => {
   return (
     <div>
-      <h2>The Gallery</h2>
+      <SectionTitle>The Gallery</SectionTitle>
       <div className="gallery-images">
         {images.map((image, index) => (
           <a key={index} href={image.src} target="_blank" rel="noopener noreferrer">

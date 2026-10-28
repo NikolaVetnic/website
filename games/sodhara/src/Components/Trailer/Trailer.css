@@ -1,15 +1,14 @@
+/* At the video's own 16:9, whatever the window's width, without the browser's default frame border. */
+.trailer-video {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
 .trailer-video iframe {
+  display: block;
   width: 100%;
-}
-
-@media (max-width: 768px) {
-  .trailer-video iframe {
-    height: 180px;
-  }
-}
-
-@media (min-width: 769px) {
-  .trailer-video iframe {
-    height: 500px;
-  }
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 10px;
 }

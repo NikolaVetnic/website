@@ -100,9 +100,8 @@ body {
 }
 
 .trailer {
-  padding: 10px 0px 0px 0px;
+  padding: 40px 20px;
   text-align: center;
-  font-family: var(--font-title);
 }
 
 .footer {
@@ -145,10 +144,6 @@ body {
   .feature,
   .gallery-images img {
     width: 100%;
-  }
-
-  .trailer-video iframe {
-    height: 300px;
   }
 }
 
