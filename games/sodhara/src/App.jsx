@@ -80,7 +80,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section id="features" className="content">
+        <section className="content">
           <AboutSection />
           <FeatureList features={features} />
         </section>
@@ -127,7 +127,7 @@ const AboutSection = () => (
 );
 
 const FeatureList = ({ features }) => (
-  <>
+  <div id="features">
     <SectionTitle>Features</SectionTitle>
     <div className="features">
       {features.map((feature, index) => (
@@ -142,7 +142,7 @@ const FeatureList = ({ features }) => (
         />
       ))}
     </div>
-  </>
+  </div>
 );
 
 export default LandingPage;

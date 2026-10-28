@@ -2,7 +2,8 @@ import { useState } from "react";
 import "./Header.css";
 
 const MENU_ITEMS = [
-  { href: "#features", label: "About" },
+  { href: "#about", label: "About" },
+  { href: "#features", label: "Features" },
   { href: "#screenshots", label: "Gallery" },
   { href: "#trailer", label: "Video" },
 ];
