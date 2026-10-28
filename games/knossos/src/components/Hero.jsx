@@ -1,4 +1,4 @@
-import { TAGLINE } from "../content";
+import { KICKSTARTER, TAGLINE } from "../content";
 import hero1280 from "../images/hero-1280.webp";
 import hero2400 from "../images/hero-2400.webp";
 import logo from "../images/logo.webp";
@@ -36,6 +36,9 @@ const Hero = () => (
         </a>
       </div>
       <p className="hero__platforms">Windows · macOS · English</p>
+      <a className="hero__kickstarter" href={KICKSTARTER.href} target="_blank" rel="noopener noreferrer">
+        Funded on Kickstarter by {KICKSTARTER.backers} backers ↗
+      </a>
     </div>
   </section>
 );

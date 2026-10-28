@@ -104,7 +104,14 @@ export const DEVLOG = [
   },
 ];
 
+// The campaign that funded the game (successful, ended 22 November 2017).
+export const KICKSTARTER = {
+  href: "https://www.kickstarter.com/projects/533772585/knossos-a-classic-point-and-click-sci-fi-adventure",
+  backers: 373,
+};
+
 export const SOCIAL = [
+  { label: "Kickstarter", href: KICKSTARTER.href },
   { label: "Facebook", href: "https://www.facebook.com/KnossosTheGame" },
   { label: "Twitter", href: "https://twitter.com/SvarunEnt" },
   { label: "YouTube", href: "https://www.youtube.com/channel/UC8abQM1r8OlrsCR1dyuVUHw" },
