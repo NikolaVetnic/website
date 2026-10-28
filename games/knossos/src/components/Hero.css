@@ -75,30 +75,12 @@
   filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7));
 }
 
-.hero__tagline {
-  margin: 0;
-  max-width: 34ch;
-  color: var(--text);
-  font-family: var(--font-display);
-  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
-  line-height: 1.4;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-}
-
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
   justify-content: center;
   margin-top: 8px;
-}
-
-.hero__platforms {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.85rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
 }
 
 .hero__kickstarter {

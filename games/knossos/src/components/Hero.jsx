@@ -1,4 +1,4 @@
-import { KICKSTARTER, TAGLINE } from "../content";
+import { KICKSTARTER } from "../content";
 import hero1280 from "../images/hero-1280.webp";
 import hero2400 from "../images/hero-2400.webp";
 import logo from "../images/logo.webp";
@@ -26,16 +26,14 @@ const Hero = () => (
           alt="K’NOSSOS: a classic point-n’-click adventure game, independently developed by Svarun Entertainment"
         />
       </h1>
-      <p className="hero__tagline">{TAGLINE}</p>
       <div className="hero__actions">
         <a className="button button--primary" href="#download">
-          Play the free Prologue
+          Play the Prologue
         </a>
         <a className="button button--ghost" href="#trailer">
           Watch the trailer
         </a>
       </div>
-      <p className="hero__platforms">Windows · macOS · English</p>
       <a className="hero__kickstarter" href={KICKSTARTER.href} target="_blank" rel="noopener noreferrer">
         Funded on Kickstarter by {KICKSTARTER.backers} backers ↗
       </a>

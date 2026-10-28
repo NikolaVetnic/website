@@ -32,8 +32,6 @@ export const DOWNLOADS = [
   { label: "macOS", href: "https://drive.google.com/file/d/1V8PawaM1xPbsuA94idRLCzBVOXi_0kvG/view?usp=drive_link" },
 ];
 
-export const TAGLINE = "A cold, surreal adventure across the unknown reaches of the cosmos";
-
 // Words written between asterisks are highlighted.
 export const STORY = [
   "K’NOSSOS is a *cold surreal adventure game* about a man traveling the unknown reaches of the cosmos, and the things he uncovers on his journey. Gameplay is reminiscent of the *point-n’-click adventure game classics* such as “The Dig” or “Chronomaster”, as well as the more recent titles such as “Primordia”. The game puts equal emphasis on characterization, atmosphere and storytelling on the one hand, and problem solving and challenging puzzles on the other.",
