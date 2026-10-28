@@ -1,5 +1,5 @@
-// Everything the page says and links to, in one place. The texts are the old site's K’NOSSOS page
-// (nikolapacekvetnic.rs/?page_id=746); headings and the short feature lines are new.
+// Everything the page says and links to, in one place. The page replaces the old site's K’NOSSOS page
+// (nikolapacekvetnic.rs/?page_id=746), whose downloads, trailer, soundtrack and screenshots it keeps.
 
 import chapter1CryoDeck from "./images/shots/chapter-1-cryo-deck.webp";
 import chapter1CryoDeckThumb from "./images/shots/chapter-1-cryo-deck-thumb.webp";
