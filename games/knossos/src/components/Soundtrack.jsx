@@ -13,7 +13,7 @@ const Soundtrack = () => {
         <div>
           <h2 className="section__title">Soundtrack</h2>
           <p className="soundtrack__text">
-            A cross-genre experimental soundtrack, written for the game: the K’NOSSOS Official Soundtrack.
+            A cross-genre experimental soundtrack, built to complement the dreamlike visuals of the game.
           </p>
         </div>
         {isLoaded ? (
@@ -21,9 +21,9 @@ const Soundtrack = () => {
         ) : (
           <div className="soundtrack__placeholder">
             <button type="button" className="button button--primary" onClick={() => setIsLoaded(true)}>
-              ▶ Listen to the soundtrack
+              ▶ Listen to Official Soundtrack
             </button>
-            <p className="soundtrack__note">Loads the player from SoundCloud, which may set cookies.</p>
+            <p className="soundtrack__note">Loads the SoundCloud player, which may set cookies.</p>
           </div>
         )}
       </div>

@@ -7,8 +7,8 @@ const Download = () => (
     <div className="download__inner">
       <h2 className="section__title">Download</h2>
       <p className="download__text">
-        To share our vision with you we have prepared a fully completed Prologue of the final game in English which you
-        are free to download via link below.
+        Play through the completed Prologue of the game today, and get a glimpse of the monster that awaits in the heart
+        of the maze.
       </p>
       <div className="download__buttons">
         {DOWNLOADS.map((download) => (

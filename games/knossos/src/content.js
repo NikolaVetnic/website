@@ -32,31 +32,38 @@ export const DOWNLOADS = [
   { label: "macOS", href: "https://drive.google.com/file/d/1V8PawaM1xPbsuA94idRLCzBVOXi_0kvG/view?usp=drive_link" },
 ];
 
-// Words written between asterisks are highlighted.
+// Words between double asterisks are bold, those between single ones highlighted.
 export const STORY = [
-  "K’NOSSOS is a *cold surreal adventure game* about a man traveling the unknown reaches of the cosmos, and the things he uncovers on his journey. Gameplay is reminiscent of the *point-n’-click adventure game classics* such as “The Dig” or “Chronomaster”, as well as the more recent titles such as “Primordia”. The game puts equal emphasis on characterization, atmosphere and storytelling on the one hand, and problem solving and challenging puzzles on the other.",
-  "This dark sci fi adventure game lets you explore an *alien and foreboding universe*, taking the player on a journey across a vast and unknown solar system down to the surface of a *sunken planet*. The endless oceans of this world hide in their depths an *enigmatic metropolis without people*, an ancient city which at its heart keeps *a terrible secret* – a secret which will turn your perception of this story on its head. The dark finale will pit the player against a bizarre and unfathomable force, an eerie presence which lurked in the dark the entire time.",
+  "**K’NOSSOS** is a *cold surreal adventure game* about a man traveling the unknown reaches of the cosmos, and the things he uncovers on his journey. Gameplay is reminiscent of the point-and-click adventure game classics such as *The Dig*, *Chronomaster* and *Primordia*. The game puts equal emphasis on environment storytelling and atmosphere on the one hand, and problem solving and challenging puzzles on the other.",
 ];
 
 // The motif is one of the shapes drawn by Motif.jsx.
 export const FEATURES = [
   {
     motif: "circles",
-    title: "A Kandinsky-inspired world",
-    text: "A unique visual style reminiscent of the art of Wassily Kandinsky.",
+    title: "An Abstract Dreamlike World",
+    text: "Abstract 2D expressionist visual style reminiscent of the art of Wassily Kandinsky.",
   },
   {
     motif: "triangle",
-    title: "Classic point-n’-click",
-    text: "Classical point-n’-click adventure gameplay, with problem solving and challenging puzzles.",
+    title: "Classic Adventure Gameplay",
+    text: "Classical point-and-click gameplay, with equal emphasis on problem solving exploration.",
   },
-  { motif: "orbit", title: "A sci-fi mystery", text: "A complex storyline set in a sci fi setting." },
+  {
+    motif: "orbit",
+    title: "A Tale of Old at the End of Time",
+    text: "A cold surreal sci-fi narrative about a descent into the heart of the maze.",
+  },
   {
     motif: "lines",
-    title: "A story told in dialogue",
-    text: "A vast amount of dialogues, and equal emphasis on characterization, atmosphere and storytelling.",
+    title: "An Inward Gaze",
+    text: "Witness the twisted world reflected in the internal monologue of the lone protagonist.",
   },
-  { motif: "waves", title: "An experimental soundtrack", text: "A cross-genre experimental soundtrack." },
+  {
+    motif: "waves",
+    title: "An Experimental Soundtrack",
+    text: "Immerse yourself into a soundscape of stilled relics of the world long lost in space and time.",
+  },
 ];
 
 export const TRAILER = { id: "VXCvAkalz7c", title: "K’NOSSOS Prologue Trailer" };

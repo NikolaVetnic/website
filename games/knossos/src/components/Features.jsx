@@ -15,7 +15,21 @@ const Features = () => (
           </li>
         ))}
       </ul>
-      <p className="features__engine">K’NOSSOS is built in Unity using the Adventure Creator toolkit.</p>
+      <p className="features__engine">
+        <strong>K’NOSSOS</strong> is built in{" "}
+        <em>
+          <a href="https://unity.com/" target="_blank" rel="noopener noreferrer">
+            Unity
+          </a>
+        </em>{" "}
+        using the{" "}
+        <em>
+          <a href="https://www.adventurecreator.org/" target="_blank" rel="noopener noreferrer">
+            Adventure Creator
+          </a>
+        </em>{" "}
+        toolkit.
+      </p>
     </div>
   </section>
 );
