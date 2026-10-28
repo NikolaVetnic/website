@@ -90,6 +90,11 @@ a {
   text-transform: uppercase;
 }
 
+/* The sections on the lighter background answer the others from the right. */
+.section__title--right {
+  text-align: right;
+}
+
 .section--alt {
   background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
 }

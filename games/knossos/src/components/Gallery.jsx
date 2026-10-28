@@ -17,7 +17,7 @@ const Gallery = () => {
   return (
     <section id="screenshots" className="section section--alt">
       <div className="section__inner">
-        <h2 className="section__title">Screenshots</h2>
+        <h2 className="section__title section__title--right">Screenshots</h2>
         <ul className="gallery">
           {SCREENSHOTS.map((shot, index) => (
             <li key={shot.caption}>
