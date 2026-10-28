@@ -2,7 +2,8 @@
   position: relative;
   display: grid;
   min-height: max(100vh, 560px);
-  padding: calc(var(--header-height) + 24px) 20px clamp(48px, 9vh, 96px);
+  /* The header lies over the top, so the content is centred in the space below it. */
+  padding: calc(var(--header-height) + 24px) 20px 24px;
   overflow: hidden;
   isolation: isolate;
 }
@@ -54,7 +55,7 @@
 .hero__content {
   display: grid;
   justify-items: center;
-  align-self: end;
+  align-self: center;
   gap: 18px;
   max-width: 900px;
   margin: 0 auto;
