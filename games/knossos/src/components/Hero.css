@@ -1,9 +1,11 @@
 .hero {
   position: relative;
   display: grid;
-  min-height: max(100vh, 560px);
-  /* The header lies over the top, so the content is centred in the space below it. */
-  padding: calc(var(--header-height) + 24px) 20px 24px;
+  /* The logo at the top, below the header that lies over it, and the buttons at the bottom, the same margin from each
+     edge. A screen too short for both makes the hero taller instead of overlapping them. */
+  --hero-margin: clamp(24px, 6vh, 64px);
+  min-height: 100vh;
+  padding: calc(var(--header-height) + var(--hero-margin)) 20px var(--hero-margin);
   overflow: hidden;
   isolation: isolate;
 }
@@ -53,17 +55,18 @@
 }
 
 .hero__content {
-  display: grid;
-  justify-items: center;
-  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 18px;
   max-width: 900px;
   margin: 0 auto;
   text-align: center;
 }
 
+/* Takes the free height, which pushes the buttons and the link below it to the bottom. */
 .hero__title {
-  margin: 0;
+  margin: 0 0 auto;
 }
 
 .hero__logo {
