@@ -1,6 +1,7 @@
 import type { Size } from "./drag";
 
-export type AppId = "about" | "blog" | "projects" | "games" | "art" | "music" | "contact" | "settings" | "sodhara";
+export type AppId =
+  "about" | "blog" | "projects" | "games" | "art" | "music" | "contact" | "settings" | "sodhara" | "knossos";
 
 export type DesktopApp = {
   id: AppId;
@@ -62,6 +63,16 @@ export const APPS: DesktopApp[] = [
     folder: "games",
     windowSize: { width: 1040, height: 720 },
     page: "/apps/sodhara/",
+  },
+  {
+    id: "knossos",
+    title: "K’NOSSOS",
+    icon: "/apps/knossos/icon-128.png",
+    description: "K’NOSSOS, a cold surreal point-n’-click adventure across the unknown reaches of the cosmos.",
+    path: "/games/knossos",
+    folder: "games",
+    windowSize: { width: 1040, height: 720 },
+    page: "/apps/knossos/",
   },
 ];
 

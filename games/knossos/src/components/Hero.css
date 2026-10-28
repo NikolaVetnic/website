@@ -1,0 +1,96 @@
+.hero {
+  position: relative;
+  display: grid;
+  /* The logo at the top, below the header that lies over it, and the buttons at the bottom, the same margin from each
+     edge. A screen too short for both makes the hero taller instead of overlapping them. */
+  --hero-margin: clamp(24px, 6vh, 64px);
+  min-height: 100vh;
+  padding: calc(var(--header-height) + var(--hero-margin)) 20px var(--hero-margin);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The art fills the hero; darker towards the bottom, where the text is, and at the edges. */
+.hero__art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 45% 30%;
+  /* Zoomed in a little, which keeps the art's corner emblem outside the frame, and drifting slowly. */
+  transform: scale(1.15);
+  transform-origin: 35% 65%;
+  animation: hero-drift 40s ease-in-out infinite alternate;
+}
+
+@keyframes hero-drift {
+  to {
+    transform: scale(1.2) translateX(-1.5%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__art {
+    animation: none;
+  }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 0%, rgba(7, 6, 11, 0.45) 75%),
+    linear-gradient(
+      180deg,
+      rgba(7, 6, 11, 0.5) 0%,
+      transparent 22%,
+      transparent 45%,
+      rgba(7, 6, 11, 0.8) 82%,
+      var(--bg) 100%
+    );
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Takes the free height, which pushes the buttons and the link below it to the bottom. */
+.hero__title {
+  margin: 0 0 auto;
+}
+
+.hero__logo {
+  display: block;
+  width: min(820px, 92vw);
+  filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7));
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.hero__kickstarter {
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.hero__kickstarter:hover {
+  color: var(--gold-bright);
+}

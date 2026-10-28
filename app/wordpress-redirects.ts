@@ -39,7 +39,7 @@ const PAGES: Record<number, string> = {
   1611: "/projects", // Mars Explorer 3D
   1614: "/projects", // SocNet Project
   302: "/games", // Game Dev
-  746: "/games", // K'NOSSOS
+  746: "/games/knossos", // K'NOSSOS
   770: "/games", // VSEVOLOD
   1413: "/games", // Game Dev Other
   1566: "/games", // Dungeon Gunner

@@ -47,7 +47,7 @@ describe("folders", () => {
   it("keeps an app in a folder off the desktop and in its folder", () => {
     expect(DESKTOP_APPS.map((app) => app.id)).not.toContain("sodhara");
     expect(DESKTOP_APPS.map((app) => app.id)).toContain("games");
-    expect(getFolderApps("games").map((app) => app.id)).toEqual(["sodhara"]);
+    expect(getFolderApps("games").map((app) => app.id)).toEqual(["sodhara", "knossos"]);
   });
 
   it("puts every app on the desktop or in a folder that is on it", () => {
