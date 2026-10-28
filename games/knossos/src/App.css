@@ -100,9 +100,13 @@ a {
   background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
 }
 
-/* Words the texts mark with asterisks. */
-.highlight {
+/* Words the texts mark with asterisks: **bold** in gold, *emphasis* in the grey of the hero's small print. */
+strong {
   color: var(--gold-bright);
+}
+
+.highlight {
+  color: var(--muted);
 }
 
 .button {
