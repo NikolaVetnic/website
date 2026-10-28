@@ -16,6 +16,8 @@
 
   --font-display: "Jost", "Futura", "Segoe UI", sans-serif;
   --font-body: "Inter", "Segoe UI", sans-serif;
+  /* The campaign's titles are set in Futura Bk BT, a commercial font; Jost is a free revival of the same design. */
+  --font-title: "Jost", "Futura", sans-serif;
 
   --header-height: 64px;
   --content-width: 1120px;
@@ -64,7 +66,7 @@ a {
   outline-offset: 3px;
 }
 
-/* A section: a heading with a small line above it, its content centred in the page's width. */
+/* A section: its title (SectionTitle) and content centred in the page's width. */
 .section {
   padding: clamp(56px, 9vw, 112px) 20px;
 }
@@ -72,34 +74,6 @@ a {
 .section__inner {
   max-width: var(--content-width);
   margin: 0 auto;
-}
-
-.section__eyebrow {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin: 0 0 10px;
-  color: var(--gold);
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.section__eyebrow::before {
-  content: "";
-  width: 36px;
-  height: 1px;
-  background: currentColor;
-}
-
-.section__title {
-  margin: 0 0 28px;
-  font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: 0.02em;
 }
 
 .section--alt {

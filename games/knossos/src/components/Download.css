@@ -14,17 +14,6 @@
   margin: 0 auto;
 }
 
-.download__eyebrow {
-  justify-content: center;
-}
-
-.download__eyebrow::after {
-  content: "";
-  width: 36px;
-  height: 1px;
-  background: currentColor;
-}
-
 .download__text {
   margin: 0 0 28px;
   color: var(--text);

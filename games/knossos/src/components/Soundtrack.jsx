@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { SOUNDTRACK } from "../content";
+import SectionTitle from "./SectionTitle";
 import "./Soundtrack.css";
 
 // SoundCloud's player sets its own cookies, so it loads only when asked for.
@@ -11,8 +12,7 @@ const Soundtrack = () => {
     <section id="soundtrack" className="section">
       <div className="section__inner soundtrack">
         <div>
-          <p className="section__eyebrow">Soundtrack</p>
-          <h2 className="section__title">Music for the deep</h2>
+          <SectionTitle icon="soundtrack">Soundtrack</SectionTitle>
           <p className="soundtrack__text">
             A cross-genre experimental soundtrack, written for the game: the K’NOSSOS Official Soundtrack.
           </p>

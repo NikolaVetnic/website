@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 
 import { SCREENSHOTS } from "../content";
 import Lightbox from "./Lightbox";
+import SectionTitle from "./SectionTitle";
 import "./Gallery.css";
 
 const Gallery = () => {
@@ -17,8 +18,7 @@ const Gallery = () => {
   return (
     <section id="screenshots" className="section section--alt">
       <div className="section__inner">
-        <p className="section__eyebrow">Screenshots</p>
-        <h2 className="section__title">From the Prologue to Chapter VI</h2>
+        <SectionTitle icon="screenshots">Screenshots</SectionTitle>
         <ul className="gallery">
           {SCREENSHOTS.map((shot, index) => (
             <li key={shot.caption}>

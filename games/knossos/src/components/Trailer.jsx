@@ -1,12 +1,12 @@
 import { TRAILER } from "../content";
+import SectionTitle from "./SectionTitle";
 import "./Trailer.css";
 
 // The no-cookie player, as in the site's posts: YouTube sets no cookies until the video is played.
 const Trailer = () => (
   <section id="trailer" className="section">
     <div className="section__inner">
-      <p className="section__eyebrow">Trailer</p>
-      <h2 className="section__title">The Prologue</h2>
+      <SectionTitle icon="trailer">Trailer</SectionTitle>
       <div className="trailer">
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${TRAILER.id}`}

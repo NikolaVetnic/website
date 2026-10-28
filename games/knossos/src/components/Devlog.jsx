@@ -1,12 +1,12 @@
 import { DEVLOG } from "../content";
 import { openInSite } from "../site";
+import SectionTitle from "./SectionTitle";
 import "./Devlog.css";
 
 const Devlog = () => (
   <section id="devlog" className="section section--alt">
     <div className="section__inner">
-      <p className="section__eyebrow">Devlog</p>
-      <h2 className="section__title">From the development</h2>
+      <SectionTitle icon="devlog">Devlog</SectionTitle>
       <ul className="devlog">
         {DEVLOG.map((post) => (
           <li key={post.path}>

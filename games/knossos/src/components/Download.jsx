@@ -1,12 +1,12 @@
 import { DOWNLOADS } from "../content";
 import colonnade from "../images/colonnade.webp";
+import SectionTitle from "./SectionTitle";
 import "./Download.css";
 
 const Download = () => (
   <section id="download" className="download" style={{ "--download-art": `url(${colonnade})` }}>
     <div className="download__inner">
-      <p className="section__eyebrow download__eyebrow">Free download</p>
-      <h2 className="section__title">Download K’NOSSOS Prologue</h2>
+      <SectionTitle icon="download">Download</SectionTitle>
       <p className="download__text">
         To share our vision with you we have prepared a fully completed Prologue of the final game in English which you
         are free to download via link below.

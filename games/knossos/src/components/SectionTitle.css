@@ -1,0 +1,38 @@
+.section-title {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 0 28px;
+}
+
+.section-title__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.section-title__banner {
+  fill: #514764;
+  stroke: #818164;
+  stroke-width: 4;
+}
+
+.section-title__line {
+  fill: #bebebe;
+}
+
+.section-title__word,
+.section-title__shadow {
+  font-family: var(--font-title);
+  font-size: 64px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.section-title__word {
+  fill: #fdca74;
+}
+
+.section-title__shadow {
+  fill: #24006d;
+}
