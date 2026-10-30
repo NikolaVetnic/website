@@ -13,13 +13,14 @@ import iceBeamDemoMp4 from "./Images/clips/ice-beam-demo.mp4";
 import wallClingAndDashWebm from "./Images/clips/wall-cling-and-dash.webm";
 import wallClingAndDashMp4 from "./Images/clips/wall-cling-and-dash.mp4";
 
-import { Header, MobileHeader } from "./Components/Header/Header";
+import Header from "./Components/Header/Header";
 import VerticalLogoOverlay from "./Components/LogoOverlay/Vertical/VerticalLogoOverlay";
 import TextBlock from "./Components/TextBlock/TextBlock";
 import Feature from "./Components/Feature/Feature";
 import Footer from "./Components/Footer/Footer";
 import Gallery from "./Components/Gallery/Gallery";
 import Trailer from "./Components/Trailer/Trailer";
+import SectionTitle from "./Components/SectionTitle/SectionTitle";
 
 const LandingPage = () => {
   const features = [
@@ -69,7 +70,6 @@ const LandingPage = () => {
     <div className="content-container">
       <div className="landing-page">
         <Header />
-        <MobileHeader />
 
         <div className="spacer"></div>
 
@@ -80,7 +80,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section id="features" className="content">
+        <section className="content">
           <AboutSection />
           <FeatureList features={features} />
         </section>
@@ -102,7 +102,7 @@ const LandingPage = () => {
 const AboutSection = () => (
   <section id="about">
     <TextBlock
-      title="&nbsp; About &nbsp;"
+      title="About"
       paragraphs={[
         /* "SODHARA is an actively developed retro-inspired 2D sci-fi Metroidvania, drawing inspiration from the classics of the genre.", */
         "Embark on a journey to explore an uncharted world in search of a motherlode of priceless minerals, for which you have been promised a fortune. Delve deep into the heart of a mysterious city, unravel the secrets of its former denizens, and use your agility and deadly force to defeat the evil that brought them to ruin.",
@@ -127,18 +127,21 @@ const AboutSection = () => (
 );
 
 const FeatureList = ({ features }) => (
-  <div className="features">
-    {features.map((feature, index) => (
-      <Feature
-        key={index}
-        clip={feature.clip}
-        overtitle={feature.overtitle}
-        title={feature.title}
-        text={feature.text}
-        highlights={feature.highlights}
-        textLeft={feature.textLeft}
-      />
-    ))}
+  <div id="features">
+    <SectionTitle>Features</SectionTitle>
+    <div className="features">
+      {features.map((feature, index) => (
+        <Feature
+          key={index}
+          clip={feature.clip}
+          overtitle={feature.overtitle}
+          title={feature.title}
+          text={feature.text}
+          highlights={feature.highlights}
+          textLeft={feature.textLeft}
+        />
+      ))}
+    </div>
   </div>
 );
 

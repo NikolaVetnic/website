@@ -1,0 +1,37 @@
+.downloads {
+  display: grid;
+  justify-items: center;
+  gap: clamp(6px, 1.4vw, 12px);
+  text-align: center;
+}
+
+.downloads__caption {
+  margin: 0;
+  color: var(--primary-color);
+  font-family: var(--font-body);
+  font-size: clamp(12px, 1.8vw, 18px);
+  letter-spacing: 1px;
+}
+
+.downloads__buttons {
+  display: flex;
+  gap: clamp(10px, 2vw, 18px);
+}
+
+.downloads__button {
+  min-width: clamp(96px, 16vw, 170px);
+  padding: clamp(7px, 1.2vw, 12px) clamp(14px, 2.4vw, 24px);
+  box-sizing: border-box;
+  border-radius: 6px;
+  background: var(--secondary-color);
+  color: #000;
+  font-family: var(--font-btn);
+  font-size: clamp(13px, 1.8vw, 18px);
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.downloads__button:hover {
+  background: #f08a45;
+}

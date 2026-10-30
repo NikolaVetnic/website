@@ -1,32 +1,29 @@
-import BadgeList from "../BadgeList";
+import "./AvailablePlatforms.css";
 
-import windowsLogo from "../../../../Images/windows.png";
-import macosLogo from "../../../../Images/macos.png";
+// Version 0.4.7 on Google Drive; the links open in a new tab, since Drive won't show inside the SODHARA window.
+const VERSION = "0.4.7";
+const DOWNLOADS = [
+  { label: "Windows", href: "https://drive.google.com/file/d/12zs5m_L-NwICbAot_Y19LcrymbqwDK6m/view?usp=drive_link" },
+  { label: "macOS", href: "https://drive.google.com/file/d/12zKE4unjpjzNZb-u7raBsL6CQgU4De8A/view?usp=drive_link" },
+];
 
-const AvailablePlatforms = () => {
-  // Version 0.4.7 on Google Drive; the links open in a new tab, since Drive won't show inside the SODHARA window.
-  const platformBadges = [
-    {
-      href: "https://drive.google.com/file/d/12zs5m_L-NwICbAot_Y19LcrymbqwDK6m/view?usp=drive_link",
-      src: windowsLogo,
-      alt: "Windows",
-    },
-    {
-      href: "https://drive.google.com/file/d/12zKE4unjpjzNZb-u7raBsL6CQgU4De8A/view?usp=drive_link",
-      src: macosLogo,
-      alt: "MacOS",
-    },
-  ];
-
-  return (
-    <BadgeList
-      caption="Download for"
-      fontSize="clamp(0.125rem, 2vw + 0.125rem, 1.5rem)"
-      gap="20%"
-      imgHeight="clamp(40px, 10vw, 100px)"
-      badges={platformBadges}
-    />
-  );
-};
+const AvailablePlatforms = () => (
+  <div id="download" className="downloads">
+    <p className="downloads__caption">Download version {VERSION} for</p>
+    <div className="downloads__buttons">
+      {DOWNLOADS.map((download) => (
+        <a
+          key={download.label}
+          className="downloads__button"
+          href={download.href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {download.label}
+        </a>
+      ))}
+    </div>
+  </div>
+);
 
 export default AvailablePlatforms;

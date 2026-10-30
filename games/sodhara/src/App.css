@@ -12,6 +12,10 @@
   --font-body: bodyFont, sans-serif;
   --font-title: titleFont, sans-serif;
   --font-btn: buttonFont, sans-serif;
+  /* The cards (About, the features) on the black page: one width, a slightly lighter ground, a thin edge. */
+  --content-width: 880px;
+  --card-background: #141414;
+  --card-border: rgba(255, 255, 255, 0.08);
 }
 
 @font-face {
@@ -32,8 +36,9 @@
 #about,
 #features,
 #screenshots,
-#trailer {
-  scroll-margin-top: 70px; /* Adjust to the height of your header */
+#trailer,
+#download {
+  scroll-margin-top: calc(var(--header-height) + 16px);
 }
 
 body {
@@ -49,11 +54,10 @@ body {
 /* Default styling for smaller screens */
 .content-container {
   width: 100%; /* Full width on small screens */
-  background-color: var(--background-primary-color); /* Matches body background */
 }
 
 .spacer {
-  height: 82px; /* Match the header offset */
+  height: var(--header-height);
 }
 
 .hero-section {
@@ -77,32 +81,27 @@ body {
 }
 
 .content {
-  padding: 20px;
+  padding: 40px 20px;
   text-align: center;
 }
 
 .features {
-  padding-left: 12.5%;
-  padding-right: 12.5%;
-  width: 75%;
   display: flex;
-  flex-wrap: nowrap;
   flex-direction: column;
-  justify-content: space-around;
+  gap: 24px;
+  max-width: var(--content-width);
+  margin: 0 auto;
 }
 
 .gallery {
-  padding: 10px 0px 0px 0px;
+  padding: 40px 20px 0;
   text-align: center;
   font-family: var(--font-title);
-  background-color: var(--background-secondary-color);
-  border-radius: 10px;
 }
 
 .trailer {
-  padding: 10px 0px 0px 0px;
+  padding: 40px 20px;
   text-align: center;
-  font-family: var(--font-title);
 }
 
 .footer {
@@ -138,21 +137,13 @@ body {
 }
 
 @media (max-width: 768px) {
-  .features,
   .gallery-images {
-    padding-left: 0;
-    padding-right: 0;
-    width: 100%;
     flex-direction: column;
   }
 
   .feature,
   .gallery-images img {
     width: 100%;
-  }
-
-  .trailer-video iframe {
-    height: 300px;
   }
 }
 
@@ -161,6 +152,5 @@ body {
   .content-container {
     max-width: 1024px; /* Adjust the width as needed */
     margin: 0 auto; /* Centers the content with equal margins on both sides */
-    background-color: var(--background-primary-color); /* Keep content area background */
   }
 }

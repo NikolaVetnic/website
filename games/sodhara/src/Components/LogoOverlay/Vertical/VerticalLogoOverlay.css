@@ -19,13 +19,15 @@
   height: 20%; /* Fixed height of 20% */
 }
 
-/* Bottom overlay (for platform logos) */
+/* Bottom overlay (for the download buttons): a fifth of the splash, or taller if the buttons need it. */
 .bottom-overlay {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   background: rgba(0, 0, 0, 0.8); /* Dark overlay */
-  height: 20%; /* Fixed height of 20% */
+  min-height: 20%;
+  padding: 10px 0;
   margin-bottom: 4px;
 }
 

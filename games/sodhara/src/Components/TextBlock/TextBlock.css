@@ -1,25 +1,14 @@
 /* General Text Block Styling */
 .text-block {
-  padding: 20px;
-  background-color: var(--background-secondary-color);
-  border-radius: 10px;
+  box-sizing: border-box;
+  max-width: var(--content-width);
+  margin: 0 auto 24px;
+  padding: 32px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background-color: var(--card-background);
   text-align: center;
-  margin: 20px 0;
   color: var(--primary-color);
-}
-
-.title-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.title {
-  font-family: var(--font-title);
-  font-size: 24px;
-  font-weight: bold;
 }
 
 .overtitle,
@@ -30,12 +19,6 @@
 .overtitle {
   font-size: 14px;
   margin-bottom: 10px;
-}
-
-.line {
-  flex: 1;
-  height: 2px;
-  background-color: var(--secondary-color);
 }
 
 .text {
@@ -50,6 +33,6 @@
 /* Responsive Adjustments */
 @media (max-width: 767px) {
   .text-block {
-    padding: 10px;
+    padding: 20px;
   }
 }

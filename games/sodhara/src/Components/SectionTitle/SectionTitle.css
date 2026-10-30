@@ -1,0 +1,22 @@
+.section-title {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  max-width: var(--content-width);
+  margin: 0 auto 24px;
+}
+
+.section-title__line {
+  flex: 1;
+  height: 2px;
+  background-color: var(--secondary-color);
+}
+
+.section-title__text {
+  margin: 0;
+  color: var(--primary-color);
+  font-family: var(--font-title);
+  font-size: 28px;
+  font-weight: normal;
+  letter-spacing: 2px;
+}
