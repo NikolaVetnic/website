@@ -4,7 +4,8 @@ import { APPS, getAppPath } from "./desktop/apps";
 
 // One layout draws the desktop for every page, so it stays mounted while the URL moves between apps.
 // The Blog has routes of its own, for its post list and for each post, and About for its bio and resume; the
-// feed and the sitemap are files. Any other address gets the desktop too, saying there's nothing there.
+// feed, the sitemap and the Blog's search index are files. Any other address gets the desktop too, saying
+// there's nothing there.
 export default [
   layout("routes/shell.tsx", [
     index("routes/home.tsx"),
@@ -18,5 +19,6 @@ export default [
     route("*", "routes/not-found.tsx"),
   ]),
   route("rss.xml", "routes/rss.ts"),
+  route("blog/search.json", "routes/blog-search.ts"),
   route("sitemap.xml", "routes/sitemap.ts"),
 ] satisfies RouteConfig;
