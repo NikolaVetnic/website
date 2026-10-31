@@ -19,21 +19,24 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: rgba(248, 251, 255, 0.85);
   cursor: pointer;
 }
 
-.taskbar__home svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
+.taskbar__logo {
+  width: 22px;
+  height: 22px;
+  opacity: 0.85;
 }
 
 .taskbar__home:hover,
 .taskbar__home:focus-visible {
   outline: none;
   background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+}
+
+.taskbar__home:hover .taskbar__logo,
+.taskbar__home:focus-visible .taskbar__logo {
+  opacity: 1;
 }
 
 .taskbar__windows {
@@ -134,9 +137,9 @@
     height: 44px;
   }
 
-  .taskbar__home svg {
-    width: 18px;
-    height: 18px;
+  .taskbar__logo {
+    width: 26px;
+    height: 26px;
   }
 
   .taskbar__window {
