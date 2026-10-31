@@ -1,15 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  APPS,
-  DESKTOP_APPS,
-  getApp,
-  getAppFromPath,
-  getAppPath,
-  getFolderApps,
-  getWindowTitle,
-  normalizePath,
-} from "./apps";
+import { APPS, DESKTOP_APPS, getAppFromPath, getAppPath, getFolderApps, normalizePath } from "./apps";
 
 describe("getAppPath and getAppFromPath", () => {
   it("gives each app its own path and finds the app from it", () => {
@@ -64,17 +55,5 @@ describe("folders", () => {
     for (const app of APPS) {
       expect(desktop.has(app.id) || desktop.has(app.folder!), app.id).toBe(true);
     }
-  });
-});
-
-describe("getWindowTitle", () => {
-  it("puts an app's folder before its title", () => {
-    expect(getWindowTitle(getApp("sodhara"))).toBe("Games/SODHARA");
-    expect(getWindowTitle(getApp("knossos"))).toBe("Games/K’NOSSOS");
-  });
-
-  it("leaves an app on the desktop as it is", () => {
-    expect(getWindowTitle(getApp("games"))).toBe("Games");
-    expect(getWindowTitle(getApp("blog"))).toBe("Blog");
   });
 });

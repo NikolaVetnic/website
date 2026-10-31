@@ -7,6 +7,7 @@ import NotFound from "~/components/NotFound/NotFound";
 import Taskbar from "~/components/Taskbar/Taskbar";
 import AppWindow from "~/components/Window/AppWindow";
 import { getApp, getAppFromPath, normalizePath, type AppId } from "~/desktop/apps";
+import { getWindowTitle } from "~/desktop/window-title";
 import {
   NO_WINDOWS,
   getFocusedId,
@@ -94,6 +95,7 @@ function Shell() {
         <Desktop onOpenApp={openApp} />
         {state.windows.map((window) => {
           const app = getApp(window.id);
+          const data = window.path === path ? pageData : pages[window.path];
 
           return (
             <AppWindow
@@ -107,12 +109,9 @@ function Shell() {
               isMaximized={window.isMaximized}
               dispatch={act}
               contentKey={window.path}
+              title={getWindowTitle(app, data)}
             >
-              <AppContent
-                app={app}
-                data={window.path === path ? pageData : pages[window.path]}
-                onActivate={() => act({ type: "focus", id: window.id })}
-              />
+              <AppContent app={app} data={data} onActivate={() => act({ type: "focus", id: window.id })} />
             </AppWindow>
           );
         })}

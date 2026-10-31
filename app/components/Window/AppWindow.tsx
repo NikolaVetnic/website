@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 
-import { getWindowTitle, type DesktopApp } from "~/desktop/apps";
+import type { DesktopApp } from "~/desktop/apps";
 import type { Size } from "~/desktop/drag";
 import { moveRect, resizeRect, type Rect, type ResizeEdge, type WindowAction } from "~/desktop/windows";
 import usePhoneLayout from "~/hooks/usePhoneLayout";
@@ -31,6 +31,8 @@ type AppWindowProps = {
   dispatch: Dispatch<WindowAction>;
   // Changes when the window shows another page of its app, which then starts scrolled to the top.
   contentKey: string;
+  // The title bar's text: a path to what the window shows ("Games/SODHARA", "Blog/<post>").
+  title: string;
   children: ReactNode;
 };
 
@@ -44,6 +46,7 @@ function AppWindow({
   isMaximized,
   dispatch,
   contentKey,
+  title,
   children,
 }: AppWindowProps) {
   const windowRef = useRef<HTMLElement | null>(null);
@@ -175,7 +178,7 @@ function AppWindow({
       >
         <img className="app-window__icon" src={app.icon} alt="" draggable={false} />
         <h2 id={titleId} className="app-window__title">
-          {getWindowTitle(app)}
+          {title}
         </h2>
         <div className="app-window__controls">
           <button
