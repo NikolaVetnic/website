@@ -1,10 +1,87 @@
+.blog__index {
+  display: grid;
+  gap: 16px;
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
 .blog__list {
   display: grid;
   gap: 20px;
-  max-width: 68ch;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* The search box and the tags, which narrow the list to the posts that match. */
+.blog__filters {
+  display: grid;
+  gap: 10px;
+}
+
+.blog__search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid rgb(var(--text) / 0.18);
+  border-radius: 8px;
+  background: rgb(var(--raised));
+  color: rgb(var(--text));
+  font: inherit;
+}
+
+.blog__search:focus {
+  outline: 2px solid rgb(var(--accent) / 0.5);
+  outline-offset: 1px;
+}
+
+.blog__tag-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.blog__tag-filter {
+  padding: 2px 10px;
+  border: 1px solid rgb(var(--accent) / 0.25);
+  border-radius: 999px;
+  background: transparent;
+  color: rgb(var(--accent));
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.blog__tag-filter:hover {
+  background: rgb(var(--accent) / 0.1);
+}
+
+.blog__tag-filter[aria-pressed="true"] {
+  border-color: rgb(var(--accent));
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+}
+
+.blog__count {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 0;
+  color: rgb(var(--text-muted));
+  font-size: 0.85rem;
+}
+
+.blog__clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
+  cursor: pointer;
+}
+
+.blog__clear:hover {
+  text-decoration: underline;
 }
 
 .blog__item-title {
