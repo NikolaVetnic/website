@@ -1,3 +1,18 @@
+/* The Blog fills its window: what it shows scrolls, and the list's search bar stays at the bottom. */
+.blog-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.blog-view__scroll {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  overflow: auto;
+  scrollbar-gutter: stable both-edges;
+}
+
 .blog__list {
   display: grid;
   gap: 20px;
@@ -5,6 +20,114 @@
   margin: 0 auto;
   padding: 0;
   list-style: none;
+}
+
+/* A status bar: the search field fills it, up to the Tags button at its right end, whose tags open above it. */
+.blog-bar {
+  border-top: 1px solid rgb(var(--text) / 0.12);
+  background: rgb(var(--text) / 0.03);
+  font-size: 0.8rem;
+}
+
+.blog-bar__row {
+  display: flex;
+}
+
+.blog-bar__search {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgb(var(--text));
+  font: inherit;
+}
+
+.blog-bar__search::placeholder {
+  color: rgb(var(--text-subtle));
+}
+
+.blog-bar__search:focus {
+  outline: none;
+}
+
+.blog-bar__search:focus-visible {
+  box-shadow: inset 0 0 0 2px rgb(var(--accent) / 0.5);
+}
+
+.blog-bar__tags-toggle {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0 16px;
+  border: 0;
+  border-left: 1px solid rgb(var(--text) / 0.12);
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.blog-bar__tags-toggle:hover {
+  background: rgb(var(--accent) / 0.08);
+}
+
+.blog-bar__tags-toggle:focus-visible {
+  outline: 2px solid rgb(var(--accent) / 0.5);
+  outline-offset: -2px;
+}
+
+/* Points up while the tags are closed, as they open upwards, and down while they're open. */
+.blog-bar__chevron {
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(2px) rotate(-135deg);
+  transition: transform 150ms;
+}
+
+.blog-bar__tags-toggle[aria-expanded="true"] .blog-bar__chevron {
+  transform: translateY(-2px) rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-bar__chevron {
+    transition: none;
+  }
+}
+
+/* The tags above the field; a long list scrolls rather than covering the posts. */
+.blog-bar__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 40vh;
+  padding: 10px 16px;
+  overflow: auto;
+  border-bottom: 1px solid rgb(var(--text) / 0.08);
+}
+
+.blog-bar__tag {
+  padding: 2px 10px;
+  border: 1px solid rgb(var(--accent) / 0.25);
+  border-radius: 999px;
+  background: transparent;
+  color: rgb(var(--accent));
+  font: inherit;
+  cursor: pointer;
+}
+
+.blog-bar__tag:hover {
+  background: rgb(var(--accent) / 0.1);
+}
+
+.blog-bar__tag[aria-pressed="true"] {
+  border-color: rgb(var(--accent));
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
 }
 
 .blog__item-title {
@@ -42,6 +165,39 @@
 .blog__empty {
   margin: 0;
   color: rgb(var(--text-muted));
+}
+
+/* While filtering, above the list: how many posts match, and a Clear. The smaller type is on its contents, so its
+   68ch is the list's. */
+.blog__count {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  max-width: 68ch;
+  margin: 0 auto 16px;
+  color: rgb(var(--text-muted));
+}
+
+.blog__count > * {
+  font-size: 0.85rem;
+}
+
+.blog__clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
+  cursor: pointer;
+}
+
+.blog__clear:hover {
+  text-decoration: underline;
+}
+
+.blog__no-match {
+  max-width: 68ch;
+  margin: 0 auto;
 }
 
 .blog__back {

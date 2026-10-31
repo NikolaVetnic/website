@@ -213,7 +213,10 @@ function AppWindow({
           </button>
         </div>
       </header>
-      <div key={contentKey} className={`app-window__content${app.page ? " app-window__content--page" : ""}`}>
+      <div
+        key={contentKey}
+        className={`app-window__content${app.page ? " app-window__content--page" : app.fills ? " app-window__content--fill" : ""}`}
+      >
         {children}
       </div>
       {isMaximized
