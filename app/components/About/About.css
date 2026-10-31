@@ -1,6 +1,4 @@
 .about {
-  /* Its width, not the screen's, decides how the bio's photo sits (below). */
-  container: about / inline-size;
   display: grid;
   gap: 16px;
   max-width: 68ch;
@@ -97,21 +95,6 @@
 
 .about__pdf:hover {
   background: rgb(var(--accent-hover));
-}
-
-/* The bio's photo sits beside the text, which wraps round it; in a narrow window it is above the text, full width. */
-.about__bio figure:first-child {
-  float: right;
-  width: 45%;
-  margin: 0.3em 0 1em 1.5em;
-}
-
-@container about (max-width: 480px) {
-  .about__bio figure:first-child {
-    float: none;
-    width: auto;
-    margin: 0 0 1.5em;
-  }
 }
 
 /* The resume's sections are labels in capitals, and its job and school lines read as list entries. */
