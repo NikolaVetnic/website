@@ -17,6 +17,9 @@ export type DesktopApp = {
   windowSize?: Size;
   // A page of its own that the window shows edge to edge, in an iframe (`/apps/sodhara/`).
   page?: string;
+  // Lays out its window itself, edge to edge, scrolling its own content beside parts that stay put (the Blog's
+  // search bar).
+  fills?: boolean;
 };
 
 // Icon order on a fresh desktop.

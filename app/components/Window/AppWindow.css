@@ -137,8 +137,10 @@
   scrollbar-gutter: stable both-edges;
 }
 
-/* A page of its own (an app's iframe) fills the window to the edges and scrolls by itself. */
-.app-window__content--page {
+/* A page of its own (an app's iframe) fills the window to the edges and scrolls by itself, and so does an app that
+   lays out its window itself (the Blog, with its search bar). */
+.app-window__content--page,
+.app-window__content--fill {
   padding: 0;
   overflow: hidden;
   scrollbar-gutter: auto;
