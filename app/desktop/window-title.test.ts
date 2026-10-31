@@ -14,9 +14,9 @@ describe("getWindowTitle", () => {
     expect(getWindowTitle(getApp("blog"), data)).toBe("Blog / A post");
   });
 
-  it("puts the resume after About", () => {
+  it("puts the bio or the resume after About", () => {
+    expect(getWindowTitle(getApp("about"), { page: "bio", versions: [] })).toBe("About / Bio");
     expect(getWindowTitle(getApp("about"), { page: "resume", versions: [] })).toBe("About / Resume");
-    expect(getWindowTitle(getApp("about"), { page: "bio", versions: [] })).toBe("About");
   });
 
   it("is just the app on its own page, or before its data has loaded", () => {
