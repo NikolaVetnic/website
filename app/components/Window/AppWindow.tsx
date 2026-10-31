@@ -31,7 +31,7 @@ type AppWindowProps = {
   dispatch: Dispatch<WindowAction>;
   // Changes when the window shows another page of its app, which then starts scrolled to the top.
   contentKey: string;
-  // The title bar's text: a path to what the window shows ("Games/SODHARA", "Blog/<post>").
+  // The title bar's text: a path to what the window shows ("Games / SODHARA", "Blog / <post>").
   title: string;
   children: ReactNode;
 };

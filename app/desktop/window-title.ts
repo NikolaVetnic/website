@@ -14,9 +14,9 @@ function getPageTitle(data: unknown): string | null {
   return null;
 }
 
-// What a window's title bar says, as a path to what it shows: "Games/SODHARA", "Blog/<post>", "About/Resume", or
-// just "Blog".
+// What a window's title bar says, as a path to what it shows: "Games / SODHARA", "Blog / <post>",
+// "About / Resume", or just "Blog".
 export function getWindowTitle(app: DesktopApp, data?: unknown): string {
   const page = getPageTitle(data);
-  return [app.folder ? getApp(app.folder).title : null, app.title, page].filter(Boolean).join("/");
+  return [app.folder ? getApp(app.folder).title : null, app.title, page].filter(Boolean).join(" / ");
 }
