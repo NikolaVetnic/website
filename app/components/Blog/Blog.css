@@ -13,8 +13,51 @@
   list-style: none;
 }
 
-/* The search box and the tags, which narrow the list to the posts that match. */
+/* The search box and the tags, which narrow the list to the posts that match, folded under a button. */
 .blog__filters {
+  display: grid;
+  gap: 10px;
+}
+
+.blog__filters-toggle {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-self: start;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.blog__filters-toggle:hover {
+  text-decoration: underline;
+}
+
+/* A small chevron, pointing down when folded and up when open. */
+.blog__filters-chevron {
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 150ms;
+}
+
+.blog__filters-toggle[aria-expanded="true"] .blog__filters-chevron {
+  transform: translateY(1px) rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog__filters-chevron {
+    transition: none;
+  }
+}
+
+.blog__filters-panel {
   display: grid;
   gap: 10px;
 }

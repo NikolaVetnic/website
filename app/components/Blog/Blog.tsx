@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router";
 
 import { formatPostDate, getPostPath, type Post, type PostSummary } from "~/blog/posts";
@@ -45,8 +45,9 @@ function PostMeta({ date, tags }: Pick<PostSummary, "date" | "tags">) {
 
 const NO_FILTER: BlogFilter = { query: "", tags: [] };
 
-// The filter outlives the list, so coming back from a post finds it as it was left.
+// The filter, and whether its panel is open, outlive the list, so coming back from a post finds them as they were.
 let lastFilter = NO_FILTER;
+let lastOpen = false;
 
 // The posts' text, fetched once, the first time someone searches.
 let searchIndex: Promise<Map<string, string>> | null = null;
@@ -71,6 +72,24 @@ function PostFilters({
   filter: BlogFilter;
   onChange: (filter: BlogFilter) => void;
 }) {
+  const [isOpen, setIsOpen] = useState(lastOpen);
+  const panelId = useId();
+  const search = useRef<HTMLInputElement | null>(null);
+  // Opening the panel puts the cursor in the search box; coming back to an open panel doesn't.
+  const wasOpened = useRef(false);
+
+  useEffect(() => {
+    if (isOpen && wasOpened.current) {
+      search.current?.focus();
+    }
+  }, [isOpen]);
+
+  const toggle = () => {
+    wasOpened.current = !isOpen;
+    lastOpen = !isOpen;
+    setIsOpen(!isOpen);
+  };
+
   const toggleTag = (tag: string) =>
     onChange({
       ...filter,
@@ -79,27 +98,42 @@ function PostFilters({
 
   return (
     <div className="blog__filters">
-      <input
-        type="search"
-        className="blog__search"
-        placeholder="Search posts"
-        aria-label="Search posts"
-        value={filter.query}
-        onChange={(event) => onChange({ ...filter, query: event.target.value })}
-      />
-      <div className="blog__tag-filters" role="group" aria-label="Tags">
-        {tags.map((tag) => (
-          <button
-            key={tag}
-            type="button"
-            className="blog__tag-filter"
-            aria-pressed={filter.tags.includes(tag)}
-            onClick={() => toggleTag(tag)}
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
+      <button
+        type="button"
+        className="blog__filters-toggle"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={toggle}
+      >
+        Search and filter
+        <span className="blog__filters-chevron" aria-hidden="true" />
+      </button>
+      {isOpen ? (
+        <div id={panelId} className="blog__filters-panel">
+          <input
+            ref={search}
+            type="search"
+            className="blog__search"
+            placeholder="Search posts"
+            aria-label="Search posts"
+            value={filter.query}
+            onChange={(event) => onChange({ ...filter, query: event.target.value })}
+          />
+          <div className="blog__tag-filters" role="group" aria-label="Tags">
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                className="blog__tag-filter"
+                aria-pressed={filter.tags.includes(tag)}
+                onClick={() => toggleTag(tag)}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
