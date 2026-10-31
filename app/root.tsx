@@ -7,7 +7,10 @@ import type { Route } from "./+types/root";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
-  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+  // The old site's icon: a tab's size, a larger one for Android, and one on white for iOS, which fills clear with black.
+  { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32.png" },
+  { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
   { rel: "alternate", type: "application/rss+xml", title: `Blog · ${SITE_NAME}`, href: "/rss.xml" },
 ];
 
