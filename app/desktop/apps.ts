@@ -88,6 +88,11 @@ export function getApp(id: AppId): DesktopApp {
   return APPS.find((app) => app.id === id) as DesktopApp;
 }
 
+// What a window's title bar says: an app in a folder app shows its folder too ("Games/SODHARA").
+export function getWindowTitle(app: DesktopApp): string {
+  return app.folder ? `${getApp(app.folder).title}/${app.title}` : app.title;
+}
+
 // Each app lives at its path, or at its id (`/blog`); no app at all is the bare desktop (`/`).
 export function getAppPath(id: AppId | null): string {
   return id ? (getApp(id).path ?? `/${id}`) : "/";

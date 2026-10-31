@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 
-import type { DesktopApp } from "~/desktop/apps";
+import { getWindowTitle, type DesktopApp } from "~/desktop/apps";
 import type { Size } from "~/desktop/drag";
 import { moveRect, resizeRect, type Rect, type ResizeEdge, type WindowAction } from "~/desktop/windows";
 import usePhoneLayout from "~/hooks/usePhoneLayout";
@@ -175,7 +175,7 @@ function AppWindow({
       >
         <img className="app-window__icon" src={app.icon} alt="" draggable={false} />
         <h2 id={titleId} className="app-window__title">
-          {app.title}
+          {getWindowTitle(app)}
         </h2>
         <div className="app-window__controls">
           <button
