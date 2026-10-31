@@ -22,68 +22,61 @@
   list-style: none;
 }
 
-/* A status bar: the search field, the count while filtering, and the Tags button, whose tags open above it. */
+/* A status bar: the search field fills it, up to the Tags button at its right end, whose tags open above it. */
 .blog-bar {
-  display: grid;
-  gap: 8px;
-  padding: 8px 12px;
   border-top: 1px solid rgb(var(--text) / 0.12);
   background: rgb(var(--text) / 0.03);
+  font-size: 0.8rem;
 }
 
 .blog-bar__row {
   display: flex;
-  gap: 10px;
-  align-items: center;
 }
 
 .blog-bar__search {
   flex: 1;
   min-width: 0;
-  padding: 5px 10px;
-  border: 1px solid rgb(var(--text) / 0.18);
-  border-radius: 6px;
-  background: rgb(var(--raised));
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: rgb(var(--text));
   font: inherit;
-  font-size: 0.9rem;
+}
+
+.blog-bar__search::placeholder {
+  color: rgb(var(--text-subtle));
 }
 
 .blog-bar__search:focus {
-  outline: 2px solid rgb(var(--accent) / 0.5);
-  outline-offset: 1px;
+  outline: none;
 }
 
-.blog-bar__count {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  color: rgb(var(--text-muted));
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
-
-.blog-bar__clear,
-.blog-bar__tags-toggle {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: rgb(var(--accent));
-  font: inherit;
-  cursor: pointer;
-}
-
-.blog-bar__clear:hover,
-.blog-bar__tags-toggle:hover {
-  text-decoration: underline;
+.blog-bar__search:focus-visible {
+  box-shadow: inset 0 0 0 2px rgb(var(--accent) / 0.5);
 }
 
 .blog-bar__tags-toggle {
   display: inline-flex;
   gap: 8px;
   align-items: center;
-  font-size: 0.9rem;
+  padding: 0 16px;
+  border: 0;
+  border-left: 1px solid rgb(var(--text) / 0.12);
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
   white-space: nowrap;
+  cursor: pointer;
+}
+
+.blog-bar__tags-toggle:hover {
+  background: rgb(var(--accent) / 0.08);
+}
+
+.blog-bar__tags-toggle:focus-visible {
+  outline: 2px solid rgb(var(--accent) / 0.5);
+  outline-offset: -2px;
 }
 
 /* Points up while the tags are closed, as they open upwards, and down while they're open. */
@@ -106,13 +99,15 @@
   }
 }
 
-/* The tags above the bar; a long list scrolls rather than covering the posts. */
+/* The tags above the field; a long list scrolls rather than covering the posts. */
 .blog-bar__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   max-height: 40vh;
+  padding: 10px 16px;
   overflow: auto;
+  border-bottom: 1px solid rgb(var(--text) / 0.08);
 }
 
 .blog-bar__tag {
@@ -122,7 +117,6 @@
   background: transparent;
   color: rgb(var(--accent));
   font: inherit;
-  font-size: 0.85rem;
   cursor: pointer;
 }
 
@@ -171,6 +165,34 @@
 .blog__empty {
   margin: 0;
   color: rgb(var(--text-muted));
+}
+
+/* While filtering, above the list: how many posts match, and a Clear. The smaller type is on its contents, so its
+   68ch is the list's. */
+.blog__count {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  max-width: 68ch;
+  margin: 0 auto 16px;
+  color: rgb(var(--text-muted));
+}
+
+.blog__count > * {
+  font-size: 0.85rem;
+}
+
+.blog__clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
+  cursor: pointer;
+}
+
+.blog__clear:hover {
+  text-decoration: underline;
 }
 
 .blog__no-match {

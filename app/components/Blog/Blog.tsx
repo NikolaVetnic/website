@@ -76,14 +76,12 @@ function BlogView({ children, bar }: { children: ReactNode; bar?: ReactNode }) {
 type SearchBarProps = {
   tags: string[];
   filter: BlogFilter;
-  shown: number;
-  total: number;
   onChange: (filter: BlogFilter) => void;
 };
 
-// A status bar along the window's bottom: the search field, the count while filtering, and a button that opens the
-// tags above the bar.
-function SearchBar({ tags, filter, shown, total, onChange }: SearchBarProps) {
+// A status bar along the window's bottom: the search field, which fills it, and a button at its right end that opens
+// the tags above it.
+function SearchBar({ tags, filter, onChange }: SearchBarProps) {
   const [areTagsOpen, setAreTagsOpen] = useState(lastTagsOpen);
   const tagsId = useId();
 
@@ -124,14 +122,6 @@ function SearchBar({ tags, filter, shown, total, onChange }: SearchBarProps) {
           value={filter.query}
           onChange={(event) => onChange({ ...filter, query: event.target.value })}
         />
-        {isFiltering(filter) ? (
-          <span className="blog-bar__count">
-            {shown} of {total}
-            <button type="button" className="blog-bar__clear" onClick={() => onChange(NO_FILTER)}>
-              Clear
-            </button>
-          </span>
-        ) : null}
         <button
           type="button"
           className="blog-bar__tags-toggle"
@@ -180,17 +170,17 @@ function PostList({ posts }: { posts: PostSummary[] }) {
   const shown = posts.filter((post) => matchesFilter(post, filter, texts?.get(post.slug)));
 
   return (
-    <BlogView
-      bar={
-        <SearchBar
-          tags={getAllTags(posts)}
-          filter={filter}
-          shown={shown.length}
-          total={posts.length}
-          onChange={changeFilter}
-        />
-      }
-    >
+    <BlogView bar={<SearchBar tags={getAllTags(posts)} filter={filter} onChange={changeFilter} />}>
+      {isFiltering(filter) ? (
+        <p className="blog__count">
+          <span>
+            {shown.length} of {posts.length} posts
+          </span>
+          <button type="button" className="blog__clear" onClick={() => changeFilter(NO_FILTER)}>
+            Clear
+          </button>
+        </p>
+      ) : null}
       {shown.length === 0 ? (
         <p className="blog__empty blog__no-match">No posts match.</p>
       ) : (
