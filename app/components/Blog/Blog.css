@@ -1,90 +1,121 @@
-.blog__index {
-  display: grid;
-  gap: 16px;
-  max-width: 68ch;
-  margin: 0 auto;
+/* The Blog fills its window: what it shows scrolls, and the list's search bar stays at the bottom. */
+.blog-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.blog-view__scroll {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  overflow: auto;
+  scrollbar-gutter: stable both-edges;
 }
 
 .blog__list {
   display: grid;
   gap: 20px;
-  margin: 0;
+  max-width: 68ch;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
 
-/* The search box and the tags, which narrow the list to the posts that match, folded under a button. */
-.blog__filters {
+/* A status bar: the search field, the count while filtering, and the Tags button, whose tags open above it. */
+.blog-bar {
   display: grid;
-  gap: 10px;
-}
-
-.blog__filters-toggle {
-  display: inline-flex;
   gap: 8px;
-  align-items: center;
-  justify-self: end;
-  padding: 4px 0;
-  border: 0;
-  background: none;
-  color: rgb(var(--accent));
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.blog__filters-toggle:hover {
-  text-decoration: underline;
-}
-
-/* A small chevron, pointing down when folded and up when open. */
-.blog__filters-chevron {
-  width: 6px;
-  height: 6px;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: translateY(-2px) rotate(45deg);
-  transition: transform 150ms;
-}
-
-.blog__filters-toggle[aria-expanded="true"] .blog__filters-chevron {
-  transform: translateY(1px) rotate(-135deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .blog__filters-chevron {
-    transition: none;
-  }
-}
-
-.blog__filters-panel {
-  display: grid;
-  gap: 10px;
-}
-
-.blog__search {
-  width: 100%;
-  box-sizing: border-box;
   padding: 8px 12px;
+  border-top: 1px solid rgb(var(--text) / 0.12);
+  background: rgb(var(--text) / 0.03);
+}
+
+.blog-bar__row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.blog-bar__search {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 10px;
   border: 1px solid rgb(var(--text) / 0.18);
-  border-radius: 8px;
+  border-radius: 6px;
   background: rgb(var(--raised));
   color: rgb(var(--text));
   font: inherit;
+  font-size: 0.9rem;
 }
 
-.blog__search:focus {
+.blog-bar__search:focus {
   outline: 2px solid rgb(var(--accent) / 0.5);
   outline-offset: 1px;
 }
 
-.blog__tag-filters {
+.blog-bar__count {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: rgb(var(--text-muted));
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.blog-bar__clear,
+.blog-bar__tags-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
+  cursor: pointer;
+}
+
+.blog-bar__clear:hover,
+.blog-bar__tags-toggle:hover {
+  text-decoration: underline;
+}
+
+.blog-bar__tags-toggle {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Points up while the tags are closed, as they open upwards, and down while they're open. */
+.blog-bar__chevron {
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(2px) rotate(-135deg);
+  transition: transform 150ms;
+}
+
+.blog-bar__tags-toggle[aria-expanded="true"] .blog-bar__chevron {
+  transform: translateY(-2px) rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-bar__chevron {
+    transition: none;
+  }
+}
+
+/* The tags above the bar; a long list scrolls rather than covering the posts. */
+.blog-bar__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  max-height: 40vh;
+  overflow: auto;
 }
 
-.blog__tag-filter {
+.blog-bar__tag {
   padding: 2px 10px;
   border: 1px solid rgb(var(--accent) / 0.25);
   border-radius: 999px;
@@ -95,36 +126,14 @@
   cursor: pointer;
 }
 
-.blog__tag-filter:hover {
+.blog-bar__tag:hover {
   background: rgb(var(--accent) / 0.1);
 }
 
-.blog__tag-filter[aria-pressed="true"] {
+.blog-bar__tag[aria-pressed="true"] {
   border-color: rgb(var(--accent));
   background: rgb(var(--accent));
   color: rgb(var(--on-accent));
-}
-
-.blog__count {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin: 0;
-  color: rgb(var(--text-muted));
-  font-size: 0.85rem;
-}
-
-.blog__clear {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: rgb(var(--accent));
-  font: inherit;
-  cursor: pointer;
-}
-
-.blog__clear:hover {
-  text-decoration: underline;
 }
 
 .blog__item-title {
@@ -162,6 +171,11 @@
 .blog__empty {
   margin: 0;
   color: rgb(var(--text-muted));
+}
+
+.blog__no-match {
+  max-width: 68ch;
+  margin: 0 auto;
 }
 
 .blog__back {

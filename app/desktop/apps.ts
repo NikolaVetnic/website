@@ -35,6 +35,7 @@ export const APPS: DesktopApp[] = [
     title: "Blog",
     icon: "/icons/blog.svg",
     description: "Posts by Nikola Pacek Vetnić on software, games and music.",
+    fills: true,
   },
   {
     id: "projects",

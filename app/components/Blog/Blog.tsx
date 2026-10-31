@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import { Link } from "react-router";
 
 import { formatPostDate, getPostPath, type Post, type PostSummary } from "~/blog/posts";
@@ -45,9 +45,9 @@ function PostMeta({ date, tags }: Pick<PostSummary, "date" | "tags">) {
 
 const NO_FILTER: BlogFilter = { query: "", tags: [] };
 
-// The filter, and whether its panel is open, outlive the list, so coming back from a post finds them as they were.
+// The filter, and whether the tags are open, outlive the list, so coming back from a post finds them as they were.
 let lastFilter = NO_FILTER;
-let lastOpen = false;
+let lastTagsOpen = false;
 
 // The posts' text, fetched once, the first time someone searches.
 let searchIndex: Promise<Map<string, string>> | null = null;
@@ -63,31 +63,33 @@ function loadSearchIndex(): Promise<Map<string, string>> {
   return searchIndex;
 }
 
-function PostFilters({
-  tags,
-  filter,
-  onChange,
-}: {
+// What the Blog shows scrolls, inside a window it fills; the search bar, on the list, stays at the bottom.
+function BlogView({ children, bar }: { children: ReactNode; bar?: ReactNode }) {
+  return (
+    <div className="blog-view">
+      <div className="blog-view__scroll">{children}</div>
+      {bar}
+    </div>
+  );
+}
+
+type SearchBarProps = {
   tags: string[];
   filter: BlogFilter;
+  shown: number;
+  total: number;
   onChange: (filter: BlogFilter) => void;
-}) {
-  const [isOpen, setIsOpen] = useState(lastOpen);
-  const panelId = useId();
-  const search = useRef<HTMLInputElement | null>(null);
-  // Opening the panel puts the cursor in the search box; coming back to an open panel doesn't.
-  const wasOpened = useRef(false);
+};
 
-  useEffect(() => {
-    if (isOpen && wasOpened.current) {
-      search.current?.focus();
-    }
-  }, [isOpen]);
+// A status bar along the window's bottom: the search field, the count while filtering, and a button that opens the
+// tags above the bar.
+function SearchBar({ tags, filter, shown, total, onChange }: SearchBarProps) {
+  const [areTagsOpen, setAreTagsOpen] = useState(lastTagsOpen);
+  const tagsId = useId();
 
-  const toggle = () => {
-    wasOpened.current = !isOpen;
-    lastOpen = !isOpen;
-    setIsOpen(!isOpen);
+  const toggleTags = () => {
+    lastTagsOpen = !areTagsOpen;
+    setAreTagsOpen(!areTagsOpen);
   };
 
   const toggleTag = (tag: string) =>
@@ -97,43 +99,50 @@ function PostFilters({
     });
 
   return (
-    <div className="blog__filters">
-      <button
-        type="button"
-        className="blog__filters-toggle"
-        aria-expanded={isOpen}
-        aria-controls={panelId}
-        onClick={toggle}
-      >
-        Search and filter
-        <span className="blog__filters-chevron" aria-hidden="true" />
-      </button>
-      {isOpen ? (
-        <div id={panelId} className="blog__filters-panel">
-          <input
-            ref={search}
-            type="search"
-            className="blog__search"
-            placeholder="Search posts"
-            aria-label="Search posts"
-            value={filter.query}
-            onChange={(event) => onChange({ ...filter, query: event.target.value })}
-          />
-          <div className="blog__tag-filters" role="group" aria-label="Tags">
-            {tags.map((tag) => (
-              <button
-                key={tag}
-                type="button"
-                className="blog__tag-filter"
-                aria-pressed={filter.tags.includes(tag)}
-                onClick={() => toggleTag(tag)}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
+    <div className="blog-bar" role="search">
+      {areTagsOpen ? (
+        <div id={tagsId} className="blog-bar__tags" role="group" aria-label="Tags">
+          {tags.map((tag) => (
+            <button
+              key={tag}
+              type="button"
+              className="blog-bar__tag"
+              aria-pressed={filter.tags.includes(tag)}
+              onClick={() => toggleTag(tag)}
+            >
+              {tag}
+            </button>
+          ))}
         </div>
       ) : null}
+      <div className="blog-bar__row">
+        <input
+          type="search"
+          className="blog-bar__search"
+          placeholder="Search posts"
+          aria-label="Search posts"
+          value={filter.query}
+          onChange={(event) => onChange({ ...filter, query: event.target.value })}
+        />
+        {isFiltering(filter) ? (
+          <span className="blog-bar__count">
+            {shown} of {total}
+            <button type="button" className="blog-bar__clear" onClick={() => onChange(NO_FILTER)}>
+              Clear
+            </button>
+          </span>
+        ) : null}
+        <button
+          type="button"
+          className="blog-bar__tags-toggle"
+          aria-expanded={areTagsOpen}
+          aria-controls={tagsId}
+          onClick={toggleTags}
+        >
+          Tags{filter.tags.length > 0 ? ` (${filter.tags.length})` : ""}
+          <span className="blog-bar__chevron" aria-hidden="true" />
+        </button>
+      </div>
     </div>
   );
 }
@@ -161,24 +170,29 @@ function PostList({ posts }: { posts: PostSummary[] }) {
   }, [isSearching, texts]);
 
   if (posts.length === 0) {
-    return <p className="blog__empty">No posts yet.</p>;
+    return (
+      <BlogView>
+        <p className="blog__empty">No posts yet.</p>
+      </BlogView>
+    );
   }
 
   const shown = posts.filter((post) => matchesFilter(post, filter, texts?.get(post.slug)));
 
   return (
-    <div className="blog__index">
-      <PostFilters tags={getAllTags(posts)} filter={filter} onChange={changeFilter} />
-      {isFiltering(filter) ? (
-        <p className="blog__count">
-          {shown.length} of {posts.length} posts
-          <button type="button" className="blog__clear" onClick={() => changeFilter(NO_FILTER)}>
-            Clear
-          </button>
-        </p>
-      ) : null}
+    <BlogView
+      bar={
+        <SearchBar
+          tags={getAllTags(posts)}
+          filter={filter}
+          shown={shown.length}
+          total={posts.length}
+          onChange={changeFilter}
+        />
+      }
+    >
       {shown.length === 0 ? (
-        <p className="blog__empty">No posts match.</p>
+        <p className="blog__empty blog__no-match">No posts match.</p>
       ) : (
         <ul className="blog__list">
           {shown.map((post) => (
@@ -192,7 +206,7 @@ function PostList({ posts }: { posts: PostSummary[] }) {
           ))}
         </ul>
       )}
-    </div>
+    </BlogView>
   );
 }
 
@@ -211,23 +225,33 @@ function PostPage({ post }: { post: Post }) {
 
 function Blog({ data }: BlogProps) {
   if (isPostPage(data)) {
-    return <PostPage post={data.post} />;
+    return (
+      <BlogView>
+        <PostPage post={data.post} />
+      </BlogView>
+    );
   }
   if (isListPage(data)) {
     return <PostList posts={data.posts} />;
   }
   if (isMissingPost(data)) {
     return (
-      <div className="blog-post">
-        <Link className="blog__back" to="/blog">
-          ← All posts
-        </Link>
-        <p className="blog__empty">This post doesn't exist, or it has moved.</p>
-      </div>
+      <BlogView>
+        <div className="blog-post">
+          <Link className="blog__back" to="/blog">
+            ← All posts
+          </Link>
+          <p className="blog__empty">This post doesn't exist, or it has moved.</p>
+        </div>
+      </BlogView>
     );
   }
 
-  return <p className="blog__empty">Loading…</p>;
+  return (
+    <BlogView>
+      <p className="blog__empty">Loading…</p>
+    </BlogView>
+  );
 }
 
 export default Blog;
