@@ -38,7 +38,7 @@
   margin: 0;
   padding: 7px 9px;
   color: rgb(var(--chrome-accent-pale) / 0.9);
-  font-size: 0.7rem;
+  font-size: 11.2px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -58,7 +58,7 @@
   background: transparent;
   color: #ffffff;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 13.6px;
   text-align: left;
   cursor: pointer;
 }

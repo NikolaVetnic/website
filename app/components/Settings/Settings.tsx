@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import type { Accent, Settings as SettingsValues, Theme, Wallpaper } from "~/settings/settings";
+import type { Accent, Settings as SettingsValues, TextSize, Theme, Wallpaper } from "~/settings/settings";
 import useSettings from "~/settings/useSettings";
 import "./Settings.css";
 
@@ -26,6 +26,12 @@ const WALLPAPER_OPTIONS: Option<Wallpaper>[] = [
   { value: "forest", label: "Forest" },
   { value: "ember", label: "Ember" },
   { value: "graphite", label: "Graphite" },
+];
+
+const TEXT_SIZE_OPTIONS: Option<TextSize>[] = [
+  { value: "small", label: "Small" },
+  { value: "normal", label: "Normal" },
+  { value: "large", label: "Large" },
 ];
 
 // One setting as a group of radio buttons drawn as cards, each with a picture of its choice above its label.
@@ -101,6 +107,17 @@ function Settings() {
           compact
           preview={(wallpaper) => (
             <span className="settings__wallpaper" data-wallpaper={wallpaper} aria-hidden="true" />
+          )}
+        />
+        <Choice
+          name="textSize"
+          legend="Text size in windows"
+          options={TEXT_SIZE_OPTIONS}
+          compact
+          preview={(size) => (
+            <span className={`settings__sample settings__sample--${size}`} aria-hidden="true">
+              Aa
+            </span>
           )}
         />
         <p className="settings__note">Settings are kept in this browser only.</p>

@@ -153,6 +153,17 @@
     linear-gradient(150deg, #3b424b 0%, #2a3037 50%, #15181c 100%);
 }
 
+/* Text size (`data-text-size`): the root font size, so all text sized in rem grows or shrinks, which is the windows'
+   content. The chrome (taskbar, title bars, icon captions, menus) sizes its text in px and stays as it is, like the
+   bars that hold it. A percentage, so the size the visitor set in their browser still counts. */
+:root[data-text-size="small"] {
+  font-size: 87.5%;
+}
+
+:root[data-text-size="large"] {
+  font-size: 125%;
+}
+
 html,
 body {
   margin: 0;

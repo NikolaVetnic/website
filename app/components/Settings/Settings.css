@@ -121,6 +121,29 @@
   background: var(--wallpaper);
 }
 
+/* "Aa" at each size, in px so the pictures stay as they are whatever size is chosen. */
+.settings__sample {
+  display: grid;
+  place-items: center;
+  height: 48px;
+  border-radius: 6px;
+  background: rgb(var(--text) / 0.06);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.settings__sample--small {
+  font-size: 15px;
+}
+
+.settings__sample--normal {
+  font-size: 19px;
+}
+
+.settings__sample--large {
+  font-size: 24px;
+}
+
 .settings__note {
   margin: 16px 0 0;
   color: rgb(var(--text-subtle));

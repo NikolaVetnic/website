@@ -83,7 +83,7 @@
   min-width: 0;
   margin: 0;
   overflow: hidden;
-  font-size: 0.9rem;
+  font-size: 14.4px;
   font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -242,7 +242,7 @@
   }
 
   .app-window__title {
-    font-size: 1rem;
+    font-size: 16px;
   }
 
   .app-window__control {

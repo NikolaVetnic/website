@@ -11,9 +11,17 @@ export type Accent = (typeof ACCENTS)[number];
 export const WALLPAPERS = ["ocean", "dusk", "forest", "ember", "graphite"] as const;
 export type Wallpaper = (typeof WALLPAPERS)[number];
 
-export type Settings = { theme: Theme; accent: Accent; wallpaper: Wallpaper };
+export const TEXT_SIZES = ["small", "normal", "large"] as const;
+export type TextSize = (typeof TEXT_SIZES)[number];
 
-export const DEFAULT_SETTINGS: Settings = { theme: "system", accent: "blue", wallpaper: "ocean" };
+export type Settings = { theme: Theme; accent: Accent; wallpaper: Wallpaper; textSize: TextSize };
+
+export const DEFAULT_SETTINGS: Settings = {
+  theme: "system",
+  accent: "blue",
+  wallpaper: "ocean",
+  textSize: "normal",
+};
 
 export const SETTINGS_KEY = "appearance";
 
@@ -22,10 +30,11 @@ export const SETTING_VALUES: { [Name in keyof Settings]: readonly Settings[Name]
   theme: THEMES,
   accent: ACCENTS,
   wallpaper: WALLPAPERS,
+  textSize: TEXT_SIZES,
 };
 
 // Puts settings on <html>, where the stylesheets read them (`data-theme`, `color-scheme` for scrollbars and form
-// controls, `data-accent`, `data-wallpaper`), and returns them: the given ones, else the stored ones. A setting that is missing or
+// controls, `data-accent`, `data-wallpaper`, `data-text-size`), and returns them: the given ones, else the stored ones. A setting that is missing or
 // not allowed gets its default, so an old or edited entry never breaks the page, and storage can be unavailable
 // (private windows, blocked site data). Self-contained, with no imports or outside names, because its source also runs as
 // the inline script in <head>, before anything else.
@@ -61,6 +70,7 @@ export function applyStoredSettings(
   root.style.colorScheme = dark ? "dark" : "light";
   root.dataset.accent = settings.accent;
   root.dataset.wallpaper = settings.wallpaper;
+  root.dataset.textSize = settings.textSize;
 
   return settings as Settings;
 }

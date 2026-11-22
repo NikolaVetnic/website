@@ -55,6 +55,12 @@ describe("applySettings", () => {
     expect(root.dataset.wallpaper).toBe("forest");
   });
 
+  it("puts the text size on the page", () => {
+    const { root } = stubBrowser({ stored: '{"textSize":"large"}' });
+    expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, textSize: "large" });
+    expect(root.dataset.textSize).toBe("large");
+  });
+
   it("keeps the settings it can use when others are wrong", () => {
     stubBrowser({ stored: '{"theme":"dark","accent":"chartreuse"}' });
     expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, theme: "dark" });
@@ -95,11 +101,12 @@ describe("the inline script", () => {
 
   // Run as the browser runs it, from its text alone: it may not use anything from outside itself.
   it("applies the stored settings on its own", () => {
-    const { root } = stubBrowser({ stored: '{"theme":"dark","accent":"rose","wallpaper":"dusk"}' });
+    const { root } = stubBrowser({ stored: '{"theme":"dark","accent":"rose","wallpaper":"dusk","textSize":"small"}' });
     new Function(APPLY_SETTINGS_SCRIPT)();
     expect(root.dataset.theme).toBe("dark");
     expect(root.dataset.accent).toBe("rose");
     expect(root.dataset.wallpaper).toBe("dusk");
+    expect(root.dataset.textSize).toBe("small");
 
     const fresh = stubBrowser({ systemIsDark: false });
     new Function(APPLY_SETTINGS_SCRIPT)();
