@@ -1,0 +1,129 @@
+.contact {
+  max-width: 68ch;
+  margin: 0 auto;
+  container: contact / inline-size;
+}
+
+.contact__header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.contact__photo {
+  flex: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(var(--text) / 0.15);
+  object-fit: cover;
+}
+
+.contact__name {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.contact__role {
+  margin: 2px 0 0;
+  color: rgb(var(--text-muted));
+}
+
+.contact__intro {
+  margin: 16px 0;
+  line-height: 1.55;
+}
+
+.contact__rows {
+  margin: 0;
+}
+
+/* Label, value and an action, in columns across the rows, each row under a thin line. */
+.contact__row {
+  display: grid;
+  grid-template-columns: 6.5em minmax(0, 1fr) auto;
+  grid-template-areas: "label value action";
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 0;
+  border-top: 1px solid rgb(var(--text) / 0.1);
+}
+
+.contact__label {
+  grid-area: label;
+  color: rgb(var(--text-muted));
+  font-size: 0.9rem;
+}
+
+.contact__value,
+.contact__action {
+  margin: 0;
+}
+
+.contact__value {
+  grid-area: value;
+  overflow-wrap: break-word;
+}
+
+.contact__action {
+  grid-area: action;
+}
+
+/* A narrow window (a phone's): each label above its value, so the addresses keep the width. */
+@container contact (max-width: 420px) {
+  .contact__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "label label"
+      "value action";
+    row-gap: 2px;
+    padding: 8px 0;
+  }
+
+  .contact__label {
+    font-size: 0.8rem;
+  }
+}
+
+.contact__link {
+  color: rgb(var(--accent));
+  text-decoration: none;
+}
+
+.contact__link:hover {
+  text-decoration: underline;
+}
+
+.contact__external {
+  margin-left: 4px;
+  font-size: 0.85em;
+}
+
+.contact__copy {
+  padding: 4px 12px;
+  border: 1px solid rgb(var(--accent) / 0.5);
+  border-radius: 6px;
+  background: none;
+  color: rgb(var(--accent));
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.contact__copy:hover:not(:disabled) {
+  background: rgb(var(--accent) / 0.1);
+}
+
+.contact__copy:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Read out, not shown. */
+.contact__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

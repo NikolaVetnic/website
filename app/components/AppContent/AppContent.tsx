@@ -1,6 +1,7 @@
 import About from "~/components/About/About";
 import AppPage from "~/components/AppPage/AppPage";
 import Blog from "~/components/Blog/Blog";
+import Contact from "~/components/Contact/Contact";
 import Folder from "~/components/Folder/Folder";
 import Settings from "~/components/Settings/Settings";
 import { getFolderApps, type DesktopApp } from "~/desktop/apps";
@@ -25,6 +26,8 @@ function AppContent({ app, data, onActivate }: AppContentProps) {
       return <About data={data} />;
     case "blog":
       return <Blog data={data} />;
+    case "contact":
+      return <Contact />;
     case "games":
       return <Folder apps={getFolderApps("games")} />;
     case "settings":
