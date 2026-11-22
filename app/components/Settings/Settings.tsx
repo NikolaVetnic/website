@@ -1,5 +1,6 @@
-import { useSyncExternalStore, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
+import useBrowserValue from "~/hooks/useBrowserValue";
 import { getTimeFormat } from "~/settings/clock";
 
 import type { Accent, ClockFormat, Settings as SettingsValues, TextSize, Theme, Wallpaper } from "~/settings/settings";
@@ -46,9 +47,6 @@ const CLOCK_OPTIONS: Option<ClockFormat>[] = [
 const EXAMPLE_TIME = new Date(2026, 0, 1, 21, 41);
 const CLOCK_EXAMPLES: Record<ClockFormat, string> = { auto: "Auto", "12": "9:41 PM", "24": "21:41" };
 
-// The browser's format doesn't change while the page is open.
-const subscribeToNothing = () => () => {};
-
 // One setting as a group of radio buttons drawn as cards, each with a picture of its choice above its label.
 function Choice<Name extends keyof SettingsValues>({
   name,
@@ -91,11 +89,7 @@ function Choice<Name extends keyof SettingsValues>({
 // The Settings window: how the site looks, for this visitor, in this browser.
 function Settings() {
   // Automatic's picture is the browser's own format, known only once the page runs in it: "Auto" before that.
-  const autoExample = useSyncExternalStore(
-    subscribeToNothing,
-    () => getTimeFormat("auto").format(EXAMPLE_TIME),
-    () => CLOCK_EXAMPLES.auto,
-  );
+  const autoExample = useBrowserValue(() => getTimeFormat("auto").format(EXAMPLE_TIME), CLOCK_EXAMPLES.auto);
 
   return (
     <div className="settings">
