@@ -14,6 +14,22 @@
   border: 0;
 }
 
+.settings__field + .settings__field,
+.settings__field + .settings__row {
+  margin-top: 20px;
+}
+
+/* Two small settings side by side, one above the other in a narrow window. */
+.settings__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.settings__row > .settings__field {
+  margin-top: 0;
+}
+
 .settings__label {
   margin-bottom: 8px;
   padding: 0;
@@ -23,8 +39,12 @@
 
 .settings__options {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 10px;
+}
+
+.settings__options--compact {
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
 }
 
 .settings__option {
@@ -66,7 +86,7 @@
   display: grid;
   align-content: start;
   gap: 5px;
-  height: 64px;
+  height: 56px;
   padding: 0 0 8px;
   overflow: hidden;
   border-radius: 6px;
@@ -97,6 +117,48 @@
 
 .settings__preview-line--short {
   width: 50%;
+}
+
+/* The accent in the page's theme: the element's own `data-accent` gives it that accent's tokens (app.css). */
+.settings__swatch {
+  height: 28px;
+  border-radius: 6px;
+  background: rgb(var(--accent));
+}
+
+/* The wallpaper itself, from its own tokens (app.css), shrunk to the card. */
+.settings__wallpaper {
+  height: 40px;
+  border-radius: 6px;
+  background: var(--wallpaper);
+}
+
+/* "Aa" at each size, in px so the pictures stay as they are whatever size is chosen. */
+.settings__sample {
+  display: grid;
+  place-items: center;
+  height: 40px;
+  border-radius: 6px;
+  background: rgb(var(--text) / 0.06);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.settings__sample--small {
+  font-size: 15px;
+}
+
+.settings__sample--normal {
+  font-size: 19px;
+}
+
+.settings__sample--large {
+  font-size: 24px;
+}
+
+.settings__sample--time {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
 }
 
 .settings__note {
