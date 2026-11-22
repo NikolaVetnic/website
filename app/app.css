@@ -7,7 +7,7 @@
 /* The colours the appearance settings change. Each is an RGB triplet for rgb(), so it can be used at any opacity:
    rgb(var(--accent)), rgb(var(--accent) / 0.1). Lines and fills in windows are the text colour at a low opacity,
    so they follow the theme. The dark chrome (taskbar, title bars, menus) keeps its own colours in each component.
-   These are the defaults: light theme, blue accent, blue wallpaper. */
+   These are the defaults: light theme, blue wallpaper. The accent comes from the presets below. */
 :root {
   /* Window content */
   --surface-top: 242 246 253;
@@ -19,14 +19,7 @@
   --shadow: 7 21 35;
   --code-block: 27 43 58;
   --code-block-text: 233 241 251;
-
-  /* Accent: strong on the light window content, bright on the dark chrome */
-  --accent: 29 95 168;
-  --accent-hover: 23 77 137;
   --on-accent: 255 255 255;
-  --chrome-accent: 118 213 255;
-  --chrome-accent-pale: 201 235 255;
-  --chrome-accent-deep: 30 91 132;
 
   /* Wallpaper */
   --wallpaper-base: #0f2a42;
@@ -36,7 +29,7 @@
     linear-gradient(145deg, #194067 0%, #1e5b84 50%, #0f2a42 100%);
 }
 
-/* The dark theme: the window content turns dark, the accent brighter. The chrome is dark in both themes. */
+/* The dark theme: the window content turns dark (each accent gets brighter, below). The chrome is dark in both themes. */
 :root[data-theme="dark"] {
   --surface-top: 33 41 53;
   --surface-bottom: 26 33 43;
@@ -47,9 +40,81 @@
   --shadow: 0 0 0;
   --code-block: 13 19 27;
   --code-block-text: 226 236 248;
+  --on-accent: 10 24 38;
+}
+
+/* Accent colours (`data-accent`): strong on the light window content, bright on the dark content and chrome.
+   The selectors aren't tied to :root, so an element with `data-accent` shows that accent inside it whatever the
+   page's is: the swatches in Settings are drawn so. Blue is the default. */
+:root,
+[data-accent="blue"] {
+  --accent: 29 95 168;
+  --accent-hover: 23 77 137;
+  --chrome-accent: 118 213 255;
+  --chrome-accent-pale: 201 235 255;
+  --chrome-accent-deep: 30 91 132;
+}
+
+:root[data-theme="dark"][data-accent="blue"],
+:root[data-theme="dark"] [data-accent="blue"] {
   --accent: 118 190 255;
   --accent-hover: 156 208 255;
-  --on-accent: 10 24 38;
+}
+
+[data-accent="teal"] {
+  --accent: 11 108 95;
+  --accent-hover: 10 94 83;
+  --chrome-accent: 110 231 208;
+  --chrome-accent-pale: 200 247 238;
+  --chrome-accent-deep: 18 104 92;
+}
+
+:root[data-theme="dark"][data-accent="teal"],
+:root[data-theme="dark"] [data-accent="teal"] {
+  --accent: 94 212 190;
+  --accent-hover: 143 227 212;
+}
+
+[data-accent="purple"] {
+  --accent: 107 70 193;
+  --accent-hover: 86 54 158;
+  --chrome-accent: 196 172 255;
+  --chrome-accent-pale: 232 222 255;
+  --chrome-accent-deep: 92 60 160;
+}
+
+:root[data-theme="dark"][data-accent="purple"],
+:root[data-theme="dark"] [data-accent="purple"] {
+  --accent: 192 170 255;
+  --accent-hover: 207 189 255;
+}
+
+[data-accent="orange"] {
+  --accent: 168 68 0;
+  --accent-hover: 143 59 0;
+  --chrome-accent: 255 182 110;
+  --chrome-accent-pale: 255 226 198;
+  --chrome-accent-deep: 150 70 10;
+}
+
+:root[data-theme="dark"][data-accent="orange"],
+:root[data-theme="dark"] [data-accent="orange"] {
+  --accent: 255 170 100;
+  --accent-hover: 255 198 150;
+}
+
+[data-accent="rose"] {
+  --accent: 184 46 88;
+  --accent-hover: 148 36 71;
+  --chrome-accent: 255 158 190;
+  --chrome-accent-pale: 255 214 228;
+  --chrome-accent-deep: 158 40 78;
+}
+
+:root[data-theme="dark"][data-accent="rose"],
+:root[data-theme="dark"] [data-accent="rose"] {
+  --accent: 255 143 176;
+  --accent-hover: 255 180 203;
 }
 
 html,

@@ -35,8 +35,23 @@ describe("applySettings", () => {
 
   it("applies a stored theme over the system's", () => {
     const { root } = stubBrowser({ stored: '{"theme":"light"}', systemIsDark: true });
-    expect(applySettings()).toEqual({ theme: "light" });
+    expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, theme: "light" });
     expect(root.dataset.theme).toBe("light");
+  });
+
+  it("puts the accent on the page", () => {
+    const { root } = stubBrowser({ stored: '{"accent":"teal"}' });
+    expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, accent: "teal" });
+    expect(root.dataset.accent).toBe("teal");
+
+    const fresh = stubBrowser();
+    applySettings();
+    expect(fresh.root.dataset.accent).toBe("blue");
+  });
+
+  it("keeps the settings it can use when others are wrong", () => {
+    stubBrowser({ stored: '{"theme":"dark","accent":"chartreuse"}' });
+    expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, theme: "dark" });
   });
 
   it("falls back to the defaults for anything it can't use", () => {
@@ -56,14 +71,15 @@ describe("saveSettings", () => {
 
   it("stores the settings and applies them", () => {
     const { root, items } = stubBrowser();
-    expect(saveSettings({ theme: "dark" })).toEqual({ theme: "dark" });
-    expect(items.get(SETTINGS_KEY)).toBe('{"theme":"dark"}');
+    const settings = { ...DEFAULT_SETTINGS, theme: "dark" as const };
+    expect(saveSettings(settings)).toEqual(settings);
+    expect(JSON.parse(items.get(SETTINGS_KEY) ?? "")).toEqual(settings);
     expect(root.dataset.theme).toBe("dark");
   });
 
   it("applies them even when they can't be stored", () => {
     const { root } = stubBrowser({ storage: false });
-    saveSettings({ theme: "dark" });
+    saveSettings({ ...DEFAULT_SETTINGS, theme: "dark" });
     expect(root.dataset.theme).toBe("dark");
   });
 });
@@ -73,9 +89,10 @@ describe("the inline script", () => {
 
   // Run as the browser runs it, from its text alone: it may not use anything from outside itself.
   it("applies the stored settings on its own", () => {
-    const { root } = stubBrowser({ stored: '{"theme":"dark"}' });
+    const { root } = stubBrowser({ stored: '{"theme":"dark","accent":"rose"}' });
     new Function(APPLY_SETTINGS_SCRIPT)();
     expect(root.dataset.theme).toBe("dark");
+    expect(root.dataset.accent).toBe("rose");
 
     const fresh = stubBrowser({ systemIsDark: false });
     new Function(APPLY_SETTINGS_SCRIPT)();

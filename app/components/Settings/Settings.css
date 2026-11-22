@@ -14,6 +14,10 @@
   border: 0;
 }
 
+.settings__field + .settings__field {
+  margin-top: 20px;
+}
+
 .settings__label {
   margin-bottom: 8px;
   padding: 0;
@@ -25,6 +29,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 10px;
+}
+
+.settings__options--compact {
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
 }
 
 .settings__option {
@@ -97,6 +105,13 @@
 
 .settings__preview-line--short {
   width: 50%;
+}
+
+/* The accent in the page's theme: the element's own `data-accent` gives it that accent's tokens (app.css). */
+.settings__swatch {
+  height: 28px;
+  border-radius: 6px;
+  background: rgb(var(--accent));
 }
 
 .settings__note {
