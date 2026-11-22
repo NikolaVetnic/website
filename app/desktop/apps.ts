@@ -56,7 +56,8 @@ export const APPS: DesktopApp[] = [
     id: "settings",
     title: "Settings",
     icon: "/icons/settings.svg",
-    description: "Change how the site looks: light or dark, and more to come.",
+    description: "Change how the site looks: theme, accent colour, wallpaper, text size and clock.",
+    windowSize: { width: 640, height: 640 },
   },
   {
     id: "sodhara",
