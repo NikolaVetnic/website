@@ -49,6 +49,12 @@ describe("applySettings", () => {
     expect(fresh.root.dataset.accent).toBe("blue");
   });
 
+  it("puts the wallpaper on the page", () => {
+    const { root } = stubBrowser({ stored: '{"wallpaper":"forest"}' });
+    expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, wallpaper: "forest" });
+    expect(root.dataset.wallpaper).toBe("forest");
+  });
+
   it("keeps the settings it can use when others are wrong", () => {
     stubBrowser({ stored: '{"theme":"dark","accent":"chartreuse"}' });
     expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, theme: "dark" });
@@ -89,10 +95,11 @@ describe("the inline script", () => {
 
   // Run as the browser runs it, from its text alone: it may not use anything from outside itself.
   it("applies the stored settings on its own", () => {
-    const { root } = stubBrowser({ stored: '{"theme":"dark","accent":"rose"}' });
+    const { root } = stubBrowser({ stored: '{"theme":"dark","accent":"rose","wallpaper":"dusk"}' });
     new Function(APPLY_SETTINGS_SCRIPT)();
     expect(root.dataset.theme).toBe("dark");
     expect(root.dataset.accent).toBe("rose");
+    expect(root.dataset.wallpaper).toBe("dusk");
 
     const fresh = stubBrowser({ systemIsDark: false });
     new Function(APPLY_SETTINGS_SCRIPT)();

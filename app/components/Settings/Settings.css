@@ -114,6 +114,13 @@
   background: rgb(var(--accent));
 }
 
+/* The wallpaper itself, from its own tokens (app.css), shrunk to the card. */
+.settings__wallpaper {
+  height: 48px;
+  border-radius: 6px;
+  background: var(--wallpaper);
+}
+
 .settings__note {
   margin: 16px 0 0;
   color: rgb(var(--text-subtle));

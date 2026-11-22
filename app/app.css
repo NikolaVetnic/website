@@ -7,7 +7,7 @@
 /* The colours the appearance settings change. Each is an RGB triplet for rgb(), so it can be used at any opacity:
    rgb(var(--accent)), rgb(var(--accent) / 0.1). Lines and fills in windows are the text colour at a low opacity,
    so they follow the theme. The dark chrome (taskbar, title bars, menus) keeps its own colours in each component.
-   These are the defaults: light theme, blue wallpaper. The accent comes from the presets below. */
+   These are the light theme's; the accent and the wallpaper come from the presets below. */
 :root {
   /* Window content */
   --surface-top: 242 246 253;
@@ -20,13 +20,6 @@
   --code-block: 27 43 58;
   --code-block-text: 233 241 251;
   --on-accent: 255 255 255;
-
-  /* Wallpaper */
-  --wallpaper-base: #0f2a42;
-  --wallpaper:
-    radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.2), transparent 30%),
-    radial-gradient(circle at 84% 10%, rgba(143, 255, 208, 0.15), transparent 26%),
-    linear-gradient(145deg, #194067 0%, #1e5b84 50%, #0f2a42 100%);
 }
 
 /* The dark theme: the window content turns dark (each accent gets brighter, below). The chrome is dark in both themes. */
@@ -115,6 +108,49 @@
 :root[data-theme="dark"] [data-accent="rose"] {
   --accent: 255 143 176;
   --accent-hover: 255 180 203;
+}
+
+/* Wallpapers (`data-wallpaper`): the desktop's background, and a plain colour (`--wallpaper-base`) for the page
+   behind it. Dark enough for the icons' white captions. Like the accents, not tied to :root, so the previews in
+   Settings are drawn from them. Ocean is the default. */
+:root,
+[data-wallpaper="ocean"] {
+  --wallpaper-base: #0f2a42;
+  --wallpaper:
+    radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.2), transparent 30%),
+    radial-gradient(circle at 84% 10%, rgba(143, 255, 208, 0.15), transparent 26%),
+    linear-gradient(145deg, #194067 0%, #1e5b84 50%, #0f2a42 100%);
+}
+
+[data-wallpaper="dusk"] {
+  --wallpaper-base: #231a3b;
+  --wallpaper:
+    radial-gradient(circle at 18% 12%, rgba(255, 214, 170, 0.22), transparent 32%),
+    radial-gradient(circle at 82% 18%, rgba(255, 140, 190, 0.16), transparent 28%),
+    linear-gradient(150deg, #3d2c63 0%, #6e3a6e 50%, #231a3b 100%);
+}
+
+[data-wallpaper="forest"] {
+  --wallpaper-base: #10261e;
+  --wallpaper:
+    radial-gradient(circle at 15% 10%, rgba(220, 255, 200, 0.16), transparent 30%),
+    radial-gradient(circle at 85% 85%, rgba(120, 200, 150, 0.12), transparent 30%),
+    linear-gradient(150deg, #1d4a3b 0%, #2d6a4c 50%, #10261e 100%);
+}
+
+[data-wallpaper="ember"] {
+  --wallpaper-base: #2b140f;
+  --wallpaper:
+    radial-gradient(circle at 80% 12%, rgba(255, 200, 140, 0.22), transparent 30%),
+    radial-gradient(circle at 10% 90%, rgba(255, 120, 80, 0.12), transparent 30%),
+    linear-gradient(150deg, #5a2a1e 0%, #94472a 50%, #2b140f 100%);
+}
+
+[data-wallpaper="graphite"] {
+  --wallpaper-base: #15181c;
+  --wallpaper:
+    radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.1), transparent 35%),
+    linear-gradient(150deg, #3b424b 0%, #2a3037 50%, #15181c 100%);
 }
 
 html,

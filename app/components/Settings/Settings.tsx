@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import type { Accent, Settings as SettingsValues, Theme } from "~/settings/settings";
+import type { Accent, Settings as SettingsValues, Theme, Wallpaper } from "~/settings/settings";
 import useSettings from "~/settings/useSettings";
 import "./Settings.css";
 
@@ -18,6 +18,14 @@ const ACCENT_OPTIONS: Option<Accent>[] = [
   { value: "purple", label: "Purple" },
   { value: "orange", label: "Orange" },
   { value: "rose", label: "Rose" },
+];
+
+const WALLPAPER_OPTIONS: Option<Wallpaper>[] = [
+  { value: "ocean", label: "Ocean" },
+  { value: "dusk", label: "Dusk" },
+  { value: "forest", label: "Forest" },
+  { value: "ember", label: "Ember" },
+  { value: "graphite", label: "Graphite" },
 ];
 
 // One setting as a group of radio buttons drawn as cards, each with a picture of its choice above its label.
@@ -85,6 +93,15 @@ function Settings() {
           options={ACCENT_OPTIONS}
           compact
           preview={(accent) => <span className="settings__swatch" data-accent={accent} aria-hidden="true" />}
+        />
+        <Choice
+          name="wallpaper"
+          legend="Wallpaper"
+          options={WALLPAPER_OPTIONS}
+          compact
+          preview={(wallpaper) => (
+            <span className="settings__wallpaper" data-wallpaper={wallpaper} aria-hidden="true" />
+          )}
         />
         <p className="settings__note">Settings are kept in this browser only.</p>
       </section>
