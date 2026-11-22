@@ -1,6 +1,8 @@
-import type { ReactNode } from "react";
+import { useSyncExternalStore, type ReactNode } from "react";
 
-import type { Accent, Settings as SettingsValues, TextSize, Theme, Wallpaper } from "~/settings/settings";
+import { getTimeFormat } from "~/settings/clock";
+
+import type { Accent, ClockFormat, Settings as SettingsValues, TextSize, Theme, Wallpaper } from "~/settings/settings";
 import useSettings from "~/settings/useSettings";
 import "./Settings.css";
 
@@ -33,6 +35,19 @@ const TEXT_SIZE_OPTIONS: Option<TextSize>[] = [
   { value: "normal", label: "Normal" },
   { value: "large", label: "Large" },
 ];
+
+const CLOCK_OPTIONS: Option<ClockFormat>[] = [
+  { value: "auto", label: "Automatic" },
+  { value: "12", label: "12-hour" },
+  { value: "24", label: "24-hour" },
+];
+
+// The clock's pictures: the time each format writes, 9:41 in the evening.
+const EXAMPLE_TIME = new Date(2026, 0, 1, 21, 41);
+const CLOCK_EXAMPLES: Record<ClockFormat, string> = { auto: "Auto", "12": "9:41 PM", "24": "21:41" };
+
+// The browser's format doesn't change while the page is open.
+const subscribeToNothing = () => () => {};
 
 // One setting as a group of radio buttons drawn as cards, each with a picture of its choice above its label.
 function Choice<Name extends keyof SettingsValues>({
@@ -75,6 +90,13 @@ function Choice<Name extends keyof SettingsValues>({
 
 // The Settings window: how the site looks, for this visitor, in this browser.
 function Settings() {
+  // Automatic's picture is the browser's own format, known only once the page runs in it: "Auto" before that.
+  const autoExample = useSyncExternalStore(
+    subscribeToNothing,
+    () => getTimeFormat("auto").format(EXAMPLE_TIME),
+    () => CLOCK_EXAMPLES.auto,
+  );
+
   return (
     <div className="settings">
       <section className="settings__section" aria-labelledby="settings-appearance">
@@ -109,17 +131,30 @@ function Settings() {
             <span className="settings__wallpaper" data-wallpaper={wallpaper} aria-hidden="true" />
           )}
         />
-        <Choice
-          name="textSize"
-          legend="Text size in windows"
-          options={TEXT_SIZE_OPTIONS}
-          compact
-          preview={(size) => (
-            <span className={`settings__sample settings__sample--${size}`} aria-hidden="true">
-              Aa
-            </span>
-          )}
-        />
+        <div className="settings__row">
+          <Choice
+            name="textSize"
+            legend="Text size in windows"
+            options={TEXT_SIZE_OPTIONS}
+            compact
+            preview={(size) => (
+              <span className={`settings__sample settings__sample--${size}`} aria-hidden="true">
+                Aa
+              </span>
+            )}
+          />
+          <Choice
+            name="clock"
+            legend="Clock"
+            options={CLOCK_OPTIONS}
+            compact
+            preview={(clock) => (
+              <span className="settings__sample settings__sample--time" aria-hidden="true">
+                {clock === "auto" ? autoExample : CLOCK_EXAMPLES[clock]}
+              </span>
+            )}
+          />
+        </div>
         <p className="settings__note">Settings are kept in this browser only.</p>
       </section>
     </div>

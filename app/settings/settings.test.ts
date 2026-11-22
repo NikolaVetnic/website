@@ -61,6 +61,11 @@ describe("applySettings", () => {
     expect(root.dataset.textSize).toBe("large");
   });
 
+  it("reads the clock format", () => {
+    stubBrowser({ stored: '{"clock":"24"}' });
+    expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, clock: "24" });
+  });
+
   it("keeps the settings it can use when others are wrong", () => {
     stubBrowser({ stored: '{"theme":"dark","accent":"chartreuse"}' });
     expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, theme: "dark" });

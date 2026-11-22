@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const timeFormat = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" });
+import { getTimeFormat } from "~/settings/clock";
+import useSettings from "~/settings/useSettings";
+
 const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "full" });
 
 // Empty until it runs in the browser: the pre-rendered page must not show the build time.
 function Clock() {
   const [now, setNow] = useState<Date | null>(null);
+  const [{ clock }] = useSettings();
+  const timeFormat = useMemo(() => getTimeFormat(clock), [clock]);
 
   useEffect(() => {
     let timer = 0;

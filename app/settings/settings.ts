@@ -14,13 +14,18 @@ export type Wallpaper = (typeof WALLPAPERS)[number];
 export const TEXT_SIZES = ["small", "normal", "large"] as const;
 export type TextSize = (typeof TEXT_SIZES)[number];
 
-export type Settings = { theme: Theme; accent: Accent; wallpaper: Wallpaper; textSize: TextSize };
+// The taskbar clock: as the browser's language has it, or 12 or 24 hours. Only the clock reads it, not the stylesheets.
+export const CLOCK_FORMATS = ["auto", "12", "24"] as const;
+export type ClockFormat = (typeof CLOCK_FORMATS)[number];
+
+export type Settings = { theme: Theme; accent: Accent; wallpaper: Wallpaper; textSize: TextSize; clock: ClockFormat };
 
 export const DEFAULT_SETTINGS: Settings = {
   theme: "system",
   accent: "blue",
   wallpaper: "ocean",
   textSize: "normal",
+  clock: "auto",
 };
 
 export const SETTINGS_KEY = "appearance";
@@ -31,6 +36,7 @@ export const SETTING_VALUES: { [Name in keyof Settings]: readonly Settings[Name]
   accent: ACCENTS,
   wallpaper: WALLPAPERS,
   textSize: TEXT_SIZES,
+  clock: CLOCK_FORMATS,
 };
 
 // Puts settings on <html>, where the stylesheets read them (`data-theme`, `color-scheme` for scrollbars and form

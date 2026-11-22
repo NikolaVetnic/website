@@ -14,8 +14,20 @@
   border: 0;
 }
 
-.settings__field + .settings__field {
+.settings__field + .settings__field,
+.settings__field + .settings__row {
   margin-top: 20px;
+}
+
+/* Two small settings side by side, one above the other in a narrow window. */
+.settings__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.settings__row > .settings__field {
+  margin-top: 0;
 }
 
 .settings__label {
@@ -27,12 +39,12 @@
 
 .settings__options {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 10px;
 }
 
 .settings__options--compact {
-  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
 }
 
 .settings__option {
@@ -74,7 +86,7 @@
   display: grid;
   align-content: start;
   gap: 5px;
-  height: 64px;
+  height: 56px;
   padding: 0 0 8px;
   overflow: hidden;
   border-radius: 6px;
@@ -116,7 +128,7 @@
 
 /* The wallpaper itself, from its own tokens (app.css), shrunk to the card. */
 .settings__wallpaper {
-  height: 48px;
+  height: 40px;
   border-radius: 6px;
   background: var(--wallpaper);
 }
@@ -125,7 +137,7 @@
 .settings__sample {
   display: grid;
   place-items: center;
-  height: 48px;
+  height: 40px;
   border-radius: 6px;
   background: rgb(var(--text) / 0.06);
   font-weight: 600;
@@ -142,6 +154,11 @@
 
 .settings__sample--large {
   font-size: 24px;
+}
+
+.settings__sample--time {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
 }
 
 .settings__note {
