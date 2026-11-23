@@ -42,6 +42,7 @@ export const APPS: DesktopApp[] = [
     title: "Projects",
     icon: "/icons/projects.svg",
     description: "Software projects by Nikola Pacek Vetnić.",
+    windowSize: { width: 840, height: 600 },
   },
   { id: "games", title: "Games", icon: "/icons/games.svg", description: "Games made by Nikola Pacek Vetnić." },
   { id: "art", title: "Art", icon: "/icons/art.svg", description: "Art by Nikola Pacek Vetnić." },
