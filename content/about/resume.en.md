@@ -41,6 +41,8 @@ Known for building robust, maintainable systems and for working across technical
   - Editor (C++, Qt): one shared widget in place of three diverging copies of the toolbar's right-click lists, so they all behave the same; also fixed a crash when selecting a deleted texture ([merge request 5738](https://gitlab.com/OpenMW/openmw/-/merge_requests/5738)).
 - **Testcontainers for .NET**: an `ExecScriptAsync` overload that takes a custom text encoding (Oct 2026, [pull request 1805](https://github.com/testcontainers/testcontainers-dotnet/pull/1805)).
 
+All contributions, as the list grows: the [Open source](/projects/open-source) tab in Projects.
+
 ## PERSONAL PROJECTS
 
 ### **Independent game development** : 2017 – Present
