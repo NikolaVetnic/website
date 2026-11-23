@@ -2,7 +2,7 @@
 
 export const CONTACT = {
   name: "Nikola Vetnić",
-  role: "Developer and composer",
+  role: "Software developer · AI engineer · Composer",
   // The old site's Contact page, narrowed to code and music.
   intro:
     "Feel free to get in touch with me. I am always open to discussing code and music. Creativity never gets stale.",
