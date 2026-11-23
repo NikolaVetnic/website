@@ -13,23 +13,21 @@ A simple live performance on electronic drums supplies structure, timing and ene
 
 The premise: **compositional complexity does not require equivalent physical performance complexity.** How the work is shared between performer and machine is itself part of the composition.
 
-```text
-                       COMPOSITION JSON
-                              |
-                     precomposed formal model
-                              v
-ELECTRONIC DRUMS ---> MAX ---> PYTHON
-       |                       |
-       |                  analyze gesture / determine state
-       |                  consult memory / run processes
-       |                  negotiate conflicts / apply constraints
-       |                       v
-       +<------ MAX <----- generated phrase
-                 |
-          +------+------+
-         MSP          JITTER
-          |             |
-        AUDIO         VISUALS
+```mermaid
+flowchart TD
+  drums["Electronic drums"] --> maxIn["Max"]
+  score["Composition JSON"] --> model["Precomposed formal model"]
+  maxIn --> python
+  model --> python
+  subgraph python["Python"]
+    direction TB
+    analyze["Analyze the gesture, determine the state"] --> memory["Consult memory, run the processes"]
+    memory --> negotiate["Negotiate conflicts, apply constraints"]
+  end
+  python --> phrase["Generated phrase"]
+  phrase --> maxOut["Max"]
+  maxOut --> audio["MSP: audio"]
+  maxOut --> visuals["Jitter: visuals"]
 ```
 
 ## Where it stands
