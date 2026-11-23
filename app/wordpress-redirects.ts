@@ -34,7 +34,7 @@ const PAGES: Record<number, string> = {
   298: "/projects", // Code
   505: "/projects", // Other Projects
   895: "/projects", // Main Projects
-  1253: "/projects", // Computer Graphics 2
+  1253: "/projects/voxel-ray-tracer", // Computer Graphics 2
   1371: "/projects", // Computer Graphics 1
   1611: "/projects", // Mars Explorer 3D
   1614: "/projects", // SocNet Project

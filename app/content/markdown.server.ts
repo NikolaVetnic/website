@@ -26,6 +26,13 @@ const markdown = new Marked({
         ? html.replace(/^<a /, '<a target="_blank" rel="noopener noreferrer" ')
         : html;
     },
+    // A ```mermaid block is a diagram: its source, kept for the browser to draw (see Prose.tsx).
+    code(token) {
+      if (token.lang !== "mermaid") {
+        return false;
+      }
+      return `<figure class="prose-diagram"><pre class="prose-diagram__source">${escapeHtml(token.text)}</pre></figure>\n`;
+    },
     // Images load as the reader scrolls to them.
     image(token) {
       return Renderer.prototype.image.call(this, token).replace(/^<img /, '<img loading="lazy" decoding="async" ');

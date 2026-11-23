@@ -90,3 +90,27 @@
   padding: 0;
   background: none;
 }
+
+/* A Mermaid diagram (Prose.tsx draws it). Until then, its source in small, quiet type. */
+.prose-diagram {
+  margin: 1.4em 0;
+}
+
+.prose-diagram__source {
+  margin: 0;
+  padding: 12px;
+  border: 1px dashed rgb(var(--text) / 0.2);
+  border-radius: 8px;
+  background: none;
+  color: rgb(var(--text-subtle));
+  font-size: 0.75rem;
+}
+
+.prose-diagram--drawn {
+  text-align: center;
+}
+
+.prose-diagram--drawn svg {
+  max-width: 100%;
+  height: auto;
+}
