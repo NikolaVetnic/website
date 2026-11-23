@@ -2,84 +2,105 @@
 title: Resume
 language: English
 flag: gb
-pdf: https://drive.google.com/file/d/15lo1hgCkxDELyPSsoz8BVx9C54WH3-wF/view?usp=sharing
+pdf: https://drive.google.com/file/d/1j5cYU8j2asyD9l2LVOWH-j3TYfSVDewc/view?usp=sharing
 ---
 
-Versatile and driven software developer with expertise in backend systems, web applications, DevOps, and computer graphics, enthusiastic about building innovative solutions and exploring diverse domains in technology.
+Backend-focused software developer with strong experience in .NET, cloud infrastructure (Azure) and DevOps, currently building AI agent governance and LLM gateway infrastructure, with a background in game development and computer graphics.
 
-## 1 RELEVANT PROFESSIONAL EXPERIENCE
+Known for building robust, maintainable systems and for working across technical and creative fields.
 
-### **Software Developer** at js-soft AG, Germany (remote) : Sep 2022 – Present
+## EXPERIENCE
 
-- Developed the storage component for [Mein Bildungsraum](https://www.meinbildungsraum.de/) project under the German Ministry of Education, enabling secure data and certificate transfer.  
-  _Tech:_ ASP.NET Core, EF Core, Postgres, Docker  
-  _Web:_ [enmeshed.eu](https://enmeshed.eu/)  
-  _GitHub: [https://github.com/nmshd/backbone](https://github.com/nmshd/backbone)_
-- Developed the middleware for authentication and authorization supporting both OData and OpenAPI scopes.  
-  _Tech:_ SAP CAP, Node.js, Postgres
+### **AI Engineer** at Brighting, Netherlands : Oct 2026 – Present
 
-### **Managing Director** at js-soft Balkan, Serbia (Novi Sad) : Apr 2024 – Present
+- Developing _Agentic Runway_, an AI agent governance platform (agent registry, LLM gateway, MCP tool gateway), and delivered its first private-network Azure installation, for a Dutch window decoration company.
+- Built the customer delivery and deployment pipeline, a lower-cost MCP gateway in place of Azure API Management, and OAuth access-token authentication for the LLM gateway, so that model spend is billed to a verified identity.  
+  _Tech:_ TypeScript, Node.js, Python, Terraform, Azure (Container Apps, Key Vault, Entra ID), AWS, Envoy, LiteLLM, PostgreSQL, Okta, Docker, GitHub Actions
 
-- Streamlined employee onboarding by managing recruitment, resolving legal issues, and representing team interests to senior management.
-- Acted as a liaison between staff and higher management, ensuring seamless communication and advocating for team needs.
+### **Lead Software Developer** at Rationale Technologies, Serbia : Oct 2025 – Sep 2026
 
-## 2 INTERNSHIPS
+- Led and implemented a decision support platform for procurement and tender approvals for a national oil company in the United Arab Emirates, with approval workflows driven by the Delegation of Authority and each tender's parameters.
+- Worked on systems integration, Azure operations and architecture: connected enterprise systems to external services, designed the deployment and release processes, and managed the cloud resources.  
+  _Tech:_ .NET 8, ASP.NET Core, EF Core, SQL Server, Azure, Angular
 
-### [NovaLite](https://novalite.rs/), Serbia (Novi Sad) : Apr 2022
+### **Software Developer** at j&s-soft AG, Germany (remote) : Sep 2022 – Oct 2025
 
-- Developed a full stack web application modelled after the modern social networks utilizing Java 1.8, sbt, Scala, Play Framework, MySQL, Slick and React at [NovaLite d.o.o.](https://novalite.rs/)
+- Developed the storage component of [Mein Bildungsraum](https://www.meinbildungsraum.de/), a project of the German Ministry of Education (later SPRIN-D), for secure data and certificate transfer in the [Enmeshed](https://enmeshed.eu/) ecosystem.  
+  _Tech:_ .NET 8, ASP.NET Core, EF Core, MediatR, RabbitMQ, OpenIddict, PostgreSQL, SpecFlow, xUnit.net, Docker, GitHub Actions  
+  _GitHub:_ [nmshd/backbone](https://github.com/nmshd/backbone)
+- Built a prototype of credential issuer and verifier services to the [OID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) and [OID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) specifications, showing that they fit the Enmeshed architecture.  
+  _Tech:_ Node.js, Express, TypeScript, Docker  
+  _GitHub:_ [NikolaVetnic/OID4VCI-VP_Prototype](https://github.com/NikolaVetnic/OID4VCI-VP_Prototype)
+- As lead developer and architect, designed and built _Timelines_, software that fits office workers' daily workflow whatever their level of IT skill (Dec 2024 – Oct 2025).  
+  _Tech:_ .NET 9, ASP.NET Core, EF Core, MediatR, PostgreSQL, SpecFlow, React, Docker, GitHub Actions
 
-### [EPAM Systems](https://www.epam.com/careers/locations/serbia), Serbia (Novi Sad) : Jul 2022
+## OPEN SOURCE
 
-- Developed a full stack web application mimicking the IMDB functionality utilizing PHP, Laravel, Eloquent, MySQL and React at Vivify Ideas d.o.o. (now [EPAM](https://www.epam.com/careers/locations/serbia)).
+- **OpenMW**, the open-source C++ game engine and editor: two merged contributions (Nov 2026).
+  - Engine: recovers from a damaged navigation mesh cache instead of crashing, and tells users how to fix SQLite database failures ([merge request 5762](https://gitlab.com/OpenMW/openmw/-/merge_requests/5762)).
+  - Editor (C++, Qt): one shared widget in place of three diverging copies of the toolbar's right-click lists, so they all behave the same; also fixed a crash when selecting a deleted texture ([merge request 5738](https://gitlab.com/OpenMW/openmw/-/merge_requests/5738)).
+- **Testcontainers for .NET**: an `ExecScriptAsync` overload that takes a custom text encoding (Oct 2026, [pull request 1805](https://github.com/testcontainers/testcontainers-dotnet/pull/1805)).
 
-### [Levi9](https://www.levi9.com/), Serbia (Novi Sad) : Sep 2022
+## PERSONAL PROJECTS
 
-- Developed a microservice web app backend in AWS ecosystem utilizing Java, Spring Framework, Docker and AWS at [Levi9](https://www.levi9.com/).
+### **Independent game development** : 2017 – Present
 
-## 3 PET PROJECTS
+- Solo developer: code, design, art, audio and music.
+- [K'NOSSOS](/games/knossos): a surreal point-and-click sci-fi adventure, crowdfunded on Kickstarter (373 backers, 2017), in active development.  
+  _Tech:_ C#, Unity
+- [SODHARA](/games/sodhara): a retro 2D sci-fi action platformer focused on exploration.  
+  _Tech:_ C#, Unity
 
-### SODHARA, a Retro Sci-Fi Action Platformer : Jul 2022 – Present
+### **Ray tracing algorithms for voxel objects** : May 2021 – Jul 2021
 
-- SODHARA is an actively developed retro sci fi action platformer heavily inspired by the SNES classic _Super Metroid_.  
-  _Tech_: Unity  
-  _Web_: [sodhara.com](https://sodhara.com/)
+- Optimized ray tracing algorithms for voxel-based 3D objects; the work became the subject of the master's thesis (2025).  
+  _Tech:_ Java, JavaFX  
+  _GitHub:_ [NikolaVetnic/RG2_GI](https://github.com/NikolaVetnic/RG2_GI)
 
-### VoxelWorld, an Optimized Voxel Raytracing Algorithm : Jun 2022 – Oct 2022
+## OTHER EXPERIENCE
 
-- Solved the problem of inefficient rendering of voxel-based solids within a custom raytracing engine; the result of the effort was 10x increase in rendering speed for scenes employing voxel solids. _Tech_: Java  
-  _GitHub_: [https://github.com/NikolaVetnic/RG2\_GI](https://github.com/NikolaVetnic/RG2_GI)
+### **Professor of Vocational Studies** at the Preschool Teachers Training College : Feb 2013 – Sep 2022
 
-## 4 TECH AND LANGUAGE SKILLS
+- Taught and examined bachelor's and master's students in music subjects, and coordinated Erasmus exchange programmes with EU institutions.
+- Also Assistant Director and Head of the International Office.
 
-Tech proficiency: Java, C, C#, Java EE, Spring, Spring Boot, Scala, PHP, Python, PyTorch, JavaScript, TypeScript, Node.js, React.
+## SKILLS
 
-Language skills: Serbian (native), English (C1), Russian (C1), German (B1), Norwegian (B1), Hungarian (A2).
+- **Programming languages:** C#, TypeScript, JavaScript, Python, Java, C++, SQL, Bash
+- **Backend:** .NET 7–9, ASP.NET Core, Entity Framework Core, Node.js, Express, Spring, Hibernate, SAP CAP
+- **Frontend and UI:** React, Redux, Remix, Angular, Qt, JavaFX
+- **Testing:** xUnit.net, SpecFlow, FluentAssertions, ArchUnitNET, JUnit, Jest
+- **Cloud and DevOps:** Azure, AWS, Docker, Kubernetes, Helm, Terraform, GitHub Actions, GitLab CI/CD
+- **Data and messaging:** PostgreSQL, SQL Server, RabbitMQ
+- **Architecture:** Clean Architecture, Domain-Driven Design, event-driven architecture, microservices, modular monolith, TDD
 
-## 5 EDUCATION
+## LANGUAGES
 
-### M.Sc. in IT Engineering at Faculty of Sciences, Serbia (Novi Sad): Oct 2023 – Present
+Serbian (native); English, Russian and Norwegian (fluent); German (intermediate).
 
-- Grade Point Average 10.00 / 10.00
+## EDUCATION
 
-### B.Sc. in IT Engineering at Faculty of Sciences, Serbia (Novi Sad): Oct 2019 – Jun 2023
+### **M.Sc. in Information Technology** at the Faculty of Sciences, Novi Sad : Sep 2025
 
-- Grade Point Average 10.00 / 10.00
+- Grade point average 10.0 / 10.0
 
-### SAP Certified Development Associate (ABAP with SAP NetWeaver 7.50) : Jan 2023
+### **B.Sc. in Information Technology** at the Faculty of Sciences, Novi Sad : Jun 2023
 
-### Java Junior Course at Vojvodina ICT Cluster BRAINS Academy : Jan 2022
+- Grade point average 10.0 / 10.0
 
-- Passed with flying colors.
+### **Doctor of Arts in Composition** at the Faculty of Music, Belgrade : Mar 2017
 
-### Doctor of Musical Arts at Faculty of Music, Serbia (Belgrade): Oct 2012 – Mar 2017
+- Grade point average 9.77 / 10.0
 
-- Grade Point Average 9.77 / 10.00
+### **M.A. in Composition** at the Academy of Arts, Novi Sad : Jun 2012
 
-### Master of Musical Arts at Academy of Arts, Serbia (Novi Sad): Oct 2011 – Jun 2012
+- Grade point average 10.0 / 10.0
 
-- Grade Point Average 10.00 / 10.00
+### **B.A. (Hons) in Composition** at the Academy of Arts, Novi Sad : Jun 2011
 
-### Bachelor of Musical Arts at Academy of Arts, Serbia (Novi Sad): Oct 2007 – Jun 2011
+- Grade point average 9.05 / 10.0
 
-- Grade Point Average 9.05 / 10.00
+### Certificates
+
+- SAP Certified Development Associate: ABAP with SAP NetWeaver 7.50 (Jan 2023)
+- Java Junior Course, BRAINS Academy of the Vojvodina ICT Cluster (Oct 2021)
