@@ -1,0 +1,22 @@
+# Open-source contributions, on the Projects window's Open source tab (/projects/open-source). Each upstream
+# project once, with what it is and its home page; each contribution in a sentence, the day it was merged
+# (YYYY-MM-DD) and its pull or merge request. The order doesn't matter: the newest are shown first.
+
+- project: OpenMW
+  about: An open-source engine and editor for Morrowind and games like it.
+  url: https://openmw.org/
+  contributions:
+    - summary: Made the engine recover from a damaged navigation mesh cache instead of crashing, and tell users how to fix SQLite database failures.
+      date: 2026-11-11
+      link: https://gitlab.com/OpenMW/openmw/-/merge_requests/5762
+    - summary: Replaced three diverging copies of the editor toolbar's right-click lists with one shared widget, so they all behave the same; also fixed a crash when selecting a deleted texture.
+      date: 2026-11-22
+      link: https://gitlab.com/OpenMW/openmw/-/merge_requests/5738
+
+- project: Testcontainers for .NET
+  about: A library that runs throwaway Docker containers for tests.
+  url: https://dotnet.testcontainers.org/
+  contributions:
+    - summary: Added an ExecScriptAsync overload that takes a custom text encoding.
+      date: 2026-10-27
+      link: https://github.com/testcontainers/testcontainers-dotnet/pull/1805

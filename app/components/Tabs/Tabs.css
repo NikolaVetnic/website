@@ -1,5 +1,7 @@
+/* As wide as its tabs, wherever it's put. */
 .tabs {
   display: flex;
+  width: fit-content;
   gap: 4px;
   padding: 3px;
   border-radius: 8px;

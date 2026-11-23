@@ -19,6 +19,7 @@ describe("getWindowTitle", () => {
       "Projects / Voxel ray tracer",
     );
     expect(getWindowTitle(getApp("projects"), { projects: [] })).toBe("Projects");
+    expect(getWindowTitle(getApp("projects"), { openSource: [] })).toBe("Projects / Open source");
   });
 
   it("puts the bio or the resume after About", () => {

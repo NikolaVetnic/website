@@ -15,6 +15,7 @@ export default [
     route("about", "routes/about.tsx"),
     route("about/resume", "routes/about-resume.tsx"),
     route("projects", "routes/projects.tsx"),
+    route("projects/open-source", "routes/projects-open-source.tsx"),
     route("projects/:slug", "routes/project.tsx"),
     ...APPS.filter((app) => !["blog", "about", "projects"].includes(app.id)).map((app) =>
       route(getAppPath(app.id).slice(1), "routes/app.tsx", { id: `routes/app-${app.id}` }),
