@@ -3,8 +3,10 @@ import { getPostPath } from "~/blog/posts";
 import { getPosts } from "~/blog/posts.server";
 import { APPS, getAppPath } from "~/desktop/apps";
 import { SITE_URL } from "~/meta";
+import { getProjectPath } from "~/projects/projects";
+import { getProjects } from "~/projects/projects.server";
 
-// Pre-rendered to /sitemap.xml at build time: the desktop, every app, the resume and every post.
+// Pre-rendered to /sitemap.xml at build time: the desktop, every app, the resume, every post and every project.
 export function loader() {
   const sitemap = getSitemap(
     [
@@ -12,6 +14,7 @@ export function loader() {
       ...APPS.map((app) => ({ path: getAppPath(app.id) })),
       { path: "/about/resume" },
       ...getPosts().map((post) => ({ path: getPostPath(post.slug), lastModified: post.date })),
+      ...getProjects().map((project) => ({ path: getProjectPath(project.slug) })),
     ],
     SITE_URL,
   );

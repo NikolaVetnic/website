@@ -14,6 +14,13 @@ describe("getWindowTitle", () => {
     expect(getWindowTitle(getApp("blog"), data)).toBe("Blog / A post");
   });
 
+  it("puts a project after Projects", () => {
+    expect(getWindowTitle(getApp("projects"), { project: { slug: "rt", title: "Voxel ray tracer" } })).toBe(
+      "Projects / Voxel ray tracer",
+    );
+    expect(getWindowTitle(getApp("projects"), { projects: [] })).toBe("Projects");
+  });
+
   it("puts the bio or the resume after About", () => {
     expect(getWindowTitle(getApp("about"), { page: "bio", versions: [] })).toBe("About / Bio");
     expect(getWindowTitle(getApp("about"), { page: "resume", versions: [] })).toBe("About / Resume");
