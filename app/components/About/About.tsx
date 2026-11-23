@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import { ABOUT_TABS, DEFAULT_LANG, type AboutData, type AboutVersion } from "~/about/about";
 import Prose from "~/components/Prose/Prose";
+import { CONTACT } from "~/contact/contact";
 import "./About.css";
 
 type AboutProps = {
@@ -46,6 +47,19 @@ function LanguageSwitch({
   );
 }
 
+// Whose resume it is, as a CV starts: the name, roles and photo of the contact card, so the two stay alike.
+function ResumeHeader() {
+  return (
+    <header className="about__header">
+      <img className="about__portrait" src={CONTACT.photo} alt="" width={64} height={64} />
+      <div>
+        <h1 className="about__name">{CONTACT.name}</h1>
+        <p className="about__role">{CONTACT.role}</p>
+      </div>
+    </header>
+  );
+}
+
 function About({ data }: AboutProps) {
   const [lang, setLang] = useState(chosenLang);
 
@@ -86,6 +100,7 @@ function About({ data }: AboutProps) {
           ) : null}
         </div>
       </div>
+      {data.page === "resume" ? <ResumeHeader /> : null}
       <Prose className={`about__${data.page}`} html={version.html} lang={version.lang} />
     </div>
   );

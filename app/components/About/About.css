@@ -108,6 +108,30 @@
   font-size: 1rem;
 }
 
+/* The resume's header: a smaller photo than the contact card's, the name and the roles beside it. */
+.about__header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.about__portrait {
+  flex: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(var(--text) / 0.15);
+}
+
+.about__name {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.about__role {
+  margin: 2px 0 0;
+  color: rgb(var(--text-muted));
+  font-size: 0.9rem;
+}
+
 .about__loading {
   margin: 0;
   color: rgb(var(--text-muted));
