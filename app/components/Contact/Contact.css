@@ -25,6 +25,7 @@
 .contact__role {
   margin: 2px 0 0;
   color: rgb(var(--text-muted));
+  font-size: 0.9rem;
 }
 
 .contact__intro {

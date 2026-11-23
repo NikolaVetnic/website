@@ -1,14 +1,12 @@
-import { SITE_NAME } from "~/meta";
-
 // What the Contact window shows. A profile is one more entry in PROFILES.
 
 export const CONTACT = {
-  name: SITE_NAME,
-  role: "Developer and composer",
-  // The old site's Contact page, word for word.
+  name: "Nikola Vetnić",
+  role: "Software developer · AI engineer · Composer",
+  // The old site's Contact page, narrowed to code and music.
   intro:
-    "Feel free to get in touch with me. I am always open to discussing art, code, game dev or music. Creativity never gets stale.",
-  // A square crop of the bio photo (public/about/belgrade-2018.webp).
+    "Feel free to get in touch with me. I am always open to discussing code and music. Creativity never gets stale.",
+  // A square crop of the bookstore portrait (Bookstore_WideShot.JPG, 1000 × 800: 520 px from 240, 20), 192 px.
   photo: "/contact/portrait.webp",
 };
 
