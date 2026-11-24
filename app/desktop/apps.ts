@@ -5,7 +5,6 @@ export type AppId =
   | "blog"
   | "projects"
   | "games"
-  | "art"
   | "music"
   | "contact"
   | "settings"
@@ -61,7 +60,6 @@ export const APPS: DesktopApp[] = [
     windowSize: { width: 840, height: 600 },
   },
   { id: "games", title: "Games", icon: "/icons/games.svg", description: "Games made by Nikola Pacek Vetnić." },
-  { id: "art", title: "Art", icon: "/icons/art.svg", description: "Art by Nikola Pacek Vetnić." },
   {
     id: "music",
     title: "Music",
