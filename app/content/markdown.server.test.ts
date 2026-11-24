@@ -5,6 +5,12 @@ import { renderMarkdown, splitFrontMatter } from "./markdown.server";
 const render = (body: string) => renderMarkdown(body, { imageBase: "/", fail: (problem) => new Error(problem) });
 
 describe("renderMarkdown", () => {
+  it("folds a song's lyrics under its title, stanza by stanza", () => {
+    expect(render("```lyrics Last Summer\n[CHORUS]\nLast summer <ere>\nwe parted\n\nGodspeed...\n```")).toBe(
+      '<details class="prose-lyrics"><summary>Last Summer</summary><p><span class="prose-lyrics__part">CHORUS</span>Last summer &lt;ere&gt;<br>we parted</p><p>Godspeed...</p></details>\n',
+    );
+  });
+
   it("keeps a mermaid block's source for the browser to draw", () => {
     expect(render("```mermaid\nflowchart LR\n  a[A & B] --> b\n```")).toBe(
       '<figure class="prose-diagram"><pre class="prose-diagram__source">flowchart LR\n  a[A &amp; B] --&gt; b</pre></figure>\n',

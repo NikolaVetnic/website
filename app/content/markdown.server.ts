@@ -25,6 +25,20 @@ function renderPlayerButton(name: string, service: string): string {
   return `<button type="button" class="prose-player__start" aria-label="Play ${label} (loads ${service}'s player)"><span class="prose-player__icon" aria-hidden="true"></span><span class="prose-player__text"><span class="prose-player__name">${label}</span><span class="prose-player__service">Plays from ${service}</span></span></button>`;
 }
 
+// A song's words, folded away under its title until opened: stanzas are split by empty lines, and a line in
+// brackets at a stanza's start (`[CHORUS]`) names the part.
+function renderLyrics(title: string, text: string): string {
+  const stanzas = text
+    .split(/\n\s*\n/)
+    .map((stanza) => stanza.split("\n").map((line) => line.trim()))
+    .map((lines) => {
+      const part = /^\[.+\]$/.test(lines[0]) ? lines.shift()!.slice(1, -1) : "";
+      const label = part ? `<span class="prose-lyrics__part">${escapeHtml(part)}</span>` : "";
+      return `<p>${label}${lines.map(escapeHtml).join("<br>")}</p>`;
+    });
+  return `<details class="prose-lyrics"><summary>${escapeHtml(title || "Lyrics")}</summary>${stanzas.join("")}</details>\n`;
+}
+
 const markdown = new Marked({
   renderer: {
     // Links out of the site open in a new tab, so the desktop stays where it was.
@@ -34,9 +48,14 @@ const markdown = new Marked({
         ? html.replace(/^<a /, '<a target="_blank" rel="noopener noreferrer" ')
         : html;
     },
-    // A ```mermaid block is a diagram: its source, kept for the browser to draw (see Prose.tsx).
+    // A ```mermaid block is a diagram: its source, kept for the browser to draw (see Prose.tsx). A
+    // ```lyrics block is a song's words, under the title written after it (```lyrics Last Summer).
     code(token) {
-      if (token.lang !== "mermaid") {
+      const [kind, ...title] = (token.lang ?? "").split(/\s+/);
+      if (kind === "lyrics") {
+        return renderLyrics(title.join(" "), token.text);
+      }
+      if (kind !== "mermaid") {
         return false;
       }
       return `<figure class="prose-diagram"><pre class="prose-diagram__source">${escapeHtml(token.text)}</pre></figure>\n`;

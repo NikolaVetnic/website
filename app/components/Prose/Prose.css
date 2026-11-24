@@ -115,6 +115,46 @@
   height: auto;
 }
 
+/* A song's lyrics, folded under its title until opened. */
+.prose-lyrics {
+  margin: 0.6em 0;
+  border: 1px solid rgb(var(--text) / 0.12);
+  border-radius: 8px;
+  background: rgb(var(--raised));
+}
+
+.prose-lyrics summary {
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.prose-lyrics summary:hover {
+  color: rgb(var(--accent));
+}
+
+.prose-lyrics summary:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+.prose-lyrics p {
+  margin: 0 18px 1em;
+}
+
+.prose-lyrics p:first-of-type {
+  margin-top: 0.4em;
+}
+
+.prose-lyrics__part {
+  display: block;
+  color: rgb(var(--text-subtle));
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* A player from Bandcamp, SoundCloud, Spotify or YouTube: a button until pressed, then the service's player at its own
    height (Prose.tsx loads it). */
 .prose-player__start,
