@@ -115,6 +115,15 @@
   height: auto;
 }
 
+/* A clip: a short silent video on a loop, shown like a picture. */
+.prose-clip {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
 /* A song's lyrics, folded under its title until opened. */
 .prose-lyrics {
   margin: 0.6em 0;

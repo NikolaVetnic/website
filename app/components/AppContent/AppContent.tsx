@@ -3,6 +3,7 @@ import AppPage from "~/components/AppPage/AppPage";
 import Blog from "~/components/Blog/Blog";
 import Contact from "~/components/Contact/Contact";
 import Folder from "~/components/Folder/Folder";
+import Game from "~/components/Game/Game";
 import Music from "~/components/Music/Music";
 import Projects from "~/components/Projects/Projects";
 import Settings from "~/components/Settings/Settings";
@@ -21,6 +22,9 @@ type AppContentProps = {
 function AppContent({ app, data, onActivate }: AppContentProps) {
   if (app.page) {
     return <AppPage app={{ ...app, page: app.page }} onActivate={onActivate} />;
+  }
+  if (app.content === "games") {
+    return <Game data={data} />;
   }
 
   switch (app.id) {

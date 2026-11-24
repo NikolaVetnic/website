@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#151515"/>
+  <g fill="#8a8a8a">
+    <rect x="9" y="13" width="2" height="2"/><rect x="17" y="13" width="2" height="2"/><rect x="25" y="13" width="2" height="2"/><rect x="37" y="13" width="2" height="2"/><rect x="45" y="13" width="2" height="2"/><rect x="53" y="13" width="2" height="2"/>
+    <rect x="9" y="49" width="2" height="2"/><rect x="17" y="49" width="2" height="2"/><rect x="25" y="49" width="2" height="2"/><rect x="37" y="49" width="2" height="2"/><rect x="45" y="49" width="2" height="2"/><rect x="53" y="49" width="2" height="2"/>
+    <rect x="9" y="25" width="2" height="2"/><rect x="9" y="37" width="2" height="2"/><rect x="53" y="25" width="2" height="2"/><rect x="53" y="37" width="2" height="2"/>
+  </g>
+  <rect x="4" y="4" width="56" height="4" fill="#c8c8c8"/>
+  <rect x="4" y="56" width="56" height="4" fill="#c8c8c8"/>
+  <text x="32" y="43" fill="#f2c94c" font-family="Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="30" font-weight="700" text-anchor="middle">@</text>
+</svg>

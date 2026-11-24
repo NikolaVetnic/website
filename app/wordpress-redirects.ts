@@ -39,10 +39,10 @@ const PAGES: Record<number, string> = {
   1614: "/projects", // SocNet Project
   302: "/games", // Game Dev
   746: "/games/knossos", // K'NOSSOS
-  770: "/games", // VSEVOLOD
-  1413: "/games", // Game Dev Other
-  1566: "/games", // Dungeon Gunner
-  1571: "/games", // Rouge C
+  770: "/games/vsevolod", // VSEVOLOD
+  1413: "/games", // Game Dev Other (Ball Breaker, not brought over)
+  1566: "/games/dungeon-gunner", // Dungeon Gunner
+  1571: "/games/rogue-c", // Rouge C
   1799: "/games/sodhara", // SODHARA
   296: "/games", // Art: assets made for the games
   102: "/music/svarun",

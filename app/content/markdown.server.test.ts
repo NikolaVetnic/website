@@ -1,3 +1,7 @@
+import { mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import { renderMarkdown, splitFrontMatter } from "./markdown.server";
@@ -43,6 +47,20 @@ describe("renderMarkdown", () => {
 });
 
 describe("splitFrontMatter", () => {
+  it("plays a clip on a line of its own on a loop, with its MP4 for browsers without WebM", () => {
+    const publicDir = mkdtempSync(path.join(tmpdir(), "clip-"));
+    const renderClip = (body: string) =>
+      renderMarkdown(body, { imageBase: "/", publicDir, fail: (problem) => new Error(problem) });
+    writeFileSync(path.join(publicDir, "run.webm"), "");
+
+    expect(() => renderClip("![Running](run.webm)")).toThrow('clip "run.webm" needs an MP4 beside it');
+    writeFileSync(path.join(publicDir, "run.mp4"), "");
+    expect(renderClip('![Running](run.webm "It runs")')).toBe(
+      '<figure><video class="prose-clip" autoplay loop muted playsinline aria-label="Running"><source src="/run.webm" type="video/webm"><source src="/run.mp4" type="video/mp4"></video><figcaption>It runs</figcaption></figure>\n',
+    );
+    expect(() => renderClip("See ![Running](run.webm) here.")).toThrow('clip "run.webm" must be on a line of its own');
+  });
+
   it("says which file has front matter YAML can't read", () => {
     const fail = (problem: string) => new Error(`Project "x": ${problem}`);
     expect(() => splitFrontMatter("---\nsummary: It is: broken\n---\nText", fail)).toThrow(

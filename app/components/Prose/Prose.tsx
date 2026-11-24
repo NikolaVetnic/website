@@ -53,6 +53,19 @@ function Prose({ html, className, lang }: ProseProps) {
     return () => observer.disconnect();
   }, [html]);
 
+  // Clips play on their own like animated pictures, unless the visitor asks for less motion: then they wait,
+  // with their controls.
+  useEffect(() => {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    for (const clip of ref.current?.querySelectorAll<HTMLVideoElement>(".prose-clip") ?? []) {
+      clip.autoplay = false;
+      clip.pause();
+      clip.controls = true;
+    }
+  }, [html]);
+
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     const start = (event.target as Element).closest(".prose-player__start");
     if (start) {

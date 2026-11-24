@@ -1,0 +1,74 @@
+/* A small game's page, read like a project's. */
+.game {
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
+.game__title {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.25;
+}
+
+.game__summary {
+  margin: 6px 0 0;
+  color: rgb(var(--text-muted));
+}
+
+.game__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgb(var(--text) / 0.1);
+}
+
+.game__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: center;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.game__years {
+  color: rgb(var(--text-subtle));
+}
+
+.game__tech {
+  padding: 1px 7px;
+  border: 1px solid rgb(var(--text) / 0.15);
+  border-radius: 4px;
+  color: rgb(var(--text-muted));
+}
+
+.game__repo {
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.game__repo:hover {
+  background: rgb(var(--accent-hover));
+}
+
+.game__repo:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+.game__body {
+  margin-top: 20px;
+}
+
+.game__empty {
+  margin: 0;
+  color: rgb(var(--text-muted));
+}

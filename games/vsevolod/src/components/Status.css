@@ -1,0 +1,8 @@
+.status {
+  max-width: 720px;
+  text-align: center;
+}
+
+.status__paragraph {
+  margin: 0 0 1em;
+}

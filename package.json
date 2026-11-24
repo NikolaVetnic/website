@@ -10,7 +10,7 @@
     "dev": "react-router dev",
     "prebuild": "npm run build:games",
     "build": "react-router build",
-    "build:games": "vite build --config games/sodhara/vite.config.ts --logLevel warn && vite build --config games/knossos/vite.config.ts --logLevel warn",
+    "build:games": "vite build --config games/sodhara/vite.config.ts --logLevel warn && vite build --config games/knossos/vite.config.ts --logLevel warn && vite build --config games/vsevolod/vite.config.ts --logLevel warn",
     "preview": "vite preview --outDir build/client",
     "typecheck": "react-router typegen && tsc",
     "lint": "eslint .",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/inter": "^5.3.0",
     "@fontsource/jost": "^5.3.0",
     "@react-router/dev": "^8.5.0",
