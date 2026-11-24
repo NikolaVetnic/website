@@ -64,6 +64,13 @@ export const SOUNDTRACK = {
   path: "/music/vsevolod-soundtrack",
 };
 
+// Who made it.
+export const CREDITS = [
+  { role: "Coding", name: "Zdeněk Mihula" },
+  { role: "Art", name: "Simon Ketteniss" },
+  { role: "Story, puzzles, additional art", name: "Nikola Vetnić" },
+];
+
 // Where the project stands.
 export const STATUS = [
   "VSEVOLOD has been on hiatus since 2012. The brunt of the work was done by *Simon Ketteniss*, who in later years lost the desire to make games.",

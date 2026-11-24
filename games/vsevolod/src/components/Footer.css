@@ -16,6 +16,30 @@
   letter-spacing: 0.22em;
 }
 
+/* Who made it: each role over its name, in a row that wraps on narrow screens. */
+.footer__credits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 40px;
+  justify-content: center;
+  margin: 6px 0 10px;
+}
+
+.footer__role {
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.footer__person {
+  margin: 2px 0 0;
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 .footer__credit {
   margin: 0;
   color: var(--muted);
