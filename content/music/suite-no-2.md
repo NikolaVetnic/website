@@ -10,6 +10,8 @@ This piece for extended drum set was awarded 2nd prize at the First Serbian Nati
 
 ![Suite No. 2](soundcloud:track/898983454)
 
-![Suite No. 2: III. Con moto](youtube:9Ga80bnHnRU "Daniel Bugyi plays the third movement")
+![Suite No. 2: 2 Manual Labour](youtube:29XxZAPfF0U?t=600 "2 Manual Labour, played by Marco Silva Pavlov")
+
+![Suite No. 2: 3 Perpetual Motion](youtube:9Ga80bnHnRU "3 Perpetual Motion, played by Daniel Bugyi")
 
 [Study score](https://drive.google.com/file/d/1nScQsfNODFMBiirFmXzuGzEa21hBKoPj/view?usp=sharing) on Google Drive.
