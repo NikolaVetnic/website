@@ -9,7 +9,7 @@ export type PlayerService = keyof typeof PLAYER_SERVICES;
 export type Player =
   | { service: "bandcamp"; kind: "album" | "track"; id: string }
   | { service: "soundcloud"; kind: "track" | "playlist"; id: string }
-  | { service: "youtube"; id: string };
+  | { service: "youtube"; id: string; start?: number };
 
 const PLAYER_SCHEME = /^(bandcamp|soundcloud|youtube):/;
 
@@ -19,7 +19,8 @@ export function isPlayerReference(href: string): boolean {
 }
 
 // `bandcamp:album/<id>`, `bandcamp:track/<id>`, `soundcloud:track/<id>`, `soundcloud:playlist/<id>` (the numbers
-// in the services' embed codes) or `youtube:<video id>`; null for anything else.
+// in the services' embed codes) or `youtube:<video id>`, optionally from a time in seconds (`youtube:<video id>?t=600`);
+// null for anything else.
 export function parsePlayer(href: string): Player | null {
   let match = /^bandcamp:(album|track)\/(\d+)$/.exec(href);
   if (match) {
@@ -29,9 +30,9 @@ export function parsePlayer(href: string): Player | null {
   if (match) {
     return { service: "soundcloud", kind: match[1] as "track" | "playlist", id: match[2] };
   }
-  match = /^youtube:([\w-]{11})$/.exec(href);
+  match = /^youtube:([\w-]{11})(?:\?t=(\d+))?$/.exec(href);
   if (match) {
-    return { service: "youtube", id: match[1] };
+    return { service: "youtube", id: match[1], ...(match[2] ? { start: Number(match[2]) } : {}) };
   }
   return null;
 }
@@ -54,7 +55,7 @@ export function getPlayerSource(player: Player, { background, accent }: PlayerCo
       return `https://w.soundcloud.com/player/?url=${url}&color=%23${accent}&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
     }
     case "youtube":
-      return `https://www.youtube-nocookie.com/embed/${player.id}?autoplay=1`;
+      return `https://www.youtube-nocookie.com/embed/${player.id}?autoplay=1${player.start ? `&start=${player.start}` : ""}`;
   }
 }
 

@@ -13,12 +13,14 @@ describe("parsePlayer", () => {
       id: "334289683",
     });
     expect(parsePlayer("youtube:xFvrRx15Mqo")).toEqual({ service: "youtube", id: "xFvrRx15Mqo" });
+    expect(parsePlayer("youtube:29XxZAPfF0U?t=600")).toEqual({ service: "youtube", id: "29XxZAPfF0U", start: 600 });
   });
 
   it("refuses anything else", () => {
     expect(parsePlayer("bandcamp:album/divide-ut-regnes")).toBeNull();
     expect(parsePlayer("soundcloud:tracks/1")).toBeNull();
     expect(parsePlayer("youtube:short")).toBeNull();
+    expect(parsePlayer("youtube:29XxZAPfF0U?t=10m")).toBeNull();
     expect(parsePlayer("photo.jpg")).toBeNull();
   });
 });
@@ -42,6 +44,9 @@ describe("getPlayerSource", () => {
   it("plays YouTube without its cookies", () => {
     expect(getPlayerSource({ service: "youtube", id: "xFvrRx15Mqo" }, colours)).toBe(
       "https://www.youtube-nocookie.com/embed/xFvrRx15Mqo?autoplay=1",
+    );
+    expect(getPlayerSource({ service: "youtube", id: "29XxZAPfF0U", start: 600 }, colours)).toBe(
+      "https://www.youtube-nocookie.com/embed/29XxZAPfF0U?autoplay=1&start=600",
     );
   });
 });
