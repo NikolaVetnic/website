@@ -10,7 +10,8 @@ const PROJECTS_DIR = path.resolve("content/projects");
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const YEARS = /^\d{4}(?:–\d{4})?$/;
 
-// YAML front matter (`title`, `summary`, `years`, `status`, `tech`, `repo`, optional `image`), then Markdown.
+// YAML front matter (`title`, `summary`, `years`, `status`, `tech`, `repo`, optional `image` and `featured`), then
+// Markdown.
 // Anything missing or malformed throws, so the build fails with the project's name.
 export function parseProject(slug: string, source: string, publicDir = PUBLIC_DIR): Project {
   const fail = (problem: string) => new Error(`Project "${slug}": ${problem}`);
@@ -23,7 +24,7 @@ export function parseProject(slug: string, source: string, publicDir = PUBLIC_DI
   }
 
   const { data, body } = splitFrontMatter(source, fail);
-  const { title, summary, years, status, tech, repo, image } = data;
+  const { title, summary, years, status, tech, repo, image, featured = false } = data;
   if (!isText(title)) {
     throw fail("`title` missing");
   }
@@ -42,6 +43,9 @@ export function parseProject(slug: string, source: string, publicDir = PUBLIC_DI
   }
   if (!isText(repo) || !/^https:\/\//.test(repo)) {
     throw fail("`repo` must be an https:// link");
+  }
+  if (typeof featured !== "boolean") {
+    throw fail("`featured` must be true or false");
   }
 
   // A project's own images are in `public/projects/<slug>/`, the card's too.
@@ -67,6 +71,7 @@ export function parseProject(slug: string, source: string, publicDir = PUBLIC_DI
     tech,
     repo,
     ...(cardImage ? { image: cardImage } : {}),
+    featured,
     html,
   };
 }
@@ -76,7 +81,8 @@ function lastYear(years: string): number {
   return Number(years.slice(-4));
 }
 
-// The most recent first; projects of the same year by title, so the order never depends on the file system.
+// Featured projects first, then the most recent; projects of the same year by title, so the order never depends on
+// the file system.
 export function getProjects(dir = PROJECTS_DIR, publicDir = PUBLIC_DIR): Project[] {
   if (!existsSync(dir)) {
     return [];
@@ -85,5 +91,10 @@ export function getProjects(dir = PROJECTS_DIR, publicDir = PUBLIC_DIR): Project
   return readdirSync(dir)
     .filter((file) => file.endsWith(".md"))
     .map((file) => parseProject(file.slice(0, -3), readFileSync(path.join(dir, file), "utf8"), publicDir))
-    .sort((a, b) => lastYear(b.years) - lastYear(a.years) || a.title.localeCompare(b.title));
+    .sort(
+      (a, b) =>
+        Number(b.featured) - Number(a.featured) ||
+        lastYear(b.years) - lastYear(a.years) ||
+        a.title.localeCompare(b.title),
+    );
 }

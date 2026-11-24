@@ -63,10 +63,15 @@ export function splitFrontMatter(source: string, fail: (problem: string) => Erro
     throw fail("front matter missing (a `---` block at the top)");
   }
 
-  return {
-    data: (parseYaml(match[1]) ?? {}) as Record<string, unknown>,
-    body: source.slice(match[0].length),
-  };
+  let data: Record<string, unknown>;
+  try {
+    data = (parseYaml(match[1]) ?? {}) as Record<string, unknown>;
+  } catch (error) {
+    // A value with ": " in it, unquoted, is the usual cause.
+    throw fail(`front matter isn't valid YAML (${error instanceof Error ? error.message.split("\n")[0] : error})`);
+  }
+
+  return { data, body: source.slice(match[0].length) };
 }
 
 type RenderOptions = {

@@ -6,6 +6,7 @@ status: finished
 tech: [Java, JavaFX]
 repo: https://github.com/NikolaVetnic/RG2_GI
 image: card.webp
+featured: true
 ---
 
 A ray tracer from the Computer Graphics 2 course at the Faculty of Sciences in Novi Sad, built on a core renderer by the course's professor, Marko Savić. The work here is the solids the renderer draws, above all voxels, and making them fast. It later became the subject of the master's thesis.

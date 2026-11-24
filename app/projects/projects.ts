@@ -19,6 +19,8 @@ export type ProjectSummary = {
 };
 
 export type Project = ProjectSummary & {
+  // Shown before the others.
+  featured: boolean;
   // Rendered from Markdown at build time.
   html: string;
 };
