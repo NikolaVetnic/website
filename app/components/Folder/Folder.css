@@ -4,12 +4,29 @@
   min-height: 100%;
 }
 
+.folder__groups {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  flex: 1;
+}
+
+/* A group's heading, over a line, like a section of a file manager's view. */
+.folder__heading {
+  margin: 0 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgb(var(--text) / 0.12);
+  color: rgb(var(--text-muted));
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
 .folder__items {
   display: grid;
   grid-template-columns: repeat(auto-fill, 104px);
   gap: 8px;
   align-content: start;
-  flex: 1;
   margin: 0;
   padding: 0;
   list-style: none;

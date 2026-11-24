@@ -1,7 +1,18 @@
 import type { Size } from "./drag";
 
 export type AppId =
-  "about" | "blog" | "projects" | "games" | "art" | "music" | "contact" | "settings" | "sodhara" | "knossos";
+  | "about"
+  | "blog"
+  | "projects"
+  | "games"
+  | "art"
+  | "music"
+  | "contact"
+  | "settings"
+  | "sodhara"
+  | "knossos"
+  | "dungeon-gunner"
+  | "rogue-c";
 
 export type DesktopApp = {
   id: AppId;
@@ -13,10 +24,14 @@ export type DesktopApp = {
   path?: string;
   // The folder app that shows it, instead of the desktop.
   folder?: AppId;
+  // The heading it sits under in its folder (`Other`); the apps without one come first, under none.
+  group?: string;
   // The size its window opens at, when not the usual (windows.ts); never more than the desktop.
   windowSize?: Size;
   // A page of its own that the window shows edge to edge, in an iframe (`/apps/sodhara/`).
   page?: string;
+  // Its window shows a page of its own, from Markdown at `content/<folder>/<id>.md` (`content/games/rogue-c.md`).
+  content?: "games";
   // Lays out its window itself, edge to edge, scrolling its own content beside parts that stay put (the Blog's
   // search bar).
   fills?: boolean;
@@ -86,6 +101,28 @@ export const APPS: DesktopApp[] = [
     windowSize: { width: 1040, height: 720 },
     page: "/apps/knossos/",
   },
+  {
+    id: "dungeon-gunner",
+    title: "Dungeon Gunner",
+    icon: "/games/dungeon-gunner/icon.webp",
+    description: "Dungeon Gunner, a 2D roguelike action game in Unity by Nikola Pacek Vetnić.",
+    path: "/games/dungeon-gunner",
+    folder: "games",
+    group: "Other",
+    windowSize: { width: 760, height: 620 },
+    content: "games",
+  },
+  {
+    id: "rogue-c",
+    title: "Rogue C",
+    icon: "/games/rogue-c/icon.svg",
+    description: "Rogue C, the classic Rogue recreated in C by Nikola Pacek Vetnić.",
+    path: "/games/rogue-c",
+    folder: "games",
+    group: "Other",
+    windowSize: { width: 760, height: 620 },
+    content: "games",
+  },
 ];
 
 // The apps with an icon on the desktop; the others are in a folder app.
@@ -94,6 +131,23 @@ export const DESKTOP_APPS = APPS.filter((app) => !app.folder);
 // The apps a folder app shows.
 export function getFolderApps(folder: AppId): DesktopApp[] {
   return APPS.filter((app) => app.folder === folder);
+}
+
+export type AppGroup = { title?: string; apps: DesktopApp[] };
+
+// Apps by the heading they sit under: those without one first, then each group in the order it first appears.
+export function groupApps(apps: DesktopApp[]): AppGroup[] {
+  const groups: AppGroup[] = [{ apps: apps.filter((app) => !app.group) }];
+  for (const app of apps) {
+    if (!app.group) continue;
+    const group = groups.find((entry) => entry.title === app.group);
+    if (group) {
+      group.apps.push(app);
+    } else {
+      groups.push({ title: app.group, apps: [app] });
+    }
+  }
+  return groups.filter((group) => group.apps.length > 0);
 }
 
 export function getApp(id: AppId): DesktopApp {
