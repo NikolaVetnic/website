@@ -34,6 +34,12 @@ describe("parseProject", () => {
     expect(getProjectPath(parsed.slug)).toBe("/projects/voxel-ray-tracer");
   });
 
+  it("is not featured unless it says so", () => {
+    expect(parseProject("a", project(valid)).featured).toBe(false);
+    expect(parseProject("a", project(`${valid}\nfeatured: true`)).featured).toBe(true);
+    expect(() => parseProject("a", project(`${valid}\nfeatured: yes please`))).toThrow(/`featured`/);
+  });
+
   it("takes a single year written as a number", () => {
     expect(parseProject("a", project(valid.replace("2020–2021", "2026"))).years).toBe("2026");
   });
@@ -74,12 +80,15 @@ describe("projects on disk", () => {
     expect(() => parseProject("rt", project(valid, "![A render](gone.webp)"), publicDir)).toThrow(/not found/);
   });
 
-  it("lists the most recent first, then by title", () => {
+  it("lists the featured first, then the most recent, then by title", () => {
     writeFileSync(path.join(dir, "old.md"), project(valid.replace("Voxel ray tracer", "Old")));
     writeFileSync(path.join(dir, "b.md"), project(valid.replace("2020–2021", "2026").replace("Voxel ray tracer", "B")));
     writeFileSync(path.join(dir, "a.md"), project(valid.replace("2020–2021", "2026").replace("Voxel ray tracer", "A")));
     writeFileSync(path.join(dir, "notes.txt"), "not a project");
 
     expect(getProjects(dir, publicDir).map((entry) => entry.title)).toEqual(["A", "B", "Old"]);
+
+    writeFileSync(path.join(dir, "old.md"), project(`${valid.replace("Voxel ray tracer", "Old")}\nfeatured: true`));
+    expect(getProjects(dir, publicDir).map((entry) => entry.title)).toEqual(["Old", "A", "B"]);
   });
 });
