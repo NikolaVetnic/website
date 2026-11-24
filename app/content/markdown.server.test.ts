@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { renderMarkdown } from "./markdown.server";
+import { renderMarkdown, splitFrontMatter } from "./markdown.server";
 
 const render = (body: string) => renderMarkdown(body, { imageBase: "/", fail: (problem) => new Error(problem) });
 
@@ -13,5 +13,14 @@ describe("renderMarkdown", () => {
 
   it("leaves other code blocks as code", () => {
     expect(render("```text\na --> b\n```")).toBe('<pre><code class="language-text">a --&gt; b\n</code></pre>\n');
+  });
+});
+
+describe("splitFrontMatter", () => {
+  it("says which file has front matter YAML can't read", () => {
+    const fail = (problem: string) => new Error(`Project "x": ${problem}`);
+    expect(() => splitFrontMatter("---\nsummary: It is: broken\n---\nText", fail)).toThrow(
+      /^Project "x": front matter isn't valid YAML/,
+    );
   });
 });
