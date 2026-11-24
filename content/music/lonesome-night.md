@@ -12,6 +12,16 @@ links:
     url: https://www.youtube.com/playlist?list=OLAK5uy_n-Z2tV3D3Gj0EtyT6T82V4vvp0tFfXQZc
 ---
 
+## Eikosæton
+
+The album came out on 8 May 2026: thirteen tracks, an hour and 22 minutes of music.
+
+![Eikosæton](spotify:album/0Ng25z6uEdigq5ktTlLsGt "Lonesome Night, 2026")
+
+![Eikosæton](cover.webp "The cover of Eikosæton")
+
+## How it came back
+
 In life, when push comes to shove, people usually prefer abandoning ship to applying some extra elbow grease and making the thing work. A neutral spectator might then say that it wasn't meant to be, or that perhaps the time wasn't right. A stubborn person may then push onward regardless, only to get more and more disappointed, before finally admitting that perhaps the time was indeed not right.
 
 Such was my experience with Lonesome Night, a band I was invited into but which then became mine before it became no one's. Perhaps we were undisciplined, perhaps we expected too much, perhaps we lacked the experience and finesse to deliver a project such as this one, but it was probably all three, and then some. Lonesome Night, the band who wanted to play serious music live but whose rehearsals always saw at least one bandmate missing and several unprepared, disbanded soon after delivering a humble promo CD, a patchwork of techniques and approaches and tracks, a monument to the Serbian proverb paraphrased as "to cut off one's ears to patch up one's ass".
@@ -34,13 +44,7 @@ So DECAMERON… Us four – Mikael on guitars, Jon on bass, my lady Viktoriya be
 
 We'll see ▣
 
-## Eikosæton
-
-The album came out on 8 May 2026: thirteen tracks, an hour and 22 minutes of music.
-
-![Eikosæton](cover.webp "The cover of Eikosæton")
-
-![Eikosæton](spotify:album/0Ng25z6uEdigq5ktTlLsGt "Lonesome Night, 2026")
+## About the album
 
 From the album's notes:
 
