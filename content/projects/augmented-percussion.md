@@ -5,6 +5,7 @@ years: 2026
 status: in-progress
 tech: [Python, Max, MSP, Jitter]
 repo: https://github.com/NikolaVetnic/AAP_PoC
+featured: true
 ---
 
 A proof of concept for computer music built from hierarchical, multi-parametric, partially independent and sometimes conflicting formal processes, and for future pieces written the same way.
