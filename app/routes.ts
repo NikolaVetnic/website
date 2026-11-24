@@ -4,7 +4,7 @@ import { APPS, getAppPath } from "./desktop/apps";
 
 // One layout draws the desktop for every page, so it stays mounted while the URL moves between apps.
 // The Blog has routes of its own, for its post list and for each post, Projects for its cards and for each
-// project, and About for its bio and resume; the
+// project, Music for its tabs and for each entry, and About for its bio and resume; the
 // feed, the sitemap and the Blog's search index are files. Any other address gets the desktop too, saying
 // there's nothing there.
 export default [
@@ -17,7 +17,11 @@ export default [
     route("projects", "routes/projects.tsx"),
     route("projects/open-source", "routes/projects-open-source.tsx"),
     route("projects/:slug", "routes/project.tsx"),
-    ...APPS.filter((app) => !["blog", "about", "projects"].includes(app.id)).map((app) =>
+    route("music", "routes/music.tsx"),
+    route("music/bands", "routes/music-bands.tsx"),
+    route("music/soundtracks", "routes/music-soundtracks.tsx"),
+    route("music/:slug", "routes/music-entry.tsx"),
+    ...APPS.filter((app) => !["blog", "about", "projects", "music"].includes(app.id)).map((app) =>
       route(getAppPath(app.id).slice(1), "routes/app.tsx", { id: `routes/app-${app.id}` }),
     ),
     route("*", "routes/not-found.tsx"),

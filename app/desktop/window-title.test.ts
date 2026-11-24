@@ -22,6 +22,12 @@ describe("getWindowTitle", () => {
     expect(getWindowTitle(getApp("projects"), { openSource: [] })).toBe("Projects / Open source");
   });
 
+  it("puts a piece, or a tab other than the first, after Music", () => {
+    expect(getWindowTitle(getApp("music"), { musicEntry: { slug: "svarun", title: "SVARUN" } })).toBe("Music / SVARUN");
+    expect(getWindowTitle(getApp("music"), { musicKind: "composition", entries: [] })).toBe("Music");
+    expect(getWindowTitle(getApp("music"), { musicKind: "band", entries: [] })).toBe("Music / Bands");
+  });
+
   it("puts the bio or the resume after About", () => {
     expect(getWindowTitle(getApp("about"), { page: "bio", versions: [] })).toBe("About / Bio");
     expect(getWindowTitle(getApp("about"), { page: "resume", versions: [] })).toBe("About / Resume");

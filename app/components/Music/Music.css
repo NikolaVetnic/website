@@ -1,0 +1,195 @@
+/* The tabs, then the cards. */
+.music-page {
+  display: grid;
+  gap: 16px;
+}
+
+/* The cards, as many to a row as fit, each with a square cover like a record's. */
+.music {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.music__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgb(var(--text) / 0.12);
+  border-radius: 10px;
+  background: rgb(var(--raised));
+  box-shadow: 0 1px 2px rgb(var(--shadow) / 0.08);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.music__card:hover {
+  border-color: rgb(var(--accent) / 0.5);
+  box-shadow: 0 4px 14px rgb(var(--shadow) / 0.14);
+}
+
+.music__card:has(:focus-visible) {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+.music__cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* Without a cover: what it's written for, large, on a wash of the accent. */
+.music__cover--plain {
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: linear-gradient(135deg, rgb(var(--accent) / 0.22), rgb(var(--accent) / 0.06));
+  color: rgb(var(--accent));
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.music__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px 12px;
+}
+
+.music__title {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.music__link {
+  color: rgb(var(--text));
+  text-decoration: none;
+}
+
+.music__link:focus-visible {
+  outline: none;
+}
+
+/* The title's link covers the card, so the whole card opens the entry. */
+.music__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.music__summary {
+  margin: 0;
+  color: rgb(var(--text-muted));
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.music__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+  margin-top: auto;
+  font-size: 0.8rem;
+}
+
+.music__years {
+  color: rgb(var(--text-subtle));
+}
+
+.music__detail {
+  padding: 1px 7px;
+  border: 1px solid rgb(var(--text) / 0.15);
+  border-radius: 4px;
+  color: rgb(var(--text-muted));
+}
+
+.music__empty {
+  margin: 0;
+  color: rgb(var(--text-muted));
+}
+
+.music__back {
+  color: rgb(var(--accent));
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.music__back:hover {
+  text-decoration: underline;
+}
+
+/* An entry's page, read like a post. */
+.music-entry {
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
+.music-entry__title {
+  margin: 12px 0 0;
+  font-size: 1.6rem;
+  line-height: 1.25;
+}
+
+.music-entry__summary {
+  margin: 6px 0 0;
+  color: rgb(var(--text-muted));
+}
+
+.music-entry__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgb(var(--text) / 0.1);
+}
+
+.music-entry__bar .music__facts {
+  margin-top: 0;
+}
+
+.music-entry__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.music-entry__link {
+  display: block;
+  padding: 4px 11px;
+  border: 1px solid rgb(var(--accent) / 0.5);
+  border-radius: 6px;
+  color: rgb(var(--accent));
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.music-entry__link:hover {
+  background: rgb(var(--accent) / 0.1);
+}
+
+.music-entry__link:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+.music-entry__body {
+  margin-top: 20px;
+}

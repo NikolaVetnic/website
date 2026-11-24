@@ -1,7 +1,8 @@
+import { getMusicTab, MUSIC_TABS, type MusicKind } from "~/music/music";
 import { getApp, type DesktopApp } from "./apps";
 
 // The page an app's window shows below the app itself, if any: a post in the Blog, a project or the open-source
-// contributions in Projects, the bio or resume in About.
+// contributions in Projects, a piece or a tab other than the first in Music, the bio or resume in About.
 function getPageTitle(data: unknown): string | null {
   if (typeof data !== "object" || data === null) {
     return null;
@@ -11,6 +12,17 @@ function getPageTitle(data: unknown): string | null {
   }
   if ("project" in data && typeof data.project === "object" && data.project !== null && "title" in data.project) {
     return String(data.project.title);
+  }
+  if (
+    "musicEntry" in data &&
+    typeof data.musicEntry === "object" &&
+    data.musicEntry !== null &&
+    "title" in data.musicEntry
+  ) {
+    return String(data.musicEntry.title);
+  }
+  if ("musicKind" in data && data.musicKind !== MUSIC_TABS[0].kind) {
+    return getMusicTab(data.musicKind as MusicKind).title;
   }
   if ("openSource" in data) {
     return "Open source";

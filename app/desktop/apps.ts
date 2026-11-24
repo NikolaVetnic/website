@@ -46,7 +46,13 @@ export const APPS: DesktopApp[] = [
   },
   { id: "games", title: "Games", icon: "/icons/games.svg", description: "Games made by Nikola Pacek Vetnić." },
   { id: "art", title: "Art", icon: "/icons/art.svg", description: "Art by Nikola Pacek Vetnić." },
-  { id: "music", title: "Music", icon: "/icons/music.svg", description: "Music by Nikola Pacek Vetnić." },
+  {
+    id: "music",
+    title: "Music",
+    icon: "/icons/music.svg",
+    description: "Music by Nikola Pacek Vetnić: compositions, bands and soundtracks.",
+    windowSize: { width: 840, height: 600 },
+  },
   {
     id: "contact",
     title: "Contact",
