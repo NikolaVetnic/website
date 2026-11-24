@@ -32,7 +32,6 @@ const PAGES: Record<number, string> = {
   1508: "/about/resume", // Resume [ENG]
   9: "/blog",
   298: "/projects", // Code
-  505: "/projects", // Other Projects
   895: "/projects", // Main Projects
   1253: "/projects/voxel-ray-tracer", // Computer Graphics 2
   1371: "/projects", // Computer Graphics 1
@@ -46,15 +45,16 @@ const PAGES: Record<number, string> = {
   1571: "/games", // Rouge C
   1799: "/games/sodhara", // SODHARA
   296: "/art",
-  102: "/music", // SVARUN
-  158: "/music", // Lonesome Night
+  102: "/music/svarun",
+  158: "/music/lonesome-night",
   277: "/music", // Contemporary Works
-  491: "/music", // Soundtracks
-  720: "/music", // HATOR
-  729: "/music", // WATERWOOD
-  928: "/music", // K'NOSSOS Soundtrack
-  933: "/music", // Stock Music
-  1103: "/music",
+  491: "/music/soundtracks",
+  720: "/music/hator",
+  729: "/music/waterwood",
+  928: "/music/knossos-soundtrack",
+  933: "/music/stock-music",
+  1103: "/music", // Music
+  505: "/music/bands", // Other Projects (bands)
   8: "/contact",
 };
 
