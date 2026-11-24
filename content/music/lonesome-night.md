@@ -553,7 +553,7 @@ uku-e še-am-du
 [ENDING]
 Within our hands
 Shattered dreams of life
-Elusive piece -
+Elusive peace -
 Eternal strife...
 ```
 
@@ -616,7 +616,7 @@ And to never die...
 ```lyrics 9. Diminished by the Words
 [VERSE I]
 A fading still appears of sorrow in the flesh
-She stared at me spoke, the silent pain emerged
+She stared at me and spoke, the silent pain emerged
 The burden weighs her down, with me she pleads for aid
 Revealing dark within she faced me with her fear...
 
