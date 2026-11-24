@@ -2,7 +2,7 @@
 title: Stock music
 kind: soundtrack
 summary: Cinematic, corporate and world music tracks, under the SVARUN AUDIO label.
-years: 2017
+years: 2013–2017
 role: Composer, producer
 image: cover.webp
 ---

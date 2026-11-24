@@ -2,7 +2,7 @@
 title: Electronic Studies
 kind: composition
 summary: Six electronic pieces written over five years, released as an album.
-years: 2023
+years: 2018–2023
 scoring: Electronics
 image: cover.webp
 links:
