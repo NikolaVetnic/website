@@ -68,7 +68,7 @@ export const SOUNDTRACK = {
 export const CREDITS = [
   { role: "Coding", name: "Zdeněk Mihula" },
   { role: "Art", name: "Simon Ketteniss" },
-  { role: "Story, puzzles, additional art", name: "Nikola Vetnić" },
+  { role: "Story & Audio", name: "Nikola Vetnić" },
 ];
 
 // Where the project stands.

@@ -12,9 +12,7 @@ const Footer = () => (
         </div>
       ))}
     </dl>
-    <p className="footer__credit">
-      Svarun Entertainment, 2012. Made with the Wintermute Engine, as K’NOSSOS is after it.
-    </p>
+    <p className="footer__credit">Svarun Entertainment, 2012. Made with the Wintermute Engine.</p>
   </footer>
 );
 
