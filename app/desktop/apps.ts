@@ -11,6 +11,7 @@ export type AppId =
   | "settings"
   | "sodhara"
   | "knossos"
+  | "vsevolod"
   | "dungeon-gunner"
   | "rogue-c";
 
@@ -100,6 +101,17 @@ export const APPS: DesktopApp[] = [
     folder: "games",
     windowSize: { width: 1040, height: 720 },
     page: "/apps/knossos/",
+  },
+  {
+    id: "vsevolod",
+    title: "VSEVOLOD",
+    icon: "/apps/vsevolod/icon-128.png",
+    description:
+      "VSEVOLOD, a classic hand-drawn 2D point-and-click adventure in a Europe where Christianity never came.",
+    path: "/games/vsevolod",
+    folder: "games",
+    windowSize: { width: 1040, height: 720 },
+    page: "/apps/vsevolod/",
   },
   {
     id: "dungeon-gunner",

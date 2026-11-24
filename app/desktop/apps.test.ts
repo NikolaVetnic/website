@@ -47,7 +47,13 @@ describe("folders", () => {
   it("keeps an app in a folder off the desktop and in its folder", () => {
     expect(DESKTOP_APPS.map((app) => app.id)).not.toContain("sodhara");
     expect(DESKTOP_APPS.map((app) => app.id)).toContain("games");
-    expect(getFolderApps("games").map((app) => app.id)).toEqual(["sodhara", "knossos", "dungeon-gunner", "rogue-c"]);
+    expect(getFolderApps("games").map((app) => app.id)).toEqual([
+      "sodhara",
+      "knossos",
+      "vsevolod",
+      "dungeon-gunner",
+      "rogue-c",
+    ]);
   });
 
   it("shows a folder's apps without a group first, then each group under its heading", () => {
@@ -56,7 +62,7 @@ describe("folders", () => {
       apps: group.apps.map((app) => app.id),
     }));
     expect(groups).toEqual([
-      { title: undefined, apps: ["sodhara", "knossos"] },
+      { title: undefined, apps: ["sodhara", "knossos", "vsevolod"] },
       { title: "Other", apps: ["dungeon-gunner", "rogue-c"] },
     ]);
   });

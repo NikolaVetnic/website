@@ -22,7 +22,7 @@ describe("getWordPressRedirect", () => {
     }
     expect(getWordPressRedirect("/", "?page_id=1799")).toBe("/games/sodhara");
     expect(getWordPressRedirect("/", "?page_id=746")).toBe("/games/knossos");
-    expect(getWordPressRedirect("/", "?page_id=770")).toBe("/games");
+    expect(getWordPressRedirect("/", "?page_id=770")).toBe("/games/vsevolod");
     expect(getWordPressRedirect("/", "?page_id=1571")).toBe("/games/rogue-c");
     expect(getWordPressRedirect("/", "?page_id=1413")).toBe("/games");
     expect(getWordPressRedirect("/", "?page_id=1508")).toBe("/about/resume");

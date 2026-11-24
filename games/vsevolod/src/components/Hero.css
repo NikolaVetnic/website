@@ -1,0 +1,107 @@
+.hero {
+  position: relative;
+  display: grid;
+  /* The title in the sky, below the header that lies over it, and the buttons at the bottom. A screen too short for
+     both makes the hero taller instead of overlapping them. */
+  --hero-margin: clamp(24px, 7vh, 72px);
+  min-height: 100vh;
+  padding: calc(var(--header-height) + var(--hero-margin)) 20px var(--hero-margin);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The cover fills the hero, drifting slowly; the faces stay at the edges, the sky in the middle. */
+.hero__art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  transform: scale(1.04);
+  animation: hero-drift 45s ease-in-out infinite alternate;
+}
+
+@keyframes hero-drift {
+  to {
+    transform: scale(1.1) translateY(-1%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__art {
+    animation: none;
+  }
+}
+
+/* Dark at the top for the header and at the bottom for the buttons, the white sky left bright between. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 15, 18, 0.55) 0%,
+    transparent 20%,
+    transparent 50%,
+    rgba(13, 15, 18, 0.75) 82%,
+    var(--bg) 100%
+  );
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Takes the free height, which pushes the buttons and the credit below it to the bottom. */
+.hero__heading {
+  margin: 0 0 auto;
+}
+
+/* Dark letters in the white sky, like a title carved in stone. */
+.hero__title {
+  margin: 0;
+  color: #1d2229;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 11vw, 7.5rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  /* The letters' spacing also follows the last one; this keeps the word centred. */
+  margin-right: -0.16em;
+  text-shadow: 0 0 40px rgba(250, 245, 232, 0.9);
+}
+
+.hero__tagline {
+  margin: 12px 0 0;
+  color: #2b323b;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  font-style: italic;
+  font-weight: 600;
+  text-shadow: 0 0 24px rgba(250, 245, 232, 0.9);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.hero__credit {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
