@@ -1,6 +1,7 @@
 import { useEffect, useRef, type MouseEvent } from "react";
 import { useNavigate } from "react-router";
 
+import { getPlayerSource, parsePlayer, toHex } from "~/content/players";
 import { drawDiagrams } from "./diagrams";
 import "./Prose.css";
 
@@ -11,8 +12,31 @@ type ProseProps = {
   lang?: string;
 };
 
+// Puts a player's own player in place of its button: only now does the page reach the service.
+function startPlayer(figure: HTMLElement) {
+  const player = parsePlayer(figure.dataset.player ?? "");
+  const button = figure.querySelector<HTMLButtonElement>(".prose-player__start");
+  if (!player || !button) {
+    return;
+  }
+
+  const style = getComputedStyle(figure);
+  const iframe = document.createElement("iframe");
+  iframe.className = "prose-player__frame";
+  iframe.src = getPlayerSource(player, {
+    background: toHex(style.getPropertyValue("--raised")),
+    accent: toHex(style.getPropertyValue("--accent")),
+  });
+  iframe.title = figure.querySelector(".prose-player__name")?.textContent ?? "Player";
+  iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
+  iframe.allowFullscreen = true;
+  button.replaceWith(iframe);
+  iframe.focus();
+}
+
 // Rendered Markdown. Links within the site move the window instead of reloading the page; links out open a new
 // tab (see markdown.server.ts). Diagrams are drawn once the page runs, and again when the theme or accent changes.
+// Players load when their button is pressed.
 function Prose({ html, className, lang }: ProseProps) {
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
@@ -30,6 +54,12 @@ function Prose({ html, className, lang }: ProseProps) {
   }, [html]);
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
+    const start = (event.target as Element).closest(".prose-player__start");
+    if (start) {
+      startPlayer(start.closest<HTMLElement>(".prose-player")!);
+      return;
+    }
+
     const link = (event.target as Element).closest("a");
     if (
       !link ||
