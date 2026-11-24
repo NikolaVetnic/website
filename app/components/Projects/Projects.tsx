@@ -1,6 +1,15 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router";
 
 import Prose from "~/components/Prose/Prose";
+import Tabs from "~/components/Tabs/Tabs";
+import {
+  describeContributions,
+  formatContributionDate,
+  getLinkLabel,
+  OPEN_SOURCE_PATH,
+  type UpstreamProject,
+} from "~/projects/open-source";
 import {
   getProjectPath,
   STATUS_LABELS,
@@ -11,13 +20,22 @@ import {
 import "./Projects.css";
 
 type ProjectsProps = {
-  // What the Projects routes loaded: the cards (`/projects`), one project (`/projects/<slug>`), or one that doesn't
-  // exist.
+  // What the Projects routes loaded: the cards (`/projects`), the open-source contributions
+  // (`/projects/open-source`), one project (`/projects/<slug>`), or one that doesn't exist.
   data: unknown;
 };
 
+const PROJECTS_TABS = [
+  { title: "Projects", path: "/projects" },
+  { title: "Open source", path: OPEN_SOURCE_PATH },
+];
+
 function isListPage(data: unknown): data is { projects: ProjectSummary[] } {
   return typeof data === "object" && data !== null && "projects" in data;
+}
+
+function isOpenSourcePage(data: unknown): data is { openSource: UpstreamProject[] } {
+  return typeof data === "object" && data !== null && "openSource" in data;
 }
 
 function isProjectPage(data: unknown): data is { project: Project } {
@@ -95,6 +113,54 @@ function ProjectList({ projects }: { projects: ProjectSummary[] }) {
   );
 }
 
+// The window's two pages, under its tabs.
+function TabPage({ current, children }: { current: string; children: ReactNode }) {
+  return (
+    <div className="projects-page">
+      <Tabs label="Projects" tabs={PROJECTS_TABS} current={current} />
+      {children}
+    </div>
+  );
+}
+
+// Each upstream project once, with what it is, and its contributions newest first.
+function OpenSource({ projects }: { projects: UpstreamProject[] }) {
+  if (projects.length === 0) {
+    return <p className="projects__empty">No contributions yet.</p>;
+  }
+
+  return (
+    <div className="open-source">
+      <p className="open-source__count">{describeContributions(projects)}</p>
+      {projects.map((project) => (
+        <section key={project.name} className="open-source__project" aria-label={project.name}>
+          <h2 className="open-source__name">
+            <a href={project.url} target="_blank" rel="noopener noreferrer">
+              {project.name}
+            </a>
+          </h2>
+          <p className="open-source__about">{project.about}</p>
+          <ul className="open-source__list">
+            {project.contributions.map((contribution) => (
+              <li key={contribution.link} className="open-source__item">
+                <span className="open-source__summary">{contribution.summary}</span>
+                <span className="open-source__meta">
+                  <time dateTime={contribution.date}>{formatContributionDate(contribution.date)}</time>
+                  {" · "}
+                  <a href={contribution.link} target="_blank" rel="noopener noreferrer">
+                    {getLinkLabel(contribution.link)}
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  );
+}
+
 function BackLink() {
   return (
     <Link className="projects__back" to="/projects">
@@ -120,13 +186,24 @@ function ProjectPage({ project }: { project: Project }) {
   );
 }
 
-// The Projects window: the cards, or one project's page.
+// The Projects window: the cards or the open-source contributions, under tabs, or one project's page.
 function Projects({ data }: ProjectsProps) {
   if (isProjectPage(data)) {
     return <ProjectPage project={data.project} />;
   }
   if (isListPage(data)) {
-    return <ProjectList projects={data.projects} />;
+    return (
+      <TabPage current="/projects">
+        <ProjectList projects={data.projects} />
+      </TabPage>
+    );
+  }
+  if (isOpenSourcePage(data)) {
+    return (
+      <TabPage current={OPEN_SOURCE_PATH}>
+        <OpenSource projects={data.openSource} />
+      </TabPage>
+    );
   }
   if (isMissingProject(data)) {
     return (

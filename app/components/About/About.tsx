@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router";
 
 import { ABOUT_TABS, DEFAULT_LANG, type AboutData, type AboutVersion } from "~/about/about";
 import Prose from "~/components/Prose/Prose";
+import Tabs from "~/components/Tabs/Tabs";
 import { CONTACT } from "~/contact/contact";
 import "./About.css";
 
@@ -77,18 +77,7 @@ function About({ data }: AboutProps) {
   return (
     <div className="about">
       <div className="about__bar">
-        <nav className="about__tabs" aria-label="About">
-          {ABOUT_TABS.map((tab) => (
-            <Link
-              key={tab.page}
-              className="about__tab"
-              to={tab.path}
-              aria-current={tab.page === data.page ? "page" : undefined}
-            >
-              {tab.title}
-            </Link>
-          ))}
-        </nav>
+        <Tabs label="About" tabs={ABOUT_TABS} current={ABOUT_TABS.find((tab) => tab.page === data.page)?.path ?? ""} />
         <div className="about__actions">
           {data.versions.length > 1 ? (
             <LanguageSwitch versions={data.versions} lang={version.lang} onChange={choose} />

@@ -1,3 +1,9 @@
+/* The tabs, then the cards or the contributions. */
+.projects-page {
+  display: grid;
+  gap: 16px;
+}
+
 /* The cards, as many to a row as fit. */
 .projects {
   display: grid;
@@ -206,4 +212,70 @@
   width: 100%;
   height: auto;
   border-radius: 6px;
+}
+
+/* The Open source tab: a column like a post's, under the tabs, each upstream project and its contributions. */
+.open-source {
+  max-width: 68ch;
+}
+
+.open-source__count {
+  margin: 0;
+  color: rgb(var(--text-subtle));
+  font-size: 0.9rem;
+}
+
+.open-source__project {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(var(--text) / 0.1);
+}
+
+.open-source__name {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.open-source__name a {
+  color: rgb(var(--text));
+  text-decoration: none;
+}
+
+.open-source__name a:hover {
+  color: rgb(var(--accent));
+}
+
+.open-source__about {
+  margin: 2px 0 0;
+  color: rgb(var(--text-muted));
+  font-size: 0.9rem;
+}
+
+.open-source__list {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 0 0 0 18px;
+}
+
+.open-source__item {
+  line-height: 1.5;
+}
+
+.open-source__summary {
+  display: block;
+}
+
+.open-source__meta {
+  color: rgb(var(--text-subtle));
+  font-size: 0.85rem;
+}
+
+.open-source__meta a {
+  color: rgb(var(--accent));
+  text-decoration: none;
+}
+
+.open-source__meta a:hover {
+  text-decoration: underline;
 }

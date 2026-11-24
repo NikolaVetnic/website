@@ -1,0 +1,32 @@
+/* As wide as its tabs, wherever it's put. */
+.tabs {
+  display: flex;
+  width: fit-content;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 8px;
+  background: rgb(var(--text) / 0.08);
+}
+
+.tabs__tab {
+  padding: 4px 14px;
+  border-radius: 6px;
+  color: rgb(var(--text-muted));
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.tabs__tab:hover {
+  color: rgb(var(--text));
+}
+
+.tabs__tab[aria-current="page"] {
+  background: rgb(var(--raised));
+  box-shadow: 0 1px 2px rgb(var(--shadow) / 0.15);
+  color: rgb(var(--text));
+}
+
+.tabs__tab:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}

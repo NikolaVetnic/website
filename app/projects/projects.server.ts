@@ -18,6 +18,9 @@ export function parseProject(slug: string, source: string, publicDir = PUBLIC_DI
   if (!SLUG.test(slug)) {
     throw fail("the file name must be lowercase letters and digits joined by hyphens");
   }
+  if (slug === "open-source") {
+    throw fail("`open-source` is taken: /projects/open-source is the Open source tab");
+  }
 
   const { data, body } = splitFrontMatter(source, fail);
   const { title, summary, years, status, tech, repo, image } = data;

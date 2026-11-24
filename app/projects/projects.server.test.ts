@@ -49,6 +49,7 @@ describe("parseProject", () => {
     expect(() => parseProject("a", project(valid.replace("[Java, JavaFX]", "[]")))).toThrow(/`tech`/);
     expect(() => parseProject("a", project(valid.replace("https://", "http://")))).toThrow(/`repo`/);
     expect(() => parseProject("Voxel Tracer", project(valid))).toThrow(/file name/);
+    expect(() => parseProject("open-source", project(valid))).toThrow(/taken/);
   });
 });
 

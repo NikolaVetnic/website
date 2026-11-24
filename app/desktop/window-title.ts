@@ -1,7 +1,7 @@
 import { getApp, type DesktopApp } from "./apps";
 
-// The page an app's window shows below the app itself, if any: a post in the Blog, a project in Projects, the bio
-// or resume in About.
+// The page an app's window shows below the app itself, if any: a post in the Blog, a project or the open-source
+// contributions in Projects, the bio or resume in About.
 function getPageTitle(data: unknown): string | null {
   if (typeof data !== "object" || data === null) {
     return null;
@@ -11,6 +11,9 @@ function getPageTitle(data: unknown): string | null {
   }
   if ("project" in data && typeof data.project === "object" && data.project !== null && "title" in data.project) {
     return String(data.project.title);
+  }
+  if ("openSource" in data) {
+    return "Open source";
   }
   if ("page" in data && data.page === "bio") {
     return "Bio";
