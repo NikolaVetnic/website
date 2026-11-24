@@ -283,12 +283,12 @@ So dark and cold
 
 [CHORUS I]
 I forsake what I have sworn
-(For) There is nougt, but for me to mourn
+(For) There is nought, but for me to mourn
 And grieve...
 
 [INTRO II]
 Aching soul...
-Never at piece again...
+Never at peace again...
 Again...
 
 [VERSE II]
@@ -341,7 +341,7 @@ So dark and cold
 I embrace what I have sworn
 An instant ere my own flesh is torn
 
-Ailling rites renounce the fright,
+Ailing rites renounce the fright,
 In blazing blight, I become the light!
 
 [CODA]
@@ -433,7 +433,7 @@ another rose,
 'twas the fate of your forbear's,
 his dark curse...
 
-You see, the Lords where three
+You see, the Lords were three
 (the furtive did flee)
 before the thunder
 struck the gods
@@ -527,7 +527,7 @@ That keeps me from crossing the gate...
 
 [BRIDGE II]
 A land obscure,
-What ailing ordeal still lays in wait for me?
+What ailing ordeal still lies in wait for me?
 
 Scorching heat in this wretched land,
 Meaningless stories in stone and sand...
@@ -560,11 +560,11 @@ Eternal strife...
 ```lyrics 8. Philosopher's Stone
 [VERSE I]
 An eerie breeze, through the dead and twisted branches, weeps as
-I am lead into the maze of ignorence
+I am led into the maze of ignorance
 
 I'm lost
 They steal my eyes, the
-Savage beasts of pray,
+Savage beasts of prey,
 Yet still I see...
 
 Through light of alkhemy...
@@ -788,7 +788,7 @@ For sight is close at hand
 To see is all I ever have asked of gods
 A throng of precious jewels I've ever prayed for
 The nights of endless darkness, they yield to Moon,
-It's regal blood presiding over flames and fire
+Its regal blood presiding over flames and fire
 
 [WALTZ]
 A dance of inner eyes,
@@ -801,7 +801,7 @@ The Cosmos, oh it beckons ever still
 
 [VERSE III]
 Hybris drowns the old ambition
-The price of ignorence - attrition
+The price of ignorance - attrition
 To stand among them we were promised
 Yet vacuous now we are
 
@@ -809,7 +809,7 @@ Yet vacuous now we are
 To see is all I ever have asked of gods
 A throng of precious jewels I've ever prayed for
 The nights of endless darkness, they yield to Moon
-It's regal blood presiding over flames and fire
+Its regal blood presiding over flames and fire
 ```
 
 ```lyrics 12. Last Summer
