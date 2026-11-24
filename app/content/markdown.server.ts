@@ -119,7 +119,7 @@ export function renderMarkdown(body: string, { imageBase, publicDir = PUBLIC_DIR
     if (isPlayerReference(image.href)) {
       if (!parsePlayer(image.href)) {
         throw fail(
-          `player "${image.href}" isn't one (bandcamp:album/<id>, bandcamp:track/<id>, soundcloud:track/<id>, soundcloud:playlist/<id> or youtube:<id>, optionally ?t=<seconds>)`,
+          `player "${image.href}" isn't one (bandcamp:album/<id>, bandcamp:track/<id>, soundcloud:track/<id>, soundcloud:playlist/<id>, spotify:album/<id>, spotify:track/<id>, spotify:playlist/<id> or youtube:<id>, optionally ?t=<seconds>)`,
         );
       }
       if (!players.has(image)) {

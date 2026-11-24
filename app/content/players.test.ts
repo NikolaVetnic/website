@@ -12,6 +12,11 @@ describe("parsePlayer", () => {
       kind: "playlist",
       id: "334289683",
     });
+    expect(parsePlayer("spotify:album/0Ng25z6uEdigq5ktTlLsGt")).toEqual({
+      service: "spotify",
+      kind: "album",
+      id: "0Ng25z6uEdigq5ktTlLsGt",
+    });
     expect(parsePlayer("youtube:xFvrRx15Mqo")).toEqual({ service: "youtube", id: "xFvrRx15Mqo" });
     expect(parsePlayer("youtube:29XxZAPfF0U?t=600")).toEqual({ service: "youtube", id: "29XxZAPfF0U", start: 600 });
   });
@@ -19,6 +24,7 @@ describe("parsePlayer", () => {
   it("refuses anything else", () => {
     expect(parsePlayer("bandcamp:album/divide-ut-regnes")).toBeNull();
     expect(parsePlayer("soundcloud:tracks/1")).toBeNull();
+    expect(parsePlayer("spotify:artist/0Ng25z6uEdigq5ktTlLsGt")).toBeNull();
     expect(parsePlayer("youtube:short")).toBeNull();
     expect(parsePlayer("youtube:29XxZAPfF0U?t=10m")).toBeNull();
     expect(parsePlayer("photo.jpg")).toBeNull();
@@ -41,6 +47,12 @@ describe("getPlayerSource", () => {
     expect(source).toContain("auto_play=true");
   });
 
+  it("embeds Spotify's player", () => {
+    expect(getPlayerSource({ service: "spotify", kind: "album", id: "0Ng25z6uEdigq5ktTlLsGt" }, colours)).toBe(
+      "https://open.spotify.com/embed/album/0Ng25z6uEdigq5ktTlLsGt",
+    );
+  });
+
   it("plays YouTube without its cookies", () => {
     expect(getPlayerSource({ service: "youtube", id: "xFvrRx15Mqo" }, colours)).toBe(
       "https://www.youtube-nocookie.com/embed/xFvrRx15Mqo?autoplay=1",
@@ -55,6 +67,8 @@ describe("getPlayerVariant", () => {
   it("tells SoundCloud's tracks from its playlists", () => {
     expect(getPlayerVariant({ service: "soundcloud", kind: "track", id: "1" })).toBe("soundcloud-track");
     expect(getPlayerVariant({ service: "bandcamp", kind: "track", id: "1" })).toBe("bandcamp");
+    expect(getPlayerVariant({ service: "spotify", kind: "album", id: "1" })).toBe("spotify-list");
+    expect(getPlayerVariant({ service: "spotify", kind: "track", id: "1" })).toBe("spotify-track");
   });
 });
 

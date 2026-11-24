@@ -115,7 +115,7 @@
   height: auto;
 }
 
-/* A player from Bandcamp, SoundCloud or YouTube: a button until pressed, then the service's player at its own
+/* A player from Bandcamp, SoundCloud, Spotify or YouTube: a button until pressed, then the service's player at its own
    height (Prose.tsx loads it). */
 .prose-player__start,
 .prose-player__frame {
@@ -202,6 +202,16 @@
 
 .prose-player--soundcloud-playlist .prose-player__frame {
   height: 360px;
+}
+
+.prose-player--spotify-track .prose-player__frame {
+  height: 152px;
+  border-radius: 12px;
+}
+
+.prose-player--spotify-list .prose-player__frame {
+  height: 352px;
+  border-radius: 12px;
 }
 
 .prose-player--youtube .prose-player__frame {

@@ -28,7 +28,7 @@ function startPlayer(figure: HTMLElement) {
     accent: toHex(style.getPropertyValue("--accent")),
   });
   iframe.title = figure.querySelector(".prose-player__name")?.textContent ?? "Player";
-  iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
+  iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
   iframe.allowFullscreen = true;
   button.replaceWith(iframe);
   iframe.focus();

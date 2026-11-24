@@ -30,7 +30,7 @@ export type MusicSummary = {
 export type MusicLink = { name: string; url: string };
 
 export type MusicEntry = MusicSummary & {
-  // Where else to hear it (Bandcamp, SoundCloud, YouTube), shown as buttons.
+  // Where else to hear it (Bandcamp, Spotify, YouTube), shown as buttons.
   links: MusicLink[];
   // Rendered from Markdown at build time.
   html: string;
