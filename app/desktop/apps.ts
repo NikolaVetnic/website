@@ -1,7 +1,6 @@
 import type { Size } from "./drag";
 
-export type AppId =
-  "about" | "blog" | "projects" | "games" | "art" | "music" | "contact" | "settings" | "sodhara" | "knossos";
+export type AppId = "about" | "blog" | "projects" | "games" | "music" | "contact" | "settings" | "sodhara" | "knossos";
 
 export type DesktopApp = {
   id: AppId;
@@ -45,7 +44,6 @@ export const APPS: DesktopApp[] = [
     windowSize: { width: 840, height: 600 },
   },
   { id: "games", title: "Games", icon: "/icons/games.svg", description: "Games made by Nikola Pacek Vetnić." },
-  { id: "art", title: "Art", icon: "/icons/art.svg", description: "Art by Nikola Pacek Vetnić." },
   {
     id: "music",
     title: "Music",
