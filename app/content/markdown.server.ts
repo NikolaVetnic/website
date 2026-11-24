@@ -12,6 +12,9 @@ export const PUBLIC_DIR = path.resolve("public");
 
 const FRONT_MATTER = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
 
+// A clip is written like an image, by its WebM file.
+const CLIP = /\.webm$/;
+
 // Only used to resolve image paths; any origin would do.
 const SITE = "https://site.invalid";
 
@@ -65,7 +68,8 @@ const markdown = new Marked({
       return Renderer.prototype.image.call(this, token).replace(/^<img /, '<img loading="lazy" decoding="async" ');
     },
     // An image on a line of its own is a figure, and its title the caption under it. A player is written the same
-    // way, and becomes a button that loads it (see players.ts).
+    // way, and becomes a button that loads it (see players.ts); so is a clip, a WebM with an MP4 beside it for the
+    // browsers without WebM, which plays silently on a loop like an animated picture.
     paragraph({ tokens }) {
       const [image] = tokens;
       if (tokens.length !== 1 || image.type !== "image") {
@@ -77,6 +81,12 @@ const markdown = new Marked({
       const player = parsePlayer(href);
       if (player) {
         return `<figure class="prose-player prose-player--${getPlayerVariant(player)}" data-player="${escapeHtml(href)}">${renderPlayerButton(text, PLAYER_SERVICES[player.service])}${caption}</figure>\n`;
+      }
+
+      if (CLIP.test(href)) {
+        const name = text ? ` aria-label="${escapeHtml(text)}"` : "";
+        const mp4 = href.replace(CLIP, ".mp4");
+        return `<figure><video class="prose-clip" autoplay loop muted playsinline${name}><source src="${escapeHtml(href)}" type="video/webm"><source src="${escapeHtml(mp4)}" type="video/mp4"></video>${caption}</figure>\n`;
       }
 
       const img = this.parser.parseInline([{ ...image, title: null } as Tokens.Image]);
@@ -117,7 +127,7 @@ type RenderOptions = {
 // Markdown to HTML. An image written by file name (`photo.jpg`) is in `public/` under `imageBase`; paths from
 // the site root stay as they are. A local image that isn't there throws, so the build fails instead of
 // shipping a broken page. Images elsewhere on the web are left alone. A player that isn't well written, or shares
-// its line with other text, throws too.
+// its line with other text, throws too, as does a clip without its MP4 or not on a line of its own.
 export function renderMarkdown(body: string, { imageBase, publicDir = PUBLIC_DIR, fail }: RenderOptions): string {
   const tokens = markdown.lexer(body);
   // Players stand on lines of their own; their paragraphs come before them in the walk.
@@ -155,6 +165,15 @@ export function renderMarkdown(body: string, { imageBase, publicDir = PUBLIC_DIR
     const file = decodeURIComponent(url.pathname);
     if (!existsSync(path.join(publicDir, file))) {
       throw fail(`image "${image.href}" not found (looked for public${file})`);
+    }
+    if (CLIP.test(file)) {
+      if (!players.has(image)) {
+        throw fail(`clip "${image.href}" must be on a line of its own`);
+      }
+      const mp4 = file.replace(CLIP, ".mp4");
+      if (!existsSync(path.join(publicDir, mp4))) {
+        throw fail(`clip "${image.href}" needs an MP4 beside it (looked for public${mp4})`);
+      }
     }
     image.href = url.pathname + url.search + url.hash;
   });
