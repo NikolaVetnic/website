@@ -1,6 +1,10 @@
+import { useCallback, useRef, useState } from "react";
+
 import { getApp, type AppId } from "~/desktop/apps";
 import type { DesktopWindow } from "~/desktop/windows";
+import usePhoneLayout from "~/hooks/usePhoneLayout";
 import Clock from "./Clock";
+import StartMenu from "./StartMenu";
 import "./Taskbar.css";
 
 type TaskbarProps = {
@@ -8,14 +12,36 @@ type TaskbarProps = {
   focusedId: AppId | null;
   onToggle: (id: AppId) => void;
   onShowDesktop: () => void;
+  onOpenApp: (id: AppId) => void;
 };
 
-function Taskbar({ windows, focusedId, onToggle, onShowDesktop }: TaskbarProps) {
+// The logo opens the start menu, and the slim button at the far right shows the desktop. On a phone the logo is the
+// home button instead, as the home screen already lists the apps.
+function Taskbar({ windows, focusedId, onToggle, onShowDesktop, onOpenApp }: TaskbarProps) {
+  const isPhone = usePhoneLayout();
+  const homeRef = useRef<HTMLButtonElement | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const closeMenu = useCallback((refocus: boolean) => {
+    setIsMenuOpen(false);
+    if (refocus) {
+      homeRef.current?.focus();
+    }
+  }, []);
+
   return (
     <footer className="taskbar">
-      <button type="button" className="taskbar__home" aria-label="Show the desktop" onClick={onShowDesktop}>
+      <button
+        ref={homeRef}
+        type="button"
+        className="taskbar__home"
+        aria-label={isPhone ? "Show the desktop" : "Start"}
+        aria-haspopup={isPhone ? undefined : "dialog"}
+        aria-expanded={isPhone ? undefined : isMenuOpen}
+        onClick={isPhone ? onShowDesktop : () => setIsMenuOpen(!isMenuOpen)}
+      >
         <img className="taskbar__logo" src="/icon-192.png" alt="" draggable={false} />
       </button>
+      {isMenuOpen && !isPhone ? <StartMenu onOpenApp={onOpenApp} onClose={closeMenu} /> : null}
       <ul className="taskbar__windows" aria-label="Open windows">
         {windows.map(({ id, isMinimized }) => {
           const app = getApp(id);
@@ -45,6 +71,13 @@ function Taskbar({ windows, focusedId, onToggle, onShowDesktop }: TaskbarProps) 
         })}
       </ul>
       <Clock />
+      <button
+        type="button"
+        className="taskbar__show-desktop"
+        aria-label="Show the desktop"
+        title="Show the desktop"
+        onClick={onShowDesktop}
+      />
     </footer>
   );
 }
