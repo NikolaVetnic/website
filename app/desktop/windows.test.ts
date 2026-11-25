@@ -173,6 +173,35 @@ describe("windowsReducer", () => {
     expect(state.windows[0].rect).toEqual(rect);
   });
 
+  it("snaps a window to a zone, remembering its rect from before, and lets go when moved by hand", () => {
+    const opened = run({ type: "open", id: "about", area });
+    const before = opened.windows[0].rect;
+    const snapped = windowsReducer(opened, { type: "snap", id: "about", zone: "left", area });
+
+    expect(snapped.windows[0]).toMatchObject({
+      rect: { x: 0, y: 0, width: 600, height: 800 },
+      snap: "left",
+      restoreRect: before,
+    });
+    const again = windowsReducer(snapped, { type: "snap", id: "about", zone: "top-right", area });
+    expect(again.windows[0]).toMatchObject({ snap: "top-right", restoreRect: before });
+
+    const moved = windowsReducer(again, {
+      type: "setRect",
+      id: "about",
+      rect: { x: 5, y: 5, width: 300, height: 200 },
+    });
+    expect(moved.windows[0]).toMatchObject({ snap: null, restoreRect: null });
+  });
+
+  it("keeps a snapped window filling its zone when the desktop changes size", () => {
+    const snapped = run({ type: "open", id: "about", area }, { type: "snap", id: "about", zone: "bottom", area });
+    const wider = windowsReducer(snapped, { type: "place", area: { width: 1600, height: 900 } });
+
+    expect(wider.windows[0].rect).toEqual({ x: 0, y: 450, width: 1600, height: 450 });
+    expect(windowsReducer(wider, { type: "place", area: { width: 1600, height: 900 } })).toBe(wider);
+  });
+
   it("minimizes every window to show the desktop, keeping the stack", () => {
     const opened = run({ type: "open", id: "about", area }, { type: "open", id: "blog", area });
     const desktop = windowsReducer(opened, { type: "showDesktop" });

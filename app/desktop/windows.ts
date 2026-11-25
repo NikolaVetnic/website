@@ -1,6 +1,7 @@
 import { getApp, getAppPath, type AppId } from "./apps";
 import type { Size } from "./drag";
 import { clamp } from "./grid";
+import { getSnapRect, type SnapZone } from "./snap";
 
 export type Rect = { x: number; y: number; width: number; height: number };
 
@@ -14,6 +15,10 @@ export type DesktopWindow = {
   rect: Rect | null;
   isMinimized: boolean;
   isMaximized: boolean;
+  // The half or quarter of the desktop it fills, if it was dropped there; its rect follows the desktop's size.
+  snap: SnapZone | null;
+  // Its rect from before it snapped, which it gets back when dragged away.
+  restoreRect: Rect | null;
 };
 
 // Windows stay in the order they were opened, so their DOM nodes never move (which would drop focus
@@ -31,7 +36,9 @@ export type WindowAction =
   | { type: "minimize"; id: AppId }
   | { type: "toggleMaximize"; id: AppId }
   | { type: "toggle"; id: AppId }
+  // Moving or resizing a window by hand takes it out of its snap zone.
   | { type: "setRect"; id: AppId; rect: Rect }
+  | { type: "snap"; id: AppId; zone: SnapZone; area: Size }
   | { type: "showDesktop" }
   | { type: "place"; area: Size };
 
@@ -135,16 +142,19 @@ function show(state: WindowsState, id: AppId): WindowsState {
   return { windows: update(state, id, { isMinimized: false }), stack: raise(state.stack, id) };
 }
 
+function sameRect(a: Rect | null, b: Rect): boolean {
+  return a !== null && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
+}
+
 export function windowsReducer(state: WindowsState, action: WindowAction): WindowsState {
+  // Unmeasured windows go where they would have opened; snapped ones fill their zone of the desktop at its new size.
   if (action.type === "place") {
-    return state.windows.some((window) => !window.rect)
-      ? {
-          ...state,
-          windows: state.windows.map((window, index) => ({
-            ...window,
-            rect: window.rect ?? getOpenRect(action.area, index, getApp(window.id).windowSize),
-          })),
-        }
+    const placeOf = (window: DesktopWindow, index: number): Rect => {
+      if (window.snap) return getSnapRect(window.snap, action.area);
+      return window.rect ?? getOpenRect(action.area, index, getApp(window.id).windowSize);
+    };
+    return state.windows.some((window, index) => !sameRect(window.rect, placeOf(window, index)))
+      ? { ...state, windows: state.windows.map((window, index) => ({ ...window, rect: placeOf(window, index) })) }
       : state;
   }
 
@@ -168,6 +178,8 @@ export function windowsReducer(state: WindowsState, action: WindowAction): Windo
       rect: action.area ? getOpenRect(action.area, state.windows.length, getApp(action.id).windowSize) : null,
       isMinimized: false,
       isMaximized: false,
+      snap: null,
+      restoreRect: null,
     };
     return { windows: [...state.windows, window], stack: [...state.stack, action.id] };
   }
@@ -196,6 +208,16 @@ export function windowsReducer(state: WindowsState, action: WindowAction): Windo
         ? { ...state, windows: update(state, action.id, { isMinimized: true }) }
         : show(state, action.id);
     case "setRect":
-      return { ...state, windows: update(state, action.id, { rect: action.rect }) };
+      return { ...state, windows: update(state, action.id, { rect: action.rect, snap: null, restoreRect: null }) };
+    case "snap":
+      return {
+        ...state,
+        windows: update(state, action.id, {
+          rect: getSnapRect(action.zone, action.area),
+          snap: action.zone,
+          // Snapping a snapped window again keeps the size from before the first snap.
+          restoreRect: current.snap ? current.restoreRect : current.rect,
+        }),
+      };
   }
 }

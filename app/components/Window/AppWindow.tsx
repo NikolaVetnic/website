@@ -12,6 +12,8 @@ import {
 
 import type { DesktopApp } from "~/desktop/apps";
 import type { Size } from "~/desktop/drag";
+import type { Point } from "~/desktop/grid";
+import { getSnapZone, unsnapRect, type SnapZone } from "~/desktop/snap";
 import { moveRect, resizeRect, type Rect, type ResizeEdge, type WindowAction } from "~/desktop/windows";
 import usePhoneLayout from "~/hooks/usePhoneLayout";
 import usePointerDrag from "~/hooks/usePointerDrag";
@@ -28,7 +30,12 @@ type AppWindowProps = {
   isFocused: boolean;
   isMinimized: boolean;
   isMaximized: boolean;
+  // The zone it's snapped to, and its rect from before, which it gets back when dragged away.
+  snap: SnapZone | null;
+  restoreRect: Rect | null;
   dispatch: Dispatch<WindowAction>;
+  // Tells the desktop where the window would snap if dropped now, so it can show it; null when nowhere.
+  onSnapPreview: (zone: SnapZone | null) => void;
   // Changes when the window shows another page of its app, which then starts scrolled to the top.
   contentKey: string;
   // The title bar's text: a path to what the window shows ("Games / SODHARA", "Blog / <post>").
@@ -44,13 +51,18 @@ function AppWindow({
   isFocused,
   isMinimized,
   isMaximized,
+  snap,
+  restoreRect,
   dispatch,
+  onSnapPreview,
   contentKey,
   title,
   children,
 }: AppWindowProps) {
   const windowRef = useRef<HTMLElement | null>(null);
   const startRect = useRef(rect);
+  // Where the pointer took the title bar, in the desktop's coordinates.
+  const grabPoint = useRef<Point>({ x: 0, y: 0 });
   const [isBusy, setIsBusy] = useState(false);
   const titleId = useId();
   const id = app.id;
@@ -67,20 +79,35 @@ function AppWindow({
 
   const setRect = (next: Rect) => dispatch({ type: "setRect", id, rect: next });
 
+  // The zone under the pointer, moved by the drag so far.
+  const getZone = (dx: number, dy: number) =>
+    area ? getSnapZone({ x: grabPoint.current.x + dx, y: grabPoint.current.y + dy }, area) : null;
+
   const startMove = usePointerDrag({
     onMove: ({ dx, dy }) => {
       setIsBusy(true);
       if (startRect.current && area) {
         setRect(moveRect(startRect.current, dx, dy, area));
+        onSnapPreview(getZone(dx, dy));
       }
     },
+    // Dropped in a zone, the window fills it; anywhere else, it stays where it was let go.
     onDrop: ({ dx, dy }) => {
       setIsBusy(false);
+      onSnapPreview(null);
       if (startRect.current && area) {
-        setRect(moveRect(startRect.current, dx, dy, area));
+        const zone = getZone(dx, dy);
+        if (zone) {
+          dispatch({ type: "snap", id, zone, area });
+        } else {
+          setRect(moveRect(startRect.current, dx, dy, area));
+        }
       }
     },
-    onCancel: () => setIsBusy(false),
+    onCancel: () => {
+      setIsBusy(false);
+      onSnapPreview(null);
+    },
   });
 
   const startResize = usePointerDrag({
@@ -105,7 +132,10 @@ function AppWindow({
       return;
     }
 
-    startRect.current = rect;
+    const desktop = windowRef.current?.parentElement?.getBoundingClientRect();
+    grabPoint.current = { x: event.clientX - (desktop?.left ?? 0), y: event.clientY - (desktop?.top ?? 0) };
+    // A snapped window moves at the size it had before it snapped, under the pointer.
+    startRect.current = snap && restoreRect ? unsnapRect(rect, restoreRect, grabPoint.current) : rect;
     startMove(id, event);
   };
 

@@ -7,6 +7,7 @@ import NotFound from "~/components/NotFound/NotFound";
 import Taskbar from "~/components/Taskbar/Taskbar";
 import AppWindow from "~/components/Window/AppWindow";
 import { getApp, getAppFromPath, normalizePath, type AppId } from "~/desktop/apps";
+import { getSnapRect, type SnapZone } from "~/desktop/snap";
 import { getWindowTitle } from "~/desktop/window-title";
 import {
   NO_WINDOWS,
@@ -89,10 +90,28 @@ function Shell() {
 
   const openApp = (id: AppId) => act({ type: "open", id, area });
 
+  // Where the window being dragged would snap if dropped now.
+  const [snapPreview, setSnapPreview] = useState<SnapZone | null>(null);
+  const previewRect = snapPreview && area ? getSnapRect(snapPreview, area) : null;
+
   return (
     <div className="shell">
       <main ref={workspaceRef} className="shell__workspace">
         <Desktop onOpenApp={openApp} />
+        {previewRect ? (
+          <div
+            className="shell__snap-preview"
+            aria-hidden="true"
+            style={{
+              left: previewRect.x,
+              top: previewRect.y,
+              width: previewRect.width,
+              height: previewRect.height,
+              // Over the other windows, under the one being dragged, which is on top.
+              zIndex: WINDOW_Z_INDEX + state.stack.length - 1,
+            }}
+          />
+        ) : null}
         {state.windows.map((window) => {
           const app = getApp(window.id);
           const data = window.path === path ? pageData : pages[window.path];
@@ -107,7 +126,10 @@ function Shell() {
               isFocused={window.id === focusedId}
               isMinimized={window.isMinimized}
               isMaximized={window.isMaximized}
+              snap={window.snap}
+              restoreRect={window.restoreRect}
               dispatch={act}
+              onSnapPreview={setSnapPreview}
               contentKey={window.path}
               title={getWindowTitle(app, data)}
             >
