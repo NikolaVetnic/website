@@ -60,7 +60,7 @@
   flex: none;
   padding: 6px 6px 6px 12px;
   border-radius: 11px 11px 0 0;
-  background: linear-gradient(145deg, #3a556f 0%, #2a4157 100%);
+  background: linear-gradient(145deg, oklch(var(--chrome-title-top)) 0%, oklch(var(--chrome-title-bottom)) 100%);
   color: rgba(248, 251, 255, 0.75);
   cursor: default;
   user-select: none;
@@ -68,7 +68,11 @@
 }
 
 .app-window--focused .app-window__titlebar {
-  background: linear-gradient(145deg, #2e4964 0%, #20364c 100%);
+  background: linear-gradient(
+    145deg,
+    oklch(var(--chrome-title-focused-top)) 0%,
+    oklch(var(--chrome-title-focused-bottom)) 100%
+  );
   color: #f8fbff;
 }
 

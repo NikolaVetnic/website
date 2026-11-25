@@ -12,7 +12,7 @@
   grid-template-rows: auto minmax(0, 1fr) auto;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 14px;
-  background: linear-gradient(180deg, #14283b 0%, #0e1d2c 100%);
+  background: linear-gradient(180deg, oklch(var(--chrome-menu-top)) 0%, oklch(var(--chrome-menu-bottom)) 100%);
   box-shadow:
     0 20px 44px rgba(2, 9, 15, 0.5),
     0 2px 8px rgba(2, 9, 15, 0.35);

@@ -7,7 +7,7 @@
   padding: 8px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 12px;
-  background: rgba(16, 30, 45, 0.95);
+  background: oklch(var(--chrome-menu-bottom) / 0.95);
   box-shadow:
     0 16px 30px rgba(2, 9, 15, 0.45),
     0 2px 8px rgba(2, 9, 15, 0.35);

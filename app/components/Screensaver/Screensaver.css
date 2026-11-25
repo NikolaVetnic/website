@@ -1,11 +1,15 @@
 /* The screensaver (Screensaver.tsx): a dark screen, and the logo crossing it one way in 13 s and the other in 8.3 s,
-   back and forth, so together it bounces off the edges along a path that rarely repeats. Its own colours, whatever
-   the theme, as the boot screen's; under the boot screen, over everything else. */
+   back and forth, so together it bounces off the edges along a path that rarely repeats. Dark in the accent's
+   hue whatever the theme, as the boot screen; under the boot screen, over everything else. */
 .screensaver {
   position: fixed;
   inset: 0;
   z-index: 900;
-  background: radial-gradient(circle at 50% 40%, #12283c 0%, #05090e 80%);
+  background: radial-gradient(
+    circle at 50% 40%,
+    oklch(0.269 calc(0.047 * var(--chrome-tint)) var(--chrome-hue)) 0%,
+    oklch(0.137 calc(0.014 * var(--chrome-tint)) var(--chrome-hue)) 80%
+  );
   cursor: none;
   animation: screensaver-in 1.2s ease-out;
 }
