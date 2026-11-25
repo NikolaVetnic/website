@@ -6,6 +6,20 @@
   background: var(--wallpaper);
 }
 
+/* The box being drawn to select icons, over them; nothing on the desktop takes a text selection meanwhile. */
+.desktop__selection {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid rgb(var(--chrome-accent-pale) / 0.8);
+  border-radius: 2px;
+  background: rgb(var(--chrome-accent) / 0.18);
+  pointer-events: none;
+}
+
+.desktop--selecting {
+  user-select: none;
+}
+
 .desktop:not(.desktop--animated) .desktop-icon {
   transition: none;
 }

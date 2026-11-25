@@ -10,10 +10,11 @@ import {
 } from "react";
 
 import { DESKTOP_APPS, type AppId, type DesktopApp } from "~/desktop/apps";
-import { getDragPoint, moveToCell } from "~/desktop/drag";
+import { boxesOverlap, getBox, getDragPoint, moveManyToCells, type Box } from "~/desktop/drag";
 import {
   arrangeInColumns,
   cellToPoint,
+  clamp,
   fitIntoGrid,
   getGridSize,
   pointToCell,
@@ -44,7 +45,13 @@ const ICON_GRID: GridSpec = {
 
 type PlacedIcon = { app: DesktopApp; cell: Cell };
 
-type IconDrag = { id: string; point: Point };
+// The selected icons being dragged, and how far: each moves by the same offset, kept inside the desktop.
+type IconDrag = { ids: AppId[]; dx: number; dy: number };
+
+// A selection box being drawn: where it started, and the selection it adds to (Ctrl or Cmd held), if any.
+type BoxStart = { origin: Point; base: AppId[] };
+
+const ICON_SIZE = { width: ICON_WIDTH, height: ICON_HEIGHT };
 
 const noDrag = () => {};
 
@@ -71,7 +78,9 @@ function Desktop({ onOpenApp }: DesktopProps) {
   const grid = useMemo(() => (size ? getGridSize(ICON_GRID, size.width, size.height) : null), [size]);
 
   const [icons, setIcons] = useState(getInitialIcons);
-  const [selectedId, setSelectedId] = useState<AppId | null>(null);
+  const [selected, setSelected] = useState<AppId[]>([]);
+  const [box, setBox] = useState<Box | null>(null);
+  const boxStart = useRef<BoxStart | null>(null);
   const [drag, setDrag] = useState<IconDrag | null>(null);
   const [isAnimated, setIsAnimated] = useState(false);
   const [menuPoint, setMenuPoint] = useState<Point | null>(null);
@@ -93,36 +102,105 @@ function Desktop({ onOpenApp }: DesktopProps) {
     return () => cancelAnimationFrame(frame);
   }, [size, isAnimated]);
 
-  const getIconDragPoint = ({ id, dx, dy }: DragMove): Point | null => {
+  const getIconPoint = (icon: PlacedIcon): Point => {
+    const origin = cellToPoint(ICON_GRID, icon.cell);
+    return drag?.ids.includes(icon.app.id) && size ? getDragPoint(origin, drag.dx, drag.dy, ICON_SIZE, size) : origin;
+  };
+
+  // How far the group moves: as far as the icon under the pointer can go and stay inside the desktop.
+  const getDragOffset = ({ id, dx, dy }: DragMove): Point | null => {
     const icon = placed.find((entry) => entry.app.id === id);
     if (!icon || !size) {
       return null;
     }
 
-    return getDragPoint(cellToPoint(ICON_GRID, icon.cell), dx, dy, { width: ICON_WIDTH, height: ICON_HEIGHT }, size);
+    const origin = cellToPoint(ICON_GRID, icon.cell);
+    const point = getDragPoint(origin, dx, dy, ICON_SIZE, size);
+    return { x: point.x - origin.x, y: point.y - origin.y };
   };
+
+  // An icon dragged from outside the selection is dragged alone, and becomes the selection.
+  const getDraggedIds = (id: AppId) => (selected.includes(id) ? selected : [id]);
 
   const startDrag = usePointerDrag({
     onMove: (move) => {
-      const point = getIconDragPoint(move);
-      setDrag(point ? { id: move.id, point } : null);
+      const ids = getDraggedIds(move.id as AppId);
+      if (ids !== selected) {
+        setSelected(ids);
+      }
+      const offset = getDragOffset(move);
+      setDrag(offset ? { ids, dx: offset.x, dy: offset.y } : null);
     },
     onDrop: (move) => {
-      const point = getIconDragPoint(move);
+      const ids = getDraggedIds(move.id as AppId);
+      const offset = getDragOffset(move);
       setDrag(null);
-      if (!point || !grid) {
+      if (!offset || !grid || !size) {
         return;
       }
 
-      const index = placed.findIndex((entry) => entry.app.id === move.id);
-      setIcons(moveToCell(placed, index, pointToCell(ICON_GRID, point, grid), grid));
+      const targets = new Map<number, Cell>();
+      placed.forEach((icon, index) => {
+        if (ids.includes(icon.app.id)) {
+          const origin = cellToPoint(ICON_GRID, icon.cell);
+          targets.set(index, pointToCell(ICON_GRID, getDragPoint(origin, offset.x, offset.y, ICON_SIZE, size), grid));
+        }
+      });
+      setIcons(moveManyToCells(placed, targets, grid));
     },
     onCancel: () => setDrag(null),
   });
 
+  // Drawing a box over the desktop selects the icons it touches, added to the selection from before if Ctrl or Cmd
+  // was held.
+  const startBox = usePointerDrag({
+    onMove: ({ dx, dy }) => {
+      const start = boxStart.current;
+      if (!start || !size) {
+        return;
+      }
+
+      const end = {
+        x: clamp(start.origin.x + dx, 0, size.width),
+        y: clamp(start.origin.y + dy, 0, size.height),
+      };
+      const next = getBox(start.origin, end);
+      const touched = placed
+        .filter((icon) => boxesOverlap(next, { ...cellToPoint(ICON_GRID, icon.cell), ...ICON_SIZE }))
+        .map((icon) => icon.app.id);
+      setBox(next);
+      setSelected([...start.base, ...touched.filter((id) => !start.base.includes(id))]);
+    },
+    onDrop: () => setBox(null),
+    onCancel: () => setBox(null),
+  });
+
+  // Ctrl or Cmd and a click adds an icon to the selection, or takes it out; a plain click selects it alone.
+  const handleSelect = (id: AppId, isAdding: boolean) => {
+    if (!isAdding) {
+      setSelected([id]);
+    } else {
+      setSelected(selected.includes(id) ? selected.filter((other) => other !== id) : [...selected, id]);
+    }
+  };
+
   const handleBackgroundPointerDown = (event: PointerEvent<HTMLElement>) => {
-    if (event.target === event.currentTarget) {
-      setSelectedId(null);
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    const isAdding = event.ctrlKey || event.metaKey;
+    if (!isAdding) {
+      setSelected([]);
+    }
+    // The phone's home screen scrolls when a finger drags over it.
+    if (!isPhone) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      boxStart.current = {
+        origin: { x: event.clientX - rect.left, y: event.clientY - rect.top },
+        base: isAdding ? selected : [],
+      };
+      startBox("box", event);
     }
   };
 
@@ -158,7 +236,7 @@ function Desktop({ onOpenApp }: DesktopProps) {
   return (
     <section
       ref={desktopRef}
-      className={`desktop${isAnimated ? " desktop--animated" : ""}`}
+      className={`desktop${isAnimated ? " desktop--animated" : ""}${box ? " desktop--selecting" : ""}`}
       style={style}
       aria-label="Desktop"
       onPointerDown={handleBackgroundPointerDown}
@@ -166,19 +244,26 @@ function Desktop({ onOpenApp }: DesktopProps) {
     >
       {/* Before the icons, so an icon dragged over a widget stays on top of it. */}
       <DesktopWidgets />
-      {placed.map(({ app, cell }) => (
+      {placed.map((icon) => (
         <DesktopIcon
-          key={app.id}
-          app={app}
-          point={drag?.id === app.id ? drag.point : cellToPoint(ICON_GRID, cell)}
-          isSelected={selectedId === app.id}
-          isDragging={drag?.id === app.id}
+          key={icon.app.id}
+          app={icon.app}
+          point={getIconPoint(icon)}
+          isSelected={selected.includes(icon.app.id)}
+          isDragging={drag?.ids.includes(icon.app.id) ?? false}
           opensOnClick={isPhone}
           onPointerDown={isPhone ? noDrag : startDrag}
-          onSelect={setSelectedId}
+          onSelect={handleSelect}
           onOpen={(id) => onOpenApp?.(id)}
         />
       ))}
+      {box ? (
+        <div
+          className="desktop__selection"
+          aria-hidden="true"
+          style={{ left: box.x, top: box.y, width: box.width, height: box.height }}
+        />
+      ) : null}
       {menuPoint && size ? (
         <DesktopContextMenu
           point={menuPoint}

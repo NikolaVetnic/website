@@ -17,7 +17,8 @@ type DesktopIconProps = {
   // Any click opens the app, not just a tap (the phone layout).
   opensOnClick: boolean;
   onPointerDown: (id: string, event: PointerEvent<HTMLElement>) => void;
-  onSelect: (id: AppId) => void;
+  // A click with Ctrl or Cmd held adds the icon to the selection, or takes it out (`isAdding`).
+  onSelect: (id: AppId, isAdding: boolean) => void;
   onOpen: (id: AppId) => void;
 };
 
@@ -54,16 +55,31 @@ function DesktopIcon({
   };
 
   // A mouse selects with a click and opens with a double-click; a finger or a pen opens with a single tap.
-  // A click from the keyboard (Space) has no press and only selects; Enter opens.
+  // A click from the keyboard (Space) has no press and only selects; Enter opens. A press that became a drag has
+  // already chosen what it moved (Desktop.tsx), so its click changes nothing.
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     const start = press.current;
     press.current = null;
 
-    const isTap = start !== null && Math.hypot(event.clientX - start.x, event.clientY - start.y) < TAP_DISTANCE;
-    if (isTap && (opensOnClick || start.pointerType !== "mouse")) {
+    if (start === null) {
+      onSelect(app.id, false);
+      return;
+    }
+    if (Math.hypot(event.clientX - start.x, event.clientY - start.y) >= TAP_DISTANCE) {
+      return;
+    }
+    if (opensOnClick || start.pointerType !== "mouse") {
       onOpen(app.id);
     } else {
-      onSelect(app.id);
+      onSelect(app.id, event.ctrlKey || event.metaKey);
+    }
+  };
+
+  // Reached from the keyboard, the icon is selected alone; a press selects on its click instead, so pressing one of
+  // several selected icons to drag them keeps them all.
+  const handleFocus = () => {
+    if (press.current === null) {
+      onSelect(app.id, false);
     }
   };
 
@@ -74,7 +90,7 @@ function DesktopIcon({
       style={{ left: point.x, top: point.y }}
       onPointerDown={handlePointerDown}
       onClick={handleClick}
-      onFocus={() => onSelect(app.id)}
+      onFocus={handleFocus}
       onDoubleClick={() => onOpen(app.id)}
       onKeyDown={handleKeyDown}
     >
