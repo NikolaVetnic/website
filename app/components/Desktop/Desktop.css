@@ -6,11 +6,44 @@
   background: var(--wallpaper);
 }
 
+/* The wallpaper again, a little larger than the desktop, drifting and zooming so slowly it's felt more than seen.
+   Only its transform moves, which the GPU does on its own. Positioned and first, so the icons and widgets, positioned
+   after it, are drawn over it. */
+.desktop::before {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  background: var(--wallpaper);
+  pointer-events: none;
+  animation: desktop-drift 90s ease-in-out infinite alternate;
+}
+
+@keyframes desktop-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-2.5%, 1.5%) scale(1.04);
+  }
+
+  100% {
+    transform: translate(2%, -2%) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop::before {
+    display: none;
+  }
+}
+
 .desktop:not(.desktop--animated) .desktop-icon {
   transition: none;
 }
 
-/* The phone layout (usePhoneLayout.ts): a home screen with the icons in rows, in their own order. */
+/* The phone layout (usePhoneLayout.ts): a home screen with the icons in rows, in their own order. The wallpaper stays
+   still, to spare the battery, and the icons in the grid's flow would be drawn under it. */
 @media (max-width: 699px), (max-height: 499px) {
   .desktop {
     display: grid;
@@ -19,5 +52,9 @@
     gap: 12px 4px;
     padding: 24px 12px;
     overflow-y: auto;
+  }
+
+  .desktop::before {
+    display: none;
   }
 }
