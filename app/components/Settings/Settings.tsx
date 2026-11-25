@@ -3,7 +3,15 @@ import type { ReactNode } from "react";
 import useBrowserValue from "~/hooks/useBrowserValue";
 import { getTimeFormat } from "~/settings/clock";
 
-import type { Accent, ClockFormat, Settings as SettingsValues, TextSize, Theme, Wallpaper } from "~/settings/settings";
+import type {
+  Accent,
+  ClockFormat,
+  ScreensaverDelay,
+  Settings as SettingsValues,
+  TextSize,
+  Theme,
+  Wallpaper,
+} from "~/settings/settings";
 import useSettings from "~/settings/useSettings";
 import "./Settings.css";
 
@@ -41,6 +49,13 @@ const CLOCK_OPTIONS: Option<ClockFormat>[] = [
   { value: "auto", label: "Automatic" },
   { value: "12", label: "12-hour" },
   { value: "24", label: "24-hour" },
+];
+
+const SCREENSAVER_OPTIONS: Option<ScreensaverDelay>[] = [
+  { value: "off", label: "Off" },
+  { value: "2", label: "After 2 min" },
+  { value: "5", label: "After 5 min" },
+  { value: "10", label: "After 10 min" },
 ];
 
 // The clock's pictures: the time each format writes, 9:41 in the evening.
@@ -149,6 +164,17 @@ function Settings() {
             )}
           />
         </div>
+        <Choice
+          name="screensaver"
+          legend="Screensaver"
+          options={SCREENSAVER_OPTIONS}
+          compact
+          preview={(delay) => (
+            <span className="settings__screensaver" aria-hidden="true">
+              {delay === "off" ? null : <img src="/icon-192.png" alt="" draggable={false} />}
+            </span>
+          )}
+        />
         <p className="settings__note">Settings are kept in this browser only.</p>
       </section>
     </div>

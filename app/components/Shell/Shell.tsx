@@ -4,6 +4,7 @@ import { useLocation, useMatches, useNavigate } from "react-router";
 import AppContent from "~/components/AppContent/AppContent";
 import Desktop from "~/components/Desktop/Desktop";
 import NotFound from "~/components/NotFound/NotFound";
+import Screensaver from "~/components/Screensaver/Screensaver";
 import Taskbar from "~/components/Taskbar/Taskbar";
 import AppWindow from "~/components/Window/AppWindow";
 import { getApp, getAppFromPath, normalizePath, type AppId } from "~/desktop/apps";
@@ -150,6 +151,7 @@ function Shell() {
         onToggle={(id) => act({ type: isPhone ? "focus" : "toggle", id })}
         onShowDesktop={() => act({ type: "showDesktop" })}
       />
+      <Screensaver />
     </div>
   );
 }

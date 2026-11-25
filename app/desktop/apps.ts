@@ -77,7 +77,7 @@ export const APPS: DesktopApp[] = [
     id: "settings",
     title: "Settings",
     icon: "/icons/settings.svg",
-    description: "Change how the site looks: theme, accent colour, wallpaper, text size and clock.",
+    description: "Change how the site looks: theme, accent colour, wallpaper, text size, clock and screensaver.",
     windowSize: { width: 640, height: 640 },
   },
   {

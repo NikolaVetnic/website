@@ -61,6 +61,14 @@ describe("applySettings", () => {
     expect(root.dataset.textSize).toBe("large");
   });
 
+  it("reads the screensaver's delay", () => {
+    stubBrowser({ stored: '{"screensaver":"off"}' });
+    expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, screensaver: "off" });
+
+    stubBrowser({ stored: '{"screensaver":"7"}' });
+    expect(applySettings().screensaver).toBe(DEFAULT_SETTINGS.screensaver);
+  });
+
   it("reads the clock format", () => {
     stubBrowser({ stored: '{"clock":"24"}' });
     expect(applySettings()).toEqual({ ...DEFAULT_SETTINGS, clock: "24" });

@@ -15,7 +15,8 @@
 }
 
 .settings__field + .settings__field,
-.settings__field + .settings__row {
+.settings__field + .settings__row,
+.settings__row + .settings__field {
   margin-top: 20px;
 }
 
@@ -159,6 +160,22 @@
 .settings__sample--time {
   font-size: 15px;
   font-variant-numeric: tabular-nums;
+}
+
+/* The screensaver in miniature: the logo on its dark screen, or the screen alone for Off. Its colours are the
+   screensaver's own (Screensaver.css), whatever the theme. */
+.settings__screensaver {
+  display: grid;
+  place-items: center;
+  height: 40px;
+  border-radius: 6px;
+  background: radial-gradient(circle at 50% 40%, #12283c 0%, #05090e 80%);
+}
+
+.settings__screensaver img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.9;
 }
 
 .settings__note {
