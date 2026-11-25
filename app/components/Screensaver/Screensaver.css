@@ -1,0 +1,44 @@
+/* The screensaver (Screensaver.tsx): a dark screen, and the logo crossing it one way in 13 s and the other in 8.3 s,
+   back and forth, so together it bounces off the edges along a path that rarely repeats. Its own colours, whatever
+   the theme, as the boot screen's; under the boot screen, over everything else. */
+.screensaver {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: radial-gradient(circle at 50% 40%, #12283c 0%, #05090e 80%);
+  cursor: none;
+  animation: screensaver-in 1.2s ease-out;
+}
+
+.screensaver__across {
+  width: 72px;
+  height: 72px;
+  animation: screensaver-x 13s linear var(--start-x, 0s) infinite alternate;
+}
+
+.screensaver__logo {
+  display: block;
+  width: 72px;
+  height: 72px;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 22px rgb(var(--chrome-accent) / 0.5));
+  animation: screensaver-y 8.3s linear var(--start-y, 0s) infinite alternate;
+}
+
+@keyframes screensaver-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes screensaver-x {
+  to {
+    transform: translateX(calc(100vw - 72px));
+  }
+}
+
+@keyframes screensaver-y {
+  to {
+    transform: translateY(calc(100vh - 72px));
+  }
+}

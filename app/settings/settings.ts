@@ -18,7 +18,18 @@ export type TextSize = (typeof TEXT_SIZES)[number];
 export const CLOCK_FORMATS = ["auto", "12", "24"] as const;
 export type ClockFormat = (typeof CLOCK_FORMATS)[number];
 
-export type Settings = { theme: Theme; accent: Accent; wallpaper: Wallpaper; textSize: TextSize; clock: ClockFormat };
+// The screensaver: off, or the minutes without a press, a move or a key before it starts. Only the Screensaver reads it.
+export const SCREENSAVER_DELAYS = ["off", "2", "5", "10"] as const;
+export type ScreensaverDelay = (typeof SCREENSAVER_DELAYS)[number];
+
+export type Settings = {
+  theme: Theme;
+  accent: Accent;
+  wallpaper: Wallpaper;
+  textSize: TextSize;
+  clock: ClockFormat;
+  screensaver: ScreensaverDelay;
+};
 
 export const DEFAULT_SETTINGS: Settings = {
   theme: "system",
@@ -26,6 +37,7 @@ export const DEFAULT_SETTINGS: Settings = {
   wallpaper: "ocean",
   textSize: "normal",
   clock: "auto",
+  screensaver: "5",
 };
 
 export const SETTINGS_KEY = "appearance";
@@ -37,6 +49,7 @@ export const SETTING_VALUES: { [Name in keyof Settings]: readonly Settings[Name]
   wallpaper: WALLPAPERS,
   textSize: TEXT_SIZES,
   clock: CLOCK_FORMATS,
+  screensaver: SCREENSAVER_DELAYS,
 };
 
 // Puts settings on <html>, where the stylesheets read them (`data-theme`, `color-scheme` for scrollbars and form
