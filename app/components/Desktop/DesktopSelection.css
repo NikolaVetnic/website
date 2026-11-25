@@ -1,0 +1,14 @@
+/* The box being drawn to select icons, over them, in the chrome's accent as the snap outline. */
+.desktop-selection {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid rgb(var(--chrome-accent-pale) / 0.8);
+  border-radius: 2px;
+  background: rgb(var(--chrome-accent) / 0.18);
+  pointer-events: none;
+}
+
+/* Nothing on the desktop takes a text selection while the box is drawn. */
+.desktop--selecting {
+  user-select: none;
+}
