@@ -33,6 +33,8 @@ function restart() {
 }
 
 type StartMenuProps = {
+  // On a phone the search field waits for a tap, rather than raising the keyboard over the menu.
+  isPhone: boolean;
   onOpenApp: (id: AppId) => void;
   // Closes the menu; `refocus` puts focus back on the button that opened it (Escape).
   onClose: (refocus: boolean) => void;
@@ -40,7 +42,7 @@ type StartMenuProps = {
 
 // The taskbar's start menu: every app as a tile, and a search field that has focus, so typing finds an app, the
 // arrow keys move between the tiles and Enter opens the one that's lit.
-function StartMenu({ onOpenApp, onClose }: StartMenuProps) {
+function StartMenu({ isPhone, onOpenApp, onClose }: StartMenuProps) {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -122,7 +124,7 @@ function StartMenu({ onOpenApp, onClose }: StartMenuProps) {
           aria-activedescendant={shown.length > 0 ? optionId(active) : undefined}
           autoComplete="off"
           spellCheck={false}
-          autoFocus
+          autoFocus={!isPhone}
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
