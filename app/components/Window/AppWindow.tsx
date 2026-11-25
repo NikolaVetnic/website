@@ -1,6 +1,7 @@
 import {
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
   type Dispatch,
@@ -13,6 +14,17 @@ import {
 import type { DesktopApp } from "~/desktop/apps";
 import type { Size } from "~/desktop/drag";
 import type { Point } from "~/desktop/grid";
+import {
+  FADE_KEYFRAMES,
+  FADE_TIMING,
+  getMinimizeKeyframes,
+  getOpenKeyframes,
+  getPressedRect,
+  getTaskbarButtonRect,
+  MINIMIZE_TIMING,
+  OPEN_TIMING,
+  prefersLessMotion,
+} from "~/desktop/launch";
 import { getSnapZone, unsnapRect, type SnapZone } from "~/desktop/snap";
 import { moveRect, resizeRect, type Rect, type ResizeEdge, type WindowAction } from "~/desktop/windows";
 import usePhoneLayout from "~/hooks/usePhoneLayout";
@@ -68,6 +80,49 @@ function AppWindow({
   const id = app.id;
   // In the phone layout every window fills the screen, so it can't be moved or maximized.
   const isPhone = usePhoneLayout();
+
+  // A window being minimized stays on screen while it shrinks into its taskbar button (`isLeaving`); one that has
+  // been minimized grows back out of the button, unless something else was pressed to bring it back. Updated
+  // during render (React's pattern for state that follows a prop), so the window is never hidden before it shrinks.
+  const [wasMinimized, setWasMinimized] = useState(isMinimized);
+  const [isLeaving, setIsLeaving] = useState(false);
+  const [hasBeenMinimized, setHasBeenMinimized] = useState(isMinimized);
+  if (wasMinimized !== isMinimized) {
+    setWasMinimized(isMinimized);
+    setIsLeaving(isMinimized);
+    if (isMinimized) {
+      setHasBeenMinimized(true);
+    }
+  }
+
+  // Opening, or coming back: out of what was pressed (see launch.ts), else out of the taskbar button. A window that
+  // was open when the page loaded wasn't opened by a press, so it's left to the stylesheet's fade.
+  useLayoutEffect(() => {
+    const element = windowRef.current;
+    if (isMinimized || !element || prefersLessMotion()) {
+      return;
+    }
+    const from = getPressedRect() ?? (hasBeenMinimized ? getTaskbarButtonRect(id) : null);
+    if (!from) {
+      return;
+    }
+    const animation = element.animate(getOpenKeyframes(from, element.getBoundingClientRect()), OPEN_TIMING);
+    return () => animation.cancel();
+  }, [isMinimized, hasBeenMinimized, id]);
+
+  // Minimizing: into the taskbar button, or a fade for less motion; hidden once that ends.
+  useLayoutEffect(() => {
+    const element = windowRef.current;
+    if (!isLeaving || !element) {
+      return;
+    }
+    const button = prefersLessMotion() ? null : getTaskbarButtonRect(id);
+    const animation = button
+      ? element.animate(getMinimizeKeyframes(element.getBoundingClientRect(), button), MINIMIZE_TIMING)
+      : element.animate(FADE_KEYFRAMES, FADE_TIMING);
+    animation.onfinish = () => setIsLeaving(false);
+    return () => animation.cancel();
+  }, [isLeaving, id]);
 
   // Focus follows the window to the top, unless the click that raised it already put focus inside.
   useEffect(() => {
@@ -161,6 +216,7 @@ function AppWindow({
     isMaximized ? "app-window--maximized" : "",
     rect ? "app-window--placed" : "app-window--unplaced",
     isBusy ? "app-window--busy" : "",
+    isLeaving ? "app-window--leaving" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -192,7 +248,7 @@ function AppWindow({
       role="dialog"
       aria-labelledby={titleId}
       tabIndex={-1}
-      hidden={isMinimized}
+      hidden={isMinimized && !isLeaving}
       onPointerDownCapture={() => dispatch({ type: "focus", id })}
       onFocus={() => dispatch({ type: "focus", id })}
       onKeyDown={handleKeyDown}

@@ -7,6 +7,7 @@ import NotFound from "~/components/NotFound/NotFound";
 import Taskbar from "~/components/Taskbar/Taskbar";
 import AppWindow from "~/components/Window/AppWindow";
 import { getApp, getAppFromPath, normalizePath, type AppId } from "~/desktop/apps";
+import { trackPresses } from "~/desktop/launch";
 import { getSnapRect, type SnapZone } from "~/desktop/snap";
 import { getWindowTitle } from "~/desktop/window-title";
 import {
@@ -80,6 +81,9 @@ function Shell() {
 
     dispatch(pathApp ? { type: "open", id: pathApp, area: current.area, path } : { type: "showDesktop" });
   }, [path, pathApp]);
+
+  // What the visitor presses, so a window that opens grows out of it (launch.ts).
+  useEffect(() => trackPresses(), []);
 
   // Windows open before the workspace was measured get their rect, right where CSS has been showing them.
   useEffect(() => {

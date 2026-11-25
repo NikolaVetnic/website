@@ -29,7 +29,14 @@ function Taskbar({ windows, focusedId, onToggle, onShowDesktop }: TaskbarProps) 
 
           return (
             <li key={id}>
-              <button type="button" className={className} aria-pressed={id === focusedId} onClick={() => onToggle(id)}>
+              <button
+                type="button"
+                className={className}
+                // Where its window shrinks to when minimized (launch.ts).
+                data-app-id={id}
+                aria-pressed={id === focusedId}
+                onClick={() => onToggle(id)}
+              >
                 <img className="taskbar__icon" src={app.icon} alt="" draggable={false} />
                 <span className="taskbar__title">{app.title}</span>
               </button>
