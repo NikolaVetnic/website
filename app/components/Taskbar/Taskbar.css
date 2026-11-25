@@ -124,7 +124,7 @@
   text-align: right;
 }
 
-/* The phone layout (usePhoneLayout.ts): bigger buttons, open apps as icons only, no clock (the phone has one). */
+/* The phone layout (usePhoneLayout.ts): bigger buttons, open apps as icons only, a bigger clock. */
 @media (max-width: 699px), (max-height: 499px) {
   .taskbar {
     gap: 4px;
@@ -162,7 +162,9 @@
   }
 
   .taskbar__clock {
-    display: none;
+    min-width: 0;
+    padding: 0 4px;
+    font-size: 15px;
   }
 }
 
