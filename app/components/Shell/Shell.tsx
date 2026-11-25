@@ -149,6 +149,7 @@ function Shell() {
         // On a phone the app on screen is the focused one, so its button only switches to it, never hides it.
         onToggle={(id) => act({ type: isPhone ? "focus" : "toggle", id })}
         onShowDesktop={() => act({ type: "showDesktop" })}
+        onOpenApp={openApp}
       />
     </div>
   );

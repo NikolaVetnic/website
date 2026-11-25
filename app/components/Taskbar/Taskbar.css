@@ -1,9 +1,12 @@
+/* Over the windows, so the start menu it holds opens over them too. */
 .taskbar {
+  position: relative;
+  z-index: 50;
   display: flex;
   align-items: center;
   gap: 8px;
   height: 48px;
-  padding: 0 12px 0 8px;
+  padding: 0 0 0 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(12, 28, 43, 0.92);
   backdrop-filter: blur(10px);
@@ -124,7 +127,27 @@
   text-align: right;
 }
 
-/* The phone layout (usePhoneLayout.ts): bigger buttons, open apps as icons only, a bigger clock. */
+/* Show the desktop: a slim strip at the taskbar's far right, as on Windows. */
+.taskbar__show-desktop {
+  flex: none;
+  align-self: stretch;
+  width: 10px;
+  margin-left: 4px;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  background: transparent;
+  cursor: pointer;
+}
+
+.taskbar__show-desktop:hover,
+.taskbar__show-desktop:focus-visible {
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* The phone layout (usePhoneLayout.ts): bigger buttons, open apps as icons only, a bigger clock, the logo as the home
+   button. */
 @media (max-width: 699px), (max-height: 499px) {
   .taskbar {
     gap: 4px;
@@ -165,6 +188,11 @@
     min-width: 0;
     padding: 0 4px;
     font-size: 15px;
+  }
+
+  /* The logo shows the desktop here. */
+  .taskbar__show-desktop {
+    display: none;
   }
 }
 

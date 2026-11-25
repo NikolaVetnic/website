@@ -5,22 +5,33 @@ import type { Rect } from "./windows";
 // was, so no caller has to pass it along.
 
 // The controls a window can grow out of.
-const CONTROL = "a, button, [role='button']";
+const CONTROL = "a, button, [role='button'], [role='option']";
 
 // How long after a press a window still counts as opened by it: time for a double-click and for a page to load.
 const PRESS_AGE = 1000;
 
-let lastPress: { control: Element; time: number } | null = null;
-
-function record(target: EventTarget | null) {
-  const control = target instanceof Element ? target.closest(CONTROL) : null;
-  lastPress = control ? { control, time: performance.now() } : null;
+function getVisibleRect(element: Element | null | undefined): Rect | null {
+  if (!element?.isConnected) {
+    return null;
+  }
+  const { x, y, width, height } = element.getBoundingClientRect();
+  return width > 0 && height > 0 ? { x, y, width, height } : null;
 }
 
-const onPointerDown = (event: PointerEvent) => record(event.target);
+// Where the control was when pressed: it may be gone by the time its window opens (the start menu closes then).
+let lastPress: { rect: Rect; time: number } | null = null;
+
+// Notes a press on a control; the page's presses are noted by trackPresses, and a control chosen some other way (the
+// start menu's, by Enter in its search field) can be noted here.
+export function notePress(target: EventTarget | null) {
+  const rect = getVisibleRect(target instanceof Element ? target.closest(CONTROL) : null);
+  lastPress = rect ? { rect, time: performance.now() } : null;
+}
+
+const onPointerDown = (event: PointerEvent) => notePress(event.target);
 const onKeyDown = (event: KeyboardEvent) => {
   if (event.key === "Enter" || event.key === " ") {
-    record(document.activeElement);
+    notePress(document.activeElement);
   }
 };
 
@@ -34,17 +45,9 @@ export function trackPresses(): () => void {
   };
 }
 
-function getVisibleRect(element: Element | null | undefined): Rect | null {
-  if (!element?.isConnected) {
-    return null;
-  }
-  const { x, y, width, height } = element.getBoundingClientRect();
-  return width > 0 && height > 0 ? { x, y, width, height } : null;
-}
-
-// Where on screen the control pressed a moment ago is, if it's still there.
+// Where on screen the control pressed a moment ago was.
 export function getPressedRect(): Rect | null {
-  return lastPress && performance.now() - lastPress.time <= PRESS_AGE ? getVisibleRect(lastPress.control) : null;
+  return lastPress && performance.now() - lastPress.time <= PRESS_AGE ? lastPress.rect : null;
 }
 
 // Where on screen an app's taskbar button is (Taskbar.tsx).
