@@ -32,11 +32,11 @@ const PAGES: Record<number, string> = {
   1508: "/about/resume", // Resume [ENG]
   9: "/blog",
   298: "/projects", // Code
-  895: "/projects", // Main Projects
+  895: "/music/bands", // Main Projects: an overview of the bands
   1253: "/projects/voxel-ray-tracer", // Computer Graphics 2
-  1371: "/projects", // Computer Graphics 1
-  1611: "/projects", // Mars Explorer 3D
-  1614: "/projects", // SocNet Project
+  1371: "/projects", // Computer Graphics 1, not brought over
+  1611: "/projects/mars-explorer-3d", // Mars Explorer 3D
+  1614: "/projects", // SocNet Project, not brought over
   302: "/games", // Game Dev
   746: "/games/knossos", // K'NOSSOS
   770: "/games/vsevolod", // VSEVOLOD

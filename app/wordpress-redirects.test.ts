@@ -25,6 +25,9 @@ describe("getWordPressRedirect", () => {
     expect(getWordPressRedirect("/", "?page_id=770")).toBe("/games/vsevolod");
     expect(getWordPressRedirect("/", "?page_id=1571")).toBe("/games/rogue-c");
     expect(getWordPressRedirect("/", "?page_id=1413")).toBe("/games");
+    expect(getWordPressRedirect("/", "?page_id=1611")).toBe("/projects/mars-explorer-3d");
+    expect(getWordPressRedirect("/", "?page_id=895")).toBe("/music/bands");
+    expect(getWordPressRedirect("/", "?page_id=1614")).toBe("/projects");
     expect(getWordPressRedirect("/", "?page_id=1508")).toBe("/about/resume");
   });
 
