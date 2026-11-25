@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
+import { BOOT_SCRIPT } from "~/boot/boot";
+import Boot from "~/components/Boot/Boot";
 import { SITE_NAME } from "~/meta";
 import { APPLY_SETTINGS_SCRIPT } from "~/settings/settings";
 import type { Route } from "./+types/root";
@@ -25,10 +27,13 @@ export function Layout({ children }: { children: ReactNode }) {
         {/* The stored appearance settings, applied before the first paint so the page never shows the wrong theme.
             Its text differs between the pre-rendered and the browser build (minified), which is harmless. */}
         <script dangerouslySetInnerHTML={{ __html: APPLY_SETTINGS_SCRIPT }} suppressHydrationWarning />
+        {/* Whether the boot screen plays (see boot.ts), decided before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} suppressHydrationWarning />
         <Meta />
         <Links />
       </head>
       <body>
+        <Boot />
         {children}
         <ScrollRestoration />
         <Scripts />
