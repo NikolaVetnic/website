@@ -159,6 +159,22 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* The phone layout (usePhoneLayout.ts): a sheet across the screen above the taskbar. */
+@media (max-width: 699px), (max-height: 499px) {
+  .start-menu {
+    right: 8px;
+    width: auto;
+    max-width: none;
+    transform-origin: bottom center;
+  }
+
+  /* 16 px, so iOS doesn't zoom the page into the field when it's tapped. */
+  .start-menu__input {
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
 @keyframes start-menu-open {
   from {
     opacity: 0;

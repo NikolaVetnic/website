@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from "react";
 
 // When the screen gets the phone layout: narrow, or too short for windows (a phone on its side). The stylesheets
-// that draw it repeat this query: Desktop.css, DesktopIcon.css, DesktopWidgets.css, AppWindow.css, Taskbar.css.
+// that draw it repeat this query: Desktop.css, DesktopIcon.css, DesktopWidgets.css, AppWindow.css, Taskbar.css,
+// StartMenu.css.
 export const PHONE_LAYOUT_QUERY = "(max-width: 699px), (max-height: 499px)";
 
 function subscribe(onChange: () => void) {

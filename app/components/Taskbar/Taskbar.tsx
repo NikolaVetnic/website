@@ -15,8 +15,8 @@ type TaskbarProps = {
   onOpenApp: (id: AppId) => void;
 };
 
-// The logo opens the start menu, and the slim button at the far right shows the desktop. On a phone the logo is the
-// home button instead, as the home screen already lists the apps.
+// The logo opens the start menu, and the slim button at the far right shows the desktop; on a phone that button is a
+// home button, before the clock.
 function Taskbar({ windows, focusedId, onToggle, onShowDesktop, onOpenApp }: TaskbarProps) {
   const isPhone = usePhoneLayout();
   const homeRef = useRef<HTMLButtonElement | null>(null);
@@ -34,14 +34,14 @@ function Taskbar({ windows, focusedId, onToggle, onShowDesktop, onOpenApp }: Tas
         ref={homeRef}
         type="button"
         className="taskbar__home"
-        aria-label={isPhone ? "Show the desktop" : "Start"}
-        aria-haspopup={isPhone ? undefined : "dialog"}
-        aria-expanded={isPhone ? undefined : isMenuOpen}
-        onClick={isPhone ? onShowDesktop : () => setIsMenuOpen(!isMenuOpen)}
+        aria-label="Start"
+        aria-haspopup="dialog"
+        aria-expanded={isMenuOpen}
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
         <img className="taskbar__logo" src="/icon-192.png" alt="" draggable={false} />
       </button>
-      {isMenuOpen && !isPhone ? <StartMenu onOpenApp={onOpenApp} onClose={closeMenu} /> : null}
+      {isMenuOpen ? <StartMenu isPhone={isPhone} onOpenApp={onOpenApp} onClose={closeMenu} /> : null}
       <ul className="taskbar__windows" aria-label="Open windows">
         {windows.map(({ id, isMinimized }) => {
           const app = getApp(id);
@@ -77,7 +77,12 @@ function Taskbar({ windows, focusedId, onToggle, onShowDesktop, onOpenApp }: Tas
         aria-label="Show the desktop"
         title="Show the desktop"
         onClick={onShowDesktop}
-      />
+      >
+        <svg className="taskbar__house" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 11 12 4l8 7" />
+          <path d="M6.5 9.5V19h4v-5h3v5h4V9.5" />
+        </svg>
+      </button>
     </footer>
   );
 }

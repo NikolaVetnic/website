@@ -146,8 +146,12 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* The phone layout (usePhoneLayout.ts): bigger buttons, open apps as icons only, a bigger clock, the logo as the home
-   button. */
+/* Only the phone's home button shows it. */
+.taskbar__house {
+  display: none;
+}
+
+/* The phone layout (usePhoneLayout.ts): bigger buttons, open apps as icons only, a home button and a bigger clock. */
 @media (max-width: 699px), (max-height: 499px) {
   .taskbar {
     gap: 4px;
@@ -190,9 +194,31 @@
     font-size: 15px;
   }
 
-  /* The logo shows the desktop here. */
+  /* Showing the desktop is a home button here, before the clock, as big as the others. */
   .taskbar__show-desktop {
-    display: none;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 48px;
+    height: 44px;
+    margin: 0;
+    border: 0;
+    border-radius: 8px;
+  }
+
+  .taskbar__house {
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: rgba(248, 251, 255, 0.85);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .taskbar__clock {
+    order: 1;
   }
 }
 
