@@ -6,7 +6,7 @@
 
 /* The colours the appearance settings change. Each is an RGB triplet for rgb(), so it can be used at any opacity:
    rgb(var(--accent)), rgb(var(--accent) / 0.1). Lines and fills in windows are the text colour at a low opacity,
-   so they follow the theme. The dark chrome (taskbar, title bars, menus) keeps its own colours in each component.
+   so they follow the theme. The dark chrome (taskbar, title bars, menus) is in a dark shade of the accent (below).
    These are the light theme's; the accent and the wallpaper come from the presets below. */
 :root {
   /* Window content */
@@ -46,6 +46,8 @@
   --chrome-accent: 118 213 255;
   --chrome-accent-pale: 201 235 255;
   --chrome-accent-deep: 30 91 132;
+  --chrome-hue: 248;
+  --chrome-tint: 1;
 }
 
 :root[data-theme="dark"][data-accent="blue"],
@@ -60,6 +62,8 @@
   --chrome-accent: 110 231 208;
   --chrome-accent-pale: 200 247 238;
   --chrome-accent-deep: 18 104 92;
+  --chrome-hue: 195;
+  --chrome-tint: 0.7;
 }
 
 :root[data-theme="dark"][data-accent="teal"],
@@ -74,6 +78,8 @@
   --chrome-accent: 196 172 255;
   --chrome-accent-pale: 232 222 255;
   --chrome-accent-deep: 92 60 160;
+  --chrome-hue: 292;
+  --chrome-tint: 0.9;
 }
 
 :root[data-theme="dark"][data-accent="purple"],
@@ -88,6 +94,8 @@
   --chrome-accent: 255 182 110;
   --chrome-accent-pale: 255 226 198;
   --chrome-accent-deep: 150 70 10;
+  --chrome-hue: 50;
+  --chrome-tint: 0.6;
 }
 
 :root[data-theme="dark"][data-accent="orange"],
@@ -102,12 +110,28 @@
   --chrome-accent: 255 158 190;
   --chrome-accent-pale: 255 214 228;
   --chrome-accent-deep: 158 40 78;
+  --chrome-hue: 355;
+  --chrome-tint: 0.75;
 }
 
 :root[data-theme="dark"][data-accent="rose"],
 :root[data-theme="dark"] [data-accent="rose"] {
   --accent: 255 143 176;
   --accent-hover: 255 180 203;
+}
+
+/* The dark chrome, in the accent's hue (`--chrome-hue`, with each accent above): lightness, chroma and hue for
+   oklch(), so they can be used at any opacity, as oklch(var(--chrome-bar) / 0.92). Each keeps the lightness the chrome
+   has in blue, so only the shade changes; `--chrome-tint` scales the depth of colour, as warm hues look stronger at
+   the same chroma. The boot screen and the screensaver use the hue and tint the same way. */
+:root {
+  --chrome-bar: 0.221 calc(0.037 * var(--chrome-tint)) var(--chrome-hue);
+  --chrome-menu-top: 0.27 calc(0.044 * var(--chrome-tint)) var(--chrome-hue);
+  --chrome-menu-bottom: 0.225 calc(0.036 * var(--chrome-tint)) var(--chrome-hue);
+  --chrome-title-top: 0.439 calc(0.054 * var(--chrome-tint)) var(--chrome-hue);
+  --chrome-title-bottom: 0.366 calc(0.048 * var(--chrome-tint)) var(--chrome-hue);
+  --chrome-title-focused-top: 0.396 calc(0.057 * var(--chrome-tint)) var(--chrome-hue);
+  --chrome-title-focused-bottom: 0.325 calc(0.048 * var(--chrome-tint)) var(--chrome-hue);
 }
 
 /* Wallpapers (`data-wallpaper`): the desktop's background, and a plain colour (`--wallpaper-base`) for the page

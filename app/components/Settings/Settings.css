@@ -82,7 +82,7 @@
 }
 
 /* A window in miniature. Its colours are the themes' own, whatever theme is showing: they're pictures of them,
-   so they don't come from the tokens. */
+   so they don't come from the content's tokens; its title bar is the chrome's, in the accent's shade. */
 .settings__preview {
   display: grid;
   align-content: start;
@@ -106,7 +106,7 @@
 .settings__preview-bar {
   height: 12px;
   margin-bottom: 4px;
-  background: #2a4157;
+  background: oklch(var(--chrome-title-bottom));
 }
 
 .settings__preview-line {
@@ -163,13 +163,17 @@
 }
 
 /* The screensaver in miniature: the logo on its dark screen, or the screen alone for Off. Its colours are the
-   screensaver's own (Screensaver.css), whatever the theme. */
+   screensaver's (Screensaver.css), whatever the theme. */
 .settings__screensaver {
   display: grid;
   place-items: center;
   height: 40px;
   border-radius: 6px;
-  background: radial-gradient(circle at 50% 40%, #12283c 0%, #05090e 80%);
+  background: radial-gradient(
+    circle at 50% 40%,
+    oklch(0.269 calc(0.047 * var(--chrome-tint)) var(--chrome-hue)) 0%,
+    oklch(0.137 calc(0.014 * var(--chrome-tint)) var(--chrome-hue)) 80%
+  );
 }
 
 .settings__screensaver img {

@@ -13,7 +13,11 @@
   place-content: center;
   justify-items: center;
   gap: 18px;
-  background: radial-gradient(circle at 50% 45%, #14324d 0%, #08131f 70%);
+  background: radial-gradient(
+    circle at 50% 45%,
+    oklch(0.309 calc(0.061 * var(--chrome-tint)) var(--chrome-hue)) 0%,
+    oklch(0.183 calc(0.03 * var(--chrome-tint)) var(--chrome-hue)) 70%
+  );
   animation: boot-out 350ms ease-in 950ms forwards;
 }
 
