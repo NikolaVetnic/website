@@ -27,6 +27,7 @@ import usePhoneLayout from "~/hooks/usePhoneLayout";
 import usePointerDrag, { type DragMove } from "~/hooks/usePointerDrag";
 import DesktopContextMenu from "./DesktopContextMenu";
 import DesktopIcon from "./DesktopIcon";
+import DesktopWidgets from "./DesktopWidgets";
 import "./Desktop.css";
 
 const ICON_WIDTH = 88;
@@ -163,6 +164,8 @@ function Desktop({ onOpenApp }: DesktopProps) {
       onPointerDown={handleBackgroundPointerDown}
       onContextMenu={handleContextMenu}
     >
+      {/* Before the icons, so an icon dragged over a widget stays on top of it. */}
+      <DesktopWidgets />
       {placed.map(({ app, cell }) => (
         <DesktopIcon
           key={app.id}
