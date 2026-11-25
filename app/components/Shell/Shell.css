@@ -10,3 +10,28 @@
   flex: 1;
   min-height: 0;
 }
+
+/* Where the window being dragged will snap: a frosted outline in the chrome's accent. */
+.shell__snap-preview {
+  position: absolute;
+  box-sizing: border-box;
+  border: 2px solid rgb(var(--chrome-accent) / 0.75);
+  border-radius: 12px;
+  background: rgb(var(--chrome-accent) / 0.16);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  animation: shell-snap-preview-in 120ms ease-out;
+}
+
+@keyframes shell-snap-preview-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell__snap-preview {
+    animation: none;
+  }
+}
