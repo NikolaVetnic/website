@@ -28,6 +28,7 @@ import usePhoneLayout from "~/hooks/usePhoneLayout";
 import usePointerDrag, { type DragMove } from "~/hooks/usePointerDrag";
 import DesktopContextMenu from "./DesktopContextMenu";
 import DesktopIcon from "./DesktopIcon";
+import DesktopSelection from "./DesktopSelection";
 import DesktopWidgets from "./DesktopWidgets";
 import "./Desktop.css";
 
@@ -257,13 +258,7 @@ function Desktop({ onOpenApp }: DesktopProps) {
           onOpen={(id) => onOpenApp?.(id)}
         />
       ))}
-      {box ? (
-        <div
-          className="desktop__selection"
-          aria-hidden="true"
-          style={{ left: box.x, top: box.y, width: box.width, height: box.height }}
-        />
-      ) : null}
+      {box ? <DesktopSelection box={box} /> : null}
       {menuPoint && size ? (
         <DesktopContextMenu
           point={menuPoint}
