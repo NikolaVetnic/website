@@ -2,3 +2,5 @@ build
 .react-router
 package-lock.json
 public/apps
+# Built elsewhere (games/rogue-c/README.md), kept as built.
+games/rogue-c/www

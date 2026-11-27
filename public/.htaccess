@@ -3,6 +3,9 @@
 DirectoryIndex index.html
 Options -Indexes -MultiViews
 
+# WebAssembly (Rogue C's game) under its own type, which browsers need to compile it while it downloads.
+AddType application/wasm .wasm
+
 RewriteEngine On
 
 # Links to the old WordPress site (/?p=2074, /?page_id=7) go to their new pages, straight to https://. The same
