@@ -36,10 +36,13 @@ Known for building robust, maintainable systems and for working across technical
 
 ## OPEN SOURCE
 
-- **OpenMW**, the open-source C++ game engine and editor: two merged contributions (Nov 2026).
+- **OpenMW**, the open-source C++ game engine and editor: three merged contributions (Nov 2026).
   - Engine: recovers from a damaged navigation mesh cache instead of crashing, and tells users how to fix SQLite database failures ([merge request 5762](https://gitlab.com/OpenMW/openmw/-/merge_requests/5762)).
   - Editor (C++, Qt): one shared widget in place of three diverging copies of the toolbar's right-click lists, so they all behave the same; also fixed a crash when selecting a deleted texture ([merge request 5738](https://gitlab.com/OpenMW/openmw/-/merge_requests/5738)).
-- **Testcontainers for .NET**: an `ExecScriptAsync` overload that takes a custom text encoding (Oct 2026, [pull request 1805](https://github.com/testcontainers/testcontainers-dotnet/pull/1805)).
+  - Documentation: the project's code style guide, in place of outdated wiki pages, with rules drawn from the clang-format and clang-tidy configuration and the existing code; the open conventions settled with the maintainers over two review rounds ([merge request 5725](https://gitlab.com/OpenMW/openmw/-/merge_requests/5725)).
+- **Testcontainers for .NET**, the library that runs throwaway Docker containers for tests: two merged contributions (Oct–Nov 2026).
+  - New module (C#, Docker, gRPC): the Google Cloud Spanner emulator, in line with the existing modules and the Java implementation; exposes the gRPC and REST endpoints and waits until the emulator is ready, with integration tests and a documentation page ([pull request 1832](https://github.com/testcontainers/testcontainers-dotnet/pull/1832)).
+  - Database modules: an `ExecScriptAsync` overload that takes a custom text encoding, in 13 modules; found and fixed SQL Server's `sqlcmd` ignoring the encoding, with tests that fail without the fix ([pull request 1805](https://github.com/testcontainers/testcontainers-dotnet/pull/1805)).
 
 All contributions, as the list grows: the [Open source](/projects/open-source) tab in Projects.
 

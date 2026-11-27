@@ -12,11 +12,17 @@
     - summary: Replaced three diverging copies of the editor toolbar's right-click lists with one shared widget, so they all behave the same; also fixed a crash when selecting a deleted texture.
       date: 2026-11-22
       link: https://gitlab.com/OpenMW/openmw/-/merge_requests/5738
+    - summary: Wrote the project's code style guide, in place of outdated wiki pages, with rules drawn from the clang-format and clang-tidy configuration and the existing code, settling the open conventions with the maintainers.
+      date: 2026-11-24
+      link: https://gitlab.com/OpenMW/openmw/-/merge_requests/5725
 
 - project: Testcontainers for .NET
   about: A library that runs throwaway Docker containers for tests.
   url: https://dotnet.testcontainers.org/
   contributions:
-    - summary: Added an ExecScriptAsync overload that takes a custom text encoding.
+    - summary: Added an ExecScriptAsync overload that takes a custom text encoding to 13 database modules, and fixed SQL Server's sqlcmd ignoring it, with tests that fail without the fix.
       date: 2026-10-27
       link: https://github.com/testcontainers/testcontainers-dotnet/pull/1805
+    - summary: Added a module for the Google Cloud Spanner emulator, in line with the existing modules and the Java implementation, exposing its gRPC and REST endpoints and waiting until it's ready, with integration tests and a documentation page.
+      date: 2026-11-26
+      link: https://github.com/testcontainers/testcontainers-dotnet/pull/1832
