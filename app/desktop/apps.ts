@@ -30,6 +30,8 @@ export type DesktopApp = {
   windowSize?: Size;
   // A page of its own that the window shows edge to edge, in an iframe (`/apps/sodhara/`).
   page?: string;
+  // The page is played with the keyboard (a game): its window hands it the focus, so keys reach it without a click.
+  keyboard?: boolean;
   // Its window shows a page of its own, from Markdown at `content/<folder>/<id>.md` (`content/games/rogue-c.md`).
   content?: "games";
   // Lays out its window itself, edge to edge, scrolling its own content beside parts that stay put (the Blog's
@@ -126,12 +128,14 @@ export const APPS: DesktopApp[] = [
     id: "rogue-c",
     title: "Rogue C",
     icon: "/games/rogue-c/icon.svg",
-    description: "Rogue C, the classic Rogue recreated in C by Nikola Pacek Vetnić.",
+    description:
+      "Rogue C, a roguelike in C by Nikola Pacek Vetnić, played in the browser: ten levels down for the Sunstone and back.",
     path: "/games/rogue-c",
     folder: "games",
     group: "Other",
-    windowSize: { width: 760, height: 620 },
-    content: "games",
+    windowSize: { width: 960, height: 640 },
+    page: "/apps/rogue-c/",
+    keyboard: true,
   },
 ];
 

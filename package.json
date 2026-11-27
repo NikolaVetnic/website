@@ -10,7 +10,7 @@
     "dev": "react-router dev",
     "prebuild": "npm run build:games",
     "build": "react-router build",
-    "build:games": "vite build --config games/sodhara/vite.config.ts --logLevel warn && vite build --config games/knossos/vite.config.ts --logLevel warn && vite build --config games/vsevolod/vite.config.ts --logLevel warn",
+    "build:games": "vite build --config games/sodhara/vite.config.ts --logLevel warn && vite build --config games/knossos/vite.config.ts --logLevel warn && vite build --config games/vsevolod/vite.config.ts --logLevel warn && node -e \"require('node:fs').cpSync('games/rogue-c/www', 'public/apps/rogue-c', { recursive: true })\"",
     "preview": "vite preview --outDir build/client",
     "typecheck": "react-router typegen && tsc",
     "lint": "eslint .",

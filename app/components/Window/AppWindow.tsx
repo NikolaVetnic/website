@@ -124,13 +124,15 @@ function AppWindow({
     return () => animation.cancel();
   }, [isLeaving, id]);
 
-  // Focus follows the window to the top, unless the click that raised it already put focus inside.
+  // Focus follows the window to the top, unless the click that raised it already put focus inside; a page played with
+  // the keyboard gets it itself.
   useEffect(() => {
     const element = windowRef.current;
     if (isFocused && element && !element.contains(document.activeElement)) {
-      element.focus({ preventScroll: true });
+      const target = app.keyboard ? element.querySelector("iframe") : null;
+      (target ?? element).focus({ preventScroll: true });
     }
-  }, [isFocused]);
+  }, [isFocused, app.keyboard]);
 
   const setRect = (next: Rect) => dispatch({ type: "setRect", id, rect: next });
 
