@@ -10,7 +10,7 @@ image: card.webp
 
 A roguelike in C. Go down ten levels, find the Sunstone and carry it back up to the daylight. It began in 2022 as practice, a recreation of the classic Rogue, and grew into a whole game: a procedurally generated dungeon (rooms and corridors at the top, caves below), monsters that hunt you, unidentified potions and scrolls, weapons, armour and hunger, ray-cast line of sight with fog of war, permadeath, and a choice of turn-based or real-time play.
 
-**[Play it in its window](/games/rogue-c)**, in Games. It needs a keyboard: move with WASD, the arrow keys or `hjkl`, and press `?` for the rest. The game saves when its window closes and picks up where it left off.
+**[Play it in its window](/games/rogue-c)**, in Games. With a keyboard, move with WASD, the arrow keys or `hjkl`, and press `?` for the rest; a click on the map walks there. On a phone or tablet, tap where to go, tap a monster next to you to attack it, and use the buttons along the bottom for items, the stairs, resting and the menu. The game saves when its window closes and picks up where it left off.
 
 ## How it's built
 

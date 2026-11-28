@@ -14,7 +14,7 @@ make web
 cp build/www/index.html build/www/index.js build/www/index.wasm build/www/index.data <website>/games/rogue-c/www/
 ```
 
-Now from RogueC 38e9fb5, built with Emscripten 7.0.1.
+Now from RogueC f23a5af, built with Emscripten 7.0.1.
 
 The game keeps its save, options and high scores in the browser's local storage (`roguec_*`), on the site's origin,
 and saves when its window closes.
